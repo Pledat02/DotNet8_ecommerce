@@ -4,6 +4,7 @@ using Ecommerce.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ecommerce.Migrations
 {
     [DbContext(typeof(MyDBContext))]
-    partial class MyDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240730005155_AddUsernamePasswordStaff")]
+    partial class AddUsernamePasswordStaff
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -108,9 +111,6 @@ namespace Ecommerce.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_order"));
 
-                    b.Property<int?>("Userid_user")
-                        .HasColumnType("int");
-
                     b.Property<string>("description")
                         .IsRequired()
                         .HasMaxLength(500)
@@ -120,9 +120,6 @@ namespace Ecommerce.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("id_user")
-                        .HasColumnType("int");
-
-                    b.Property<int>("id_voucher")
                         .HasColumnType("int");
 
                     b.Property<string>("name")
@@ -143,12 +140,9 @@ namespace Ecommerce.Migrations
 
                     b.HasKey("id_order");
 
-                    b.HasIndex("Userid_user");
-
                     b.HasIndex("id_staff");
 
-                    b.HasIndex("id_voucher", "id_user")
-                        .IsUnique();
+                    b.HasIndex("id_user");
 
                     b.ToTable("Orders", (string)null);
                 });
@@ -219,6 +213,21 @@ namespace Ecommerce.Migrations
                     b.HasIndex("id_supplier");
 
                     b.ToTable("Products", (string)null);
+                });
+
+            modelBuilder.Entity("Ecommerce.Data.ProductVoucher", b =>
+                {
+                    b.Property<int>("id_product")
+                        .HasColumnType("int");
+
+                    b.Property<int>("id_voucher")
+                        .HasColumnType("int");
+
+                    b.HasKey("id_product", "id_voucher");
+
+                    b.HasIndex("id_voucher");
+
+                    b.ToTable("ProductVouchers", (string)null);
                 });
 
             modelBuilder.Entity("Ecommerce.Data.Role", b =>
@@ -359,9 +368,6 @@ namespace Ecommerce.Migrations
 
                     b.HasKey("id_user");
 
-                    b.HasIndex("username")
-                        .IsUnique();
-
                     b.ToTable("Users", (string)null);
                 });
 
@@ -392,13 +398,7 @@ namespace Ecommerce.Migrations
                     b.Property<int>("id_voucher")
                         .HasColumnType("int");
 
-                    b.Property<int?>("id_user")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("id_order")
-                        .HasColumnType("int");
-
-                    b.Property<int>("state")
+                    b.Property<int>("id_user")
                         .HasColumnType("int");
 
                     b.HasKey("id_voucher", "id_user");
@@ -413,7 +413,7 @@ namespace Ecommerce.Migrations
                     b.HasOne("Ecommerce.Data.Order", "Order")
                         .WithOne("Bill")
                         .HasForeignKey("Ecommerce.Data.Bill", "id_order")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Order");
@@ -424,13 +424,13 @@ namespace Ecommerce.Migrations
                     b.HasOne("Ecommerce.Data.Product", "Product")
                         .WithMany("Comments")
                         .HasForeignKey("id_product")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Ecommerce.Data.User", "User")
                         .WithMany("Comments")
                         .HasForeignKey("id_user")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Product");
@@ -440,25 +440,21 @@ namespace Ecommerce.Migrations
 
             modelBuilder.Entity("Ecommerce.Data.Order", b =>
                 {
-                    b.HasOne("Ecommerce.Data.User", null)
-                        .WithMany("Orders")
-                        .HasForeignKey("Userid_user");
-
                     b.HasOne("Ecommerce.Data.Staff", "Staff")
                         .WithMany("Orders")
                         .HasForeignKey("id_staff")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Ecommerce.Data.Voucher_User", "Voucher_User")
-                        .WithOne("Order")
-                        .HasForeignKey("Ecommerce.Data.Order", "id_voucher", "id_user")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("Ecommerce.Data.User", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("id_user")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Staff");
 
-                    b.Navigation("Voucher_User");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Ecommerce.Data.OrderDetail", b =>
@@ -466,13 +462,13 @@ namespace Ecommerce.Migrations
                     b.HasOne("Ecommerce.Data.Order", "Order")
                         .WithMany("OrderDetails")
                         .HasForeignKey("id_order")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Ecommerce.Data.Product", "Product")
                         .WithMany("OrderDetails")
                         .HasForeignKey("id_product")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Order");
@@ -485,13 +481,13 @@ namespace Ecommerce.Migrations
                     b.HasOne("Ecommerce.Data.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("id_category")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Ecommerce.Data.Supplier", "Supplier")
                         .WithMany("Products")
                         .HasForeignKey("id_supplier")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Category");
@@ -499,18 +495,37 @@ namespace Ecommerce.Migrations
                     b.Navigation("Supplier");
                 });
 
+            modelBuilder.Entity("Ecommerce.Data.ProductVoucher", b =>
+                {
+                    b.HasOne("Ecommerce.Data.Product", "Product")
+                        .WithMany("ProductVouchers")
+                        .HasForeignKey("id_product")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Ecommerce.Data.Voucher", "Voucher")
+                        .WithMany("ProductVouchers")
+                        .HasForeignKey("id_voucher")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Voucher");
+                });
+
             modelBuilder.Entity("Ecommerce.Data.StaffRole", b =>
                 {
                     b.HasOne("Ecommerce.Data.Role", "Role")
                         .WithMany("StaffRoles")
                         .HasForeignKey("id_role")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Ecommerce.Data.Staff", "Staff")
                         .WithMany("StaffRoles")
                         .HasForeignKey("id_staff")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Role");
@@ -523,13 +538,13 @@ namespace Ecommerce.Migrations
                     b.HasOne("Ecommerce.Data.User", "User")
                         .WithMany("Voucher_Users")
                         .HasForeignKey("id_user")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Ecommerce.Data.Voucher", "Voucher")
                         .WithMany("Voucher_Users")
                         .HasForeignKey("id_voucher")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -555,6 +570,8 @@ namespace Ecommerce.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("OrderDetails");
+
+                    b.Navigation("ProductVouchers");
                 });
 
             modelBuilder.Entity("Ecommerce.Data.Role", b =>
@@ -585,13 +602,9 @@ namespace Ecommerce.Migrations
 
             modelBuilder.Entity("Ecommerce.Data.Voucher", b =>
                 {
-                    b.Navigation("Voucher_Users");
-                });
+                    b.Navigation("ProductVouchers");
 
-            modelBuilder.Entity("Ecommerce.Data.Voucher_User", b =>
-                {
-                    b.Navigation("Order")
-                        .IsRequired();
+                    b.Navigation("Voucher_Users");
                 });
 #pragma warning restore 612, 618
         }

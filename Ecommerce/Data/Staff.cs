@@ -12,6 +12,9 @@ namespace Ecommerce.Data
         public string sex { get; set; }
         public string email { get; set; }
 
+        public string username { get; set; }
+        public string password { get; set; }
+
         public ICollection<Order> Orders { get; set; }
         public ICollection<StaffRole> StaffRoles { get; set; }
 

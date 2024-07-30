@@ -4,6 +4,7 @@ using Ecommerce.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ecommerce.Migrations
 {
     [DbContext(typeof(MyDBContext))]
-    partial class MyDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240730054511_AddUniqueProperty")]
+    partial class AddUniqueProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,6 +65,9 @@ namespace Ecommerce.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("id_category");
+
+                    b.HasIndex("name")
+                        .IsUnique();
 
                     b.ToTable("Categories", (string)null);
                 });
@@ -321,6 +327,9 @@ namespace Ecommerce.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("id_supplier");
+
+                    b.HasIndex("name_company")
+                        .IsUnique();
 
                     b.ToTable("Suppliers", (string)null);
                 });

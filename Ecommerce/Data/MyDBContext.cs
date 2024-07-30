@@ -1,25 +1,24 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿    using Microsoft.EntityFrameworkCore;
 
-namespace Ecommerce.Data
-{
-    public class MyDBContext : DbContext
+    namespace Ecommerce.Data
     {
-        public MyDBContext(DbContextOptions options) : base(options) { }
+        public class MyDBContext : DbContext
+        {
+            public MyDBContext(DbContextOptions options) : base(options) { }
 
-        public DbSet<User> Users { get; set; }
-        public DbSet<Comment> Comments { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Supplier> Suppliers { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<Bill> Bills { get; set; }
-        public DbSet<OrderDetail> OrderDetails { get; set; }
-        public DbSet<Voucher> Vouchers { get; set; }
-        public DbSet<Staff> Staffs { get; set; }
-        public DbSet<Role> Roles { get; set; }
-        public DbSet<StaffRole> StaffRoles { get; set; }
-        public DbSet<Voucher_User> Voucher_Users { get; set; }
-        public DbSet<ProductVoucher> ProductVouchers { get; set; }
+            public DbSet<User> Users { get; set; }
+            public DbSet<Comment> Comments { get; set; }
+            public DbSet<Category> Categories { get; set; }
+            public DbSet<Product> Products { get; set; }
+            public DbSet<Supplier> Suppliers { get; set; }
+            public DbSet<Order> Orders { get; set; }
+            public DbSet<Bill> Bills { get; set; }
+            public DbSet<OrderDetail> OrderDetails { get; set; }
+            public DbSet<Voucher> Vouchers { get; set; }
+            public DbSet<Staff> Staffs { get; set; }
+            public DbSet<Role> Roles { get; set; }
+            public DbSet<StaffRole> StaffRoles { get; set; }
+            public DbSet<Voucher_User> Voucher_Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -29,11 +28,11 @@ namespace Ecommerce.Data
             {
                 e.ToTable("Users");
                 e.HasKey(u => u.id_user);
-                e.Property(u => u.username).IsRequired().HasMaxLength(100);
-                e.Property(u => u.email).IsRequired().HasMaxLength(100);
+                e.Property(u => u.username).IsRequired().HasMaxLength(25);
                 e.Property(u => u.password).IsRequired().HasMaxLength(100);
                 e.Property(u => u.address).HasMaxLength(200);
                 e.Property(u => u.phone).HasMaxLength(15);
+                e.HasIndex(u => u.username).IsUnique();
             });
 
             modelBuilder.Entity<Comment>(e =>
@@ -47,12 +46,12 @@ namespace Ecommerce.Data
                 e.HasOne(c => c.User)
                  .WithMany(u => u.Comments)
                  .HasForeignKey(c => c.id_user)
-                 .OnDelete(DeleteBehavior.Restrict);
+                 .OnDelete(DeleteBehavior.SetNull);
 
                 e.HasOne(c => c.Product)
                  .WithMany(p => p.Comments)
                  .HasForeignKey(c => c.id_product)
-                 .OnDelete(DeleteBehavior.Restrict);
+                 .OnDelete(DeleteBehavior.SetNull);
             });
 
             modelBuilder.Entity<Category>(e =>
@@ -76,12 +75,12 @@ namespace Ecommerce.Data
                 e.HasOne(p => p.Category)
                  .WithMany(c => c.Products)
                  .HasForeignKey(p => p.id_category)
-                 .OnDelete(DeleteBehavior.Restrict);
+                 .OnDelete(DeleteBehavior.SetNull);
 
                 e.HasOne(p => p.Supplier)
                  .WithMany(s => s.Products)
                  .HasForeignKey(p => p.id_supplier)
-                 .OnDelete(DeleteBehavior.Restrict);
+                 .OnDelete(DeleteBehavior.SetNull);
             });
 
             modelBuilder.Entity<Supplier>(e =>
@@ -89,6 +88,7 @@ namespace Ecommerce.Data
                 e.ToTable("Suppliers");
                 e.HasKey(s => s.id_supplier);
                 e.Property(s => s.name_company).IsRequired().HasMaxLength(100);
+                e.HasIndex(s => s.name_company).IsUnique();
                 e.Property(s => s.address).HasMaxLength(200);
             });
 
@@ -102,15 +102,14 @@ namespace Ecommerce.Data
                 e.Property(o => o.price).IsRequired().HasColumnType("decimal(18,2)");
                 e.Property(o => o.status).IsRequired().HasMaxLength(50);
 
-                e.HasOne(o => o.User)
-                 .WithMany(u => u.Orders)
-                 .HasForeignKey(o => o.id_user)
-                 .OnDelete(DeleteBehavior.Restrict);
-
                 e.HasOne(o => o.Staff)
                  .WithMany(s => s.Orders)
                  .HasForeignKey(o => o.id_staff)
-                 .OnDelete(DeleteBehavior.Restrict);
+                 .OnDelete(DeleteBehavior.SetNull);
+
+                e.HasOne(o => o.Voucher_User)
+                .WithOne(vu => vu.Order) // Assuming there's a navigation property in Voucher_User
+                 .HasForeignKey<Order>(o => new { o.id_voucher, o.id_user });
             });
 
             modelBuilder.Entity<Bill>(e =>
@@ -124,7 +123,7 @@ namespace Ecommerce.Data
                 e.HasOne(b => b.Order)
                  .WithOne(o => o.Bill)
                  .HasForeignKey<Bill>(b => b.id_order)
-                 .OnDelete(DeleteBehavior.Restrict);
+                 .OnDelete(DeleteBehavior.SetNull);
             });
 
             modelBuilder.Entity<OrderDetail>(e =>
@@ -138,12 +137,12 @@ namespace Ecommerce.Data
                 e.HasOne(od => od.Order)
                  .WithMany(o => o.OrderDetails)
                  .HasForeignKey(od => od.id_order)
-                 .OnDelete(DeleteBehavior.Restrict);
+                 .OnDelete(DeleteBehavior.SetNull);
 
                 e.HasOne(od => od.Product)
                  .WithMany(p => p.OrderDetails)
                  .HasForeignKey(od => od.id_product)
-                 .OnDelete(DeleteBehavior.Restrict);
+                 .OnDelete(DeleteBehavior.SetNull);
             });
 
             modelBuilder.Entity<Voucher>(e =>
@@ -162,29 +161,11 @@ namespace Ecommerce.Data
 
                 e.HasOne(vu => vu.Voucher)
                  .WithMany(v => v.Voucher_Users)
-                 .HasForeignKey(vu => vu.id_voucher)
-                 .OnDelete(DeleteBehavior.Restrict);
+                 .HasForeignKey(vu => vu.id_voucher);
 
                 e.HasOne(vu => vu.User)
                  .WithMany(u => u.Voucher_Users)
-                 .HasForeignKey(vu => vu.id_user)
-                 .OnDelete(DeleteBehavior.Restrict);
-            });
-
-            modelBuilder.Entity<ProductVoucher>(e =>
-            {
-                e.ToTable("ProductVouchers");
-                e.HasKey(pv => new { pv.id_product, pv.id_voucher });
-
-                e.HasOne(pv => pv.Product)
-                 .WithMany(p => p.ProductVouchers)
-                 .HasForeignKey(pv => pv.id_product)
-                 .OnDelete(DeleteBehavior.Restrict);
-
-                e.HasOne(pv => pv.Voucher)
-                 .WithMany(v => v.ProductVouchers)
-                 .HasForeignKey(pv => pv.id_voucher)
-                 .OnDelete(DeleteBehavior.Restrict);
+                 .HasForeignKey(vu => vu.id_user);
             });
 
             modelBuilder.Entity<Staff>(e =>
@@ -196,6 +177,8 @@ namespace Ecommerce.Data
                 e.Property(s => s.position).IsRequired().HasMaxLength(50);
                 e.Property(s => s.sex).IsRequired().HasMaxLength(10);
                 e.Property(s => s.email).IsRequired().HasMaxLength(100);
+                e.Property(s => s.username).IsRequired().HasMaxLength(25);
+                e.Property(s => s.password).IsRequired().HasMaxLength(16);
             });
 
             modelBuilder.Entity<Role>(e =>
@@ -213,13 +196,14 @@ namespace Ecommerce.Data
                 e.HasOne(sr => sr.Staff)
                  .WithMany(s => s.StaffRoles)
                  .HasForeignKey(sr => sr.id_staff)
-                 .OnDelete(DeleteBehavior.Restrict);
+                 .OnDelete(DeleteBehavior.SetNull);
 
                 e.HasOne(sr => sr.Role)
                  .WithMany(r => r.StaffRoles)
                  .HasForeignKey(sr => sr.id_role)
-                 .OnDelete(DeleteBehavior.Restrict);
+                 .OnDelete(DeleteBehavior.SetNull);
             });
         }
+
     }
 }
