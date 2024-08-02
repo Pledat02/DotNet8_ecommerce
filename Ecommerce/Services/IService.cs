@@ -1,11 +1,12 @@
 ﻿namespace Ecommerce.Services
 {
-    public interface Iservice<TEntity,TViewModel>
+    public interface Iservice<T>
     {
-        Task<List<TViewModel>> GetAllAsync();
-        Task<TViewModel> GetOneAsync(int id);
-        Task<TViewModel> InsertAsync(TEntity entity);
-        Task UpdateAsync(TEntity entity);
-        Task DeleteAsync(int id);
+        Task<List<T>> GetAllAsync();
+        Task<T> GetOneAsync(int? id);
+        Task<T> InsertAsync(T entity);
+        Task UpdateAsync(T entity);
+        Task DeleteAsync(int? id);
+        bool IsExists(int id);
     }
 }

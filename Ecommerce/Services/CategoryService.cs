@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Services
 {
-    public class CategoryService : Iservice<Category, CategoryVM>
+    public class CategoryService : Iservice<Category>
     {
         private readonly MyDBContext _dbContext;
 
@@ -13,63 +13,64 @@ namespace Ecommerce.Services
             _dbContext = context;
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(int? id)
         {
+
             var category = await _dbContext.Categories
-                .FirstOrDefaultAsync(c =>c.id_category==id);
+                .FirstOrDefaultAsync(c => c.id_category == id);
+
             if (category != null)
             {
                 _dbContext.Categories.Remove(category);
                 await _dbContext.SaveChangesAsync();
             }
+            else
+            {
+                throw new KeyNotFoundException("Category not found.");
+            }
         }
 
-        public async Task<List<CategoryVM>> GetAllAsync()
+        public async Task<List<Category>> GetAllAsync()
         {
-            var list = await _dbContext.Categories
-                .Select(c => new CategoryVM
-                {
-                    IdCategory = c.id_category,
-                    Name = c.name,
-                    Description = c.description
-                })
-                .ToListAsync();
-
-            return list;
+            return await _dbContext.Categories.ToListAsync();
         }
 
-        public async Task<CategoryVM> GetOneAsync(int id)
+        public async Task<Category> GetOneAsync(int? id)
         {
-            var category = await _dbContext.Categories
-                .Where(c => c.id_category == id)
-                .Select(c => new CategoryVM
-                {
-                    IdCategory = c.id_category,
-                    Name = c.name,
-                    Description = c.description
-                })
-                .SingleOrDefaultAsync();
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id), "Category ID cannot be null.");
+            }
+
+            return await _dbContext.Categories
+                .FirstOrDefaultAsync(c => c.id_category == id)
+                ?? throw new KeyNotFoundException("Category not found.");
+        }
+
+        public async Task<Category> InsertAsync(Category category)
+        {
+            if (category == null)
+            {
+                throw new ArgumentNullException(nameof(category), "Category cannot be null.");
+            }
+
+            _dbContext.Categories.Add(category);
+            await _dbContext.SaveChangesAsync();
 
             return category;
         }
 
-        public async Task<CategoryVM> InsertAsync(Category entity)
+        public async Task UpdateAsync(Category category)
         {
-            _dbContext.Categories.Add(entity);
-            await _dbContext.SaveChangesAsync();
-
-            return new CategoryVM
-            {
-                IdCategory = entity.id_category,
-                Name = entity.name,
-                Description = entity.description
-            };
+           
+                _dbContext.Categories.Update(category);
+                await _dbContext.SaveChangesAsync();
+           
         }
 
-        public async Task UpdateAsync(Category entity)
+        public bool IsExists(int id)
         {
-            _dbContext.Categories.Update(entity);
-            await _dbContext.SaveChangesAsync();
+            return _dbContext.Categories.Any(e => e.id_category == id);
         }
     }
 }
