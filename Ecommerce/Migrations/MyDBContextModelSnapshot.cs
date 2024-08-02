@@ -24,7 +24,7 @@ namespace Ecommerce.Migrations
 
             modelBuilder.Entity("Ecommerce.Data.Bill", b =>
                 {
-                    b.Property<int?>("id_order")
+                    b.Property<int>("id_order")
                         .HasColumnType("int");
 
                     b.Property<decimal>("amount")
@@ -116,13 +116,13 @@ namespace Ecommerce.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int?>("id_staff")
+                    b.Property<int>("id_staff")
                         .HasColumnType("int");
 
-                    b.Property<int?>("id_user")
+                    b.Property<int>("id_user")
                         .HasColumnType("int");
 
-                    b.Property<int?>("id_voucher")
+                    b.Property<int>("id_voucher")
                         .HasColumnType("int");
 
                     b.Property<string>("name")
@@ -148,8 +148,7 @@ namespace Ecommerce.Migrations
                     b.HasIndex("id_staff");
 
                     b.HasIndex("id_voucher", "id_user")
-                        .IsUnique()
-                        .HasFilter("[id_voucher] IS NOT NULL AND [id_user] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Orders", (string)null);
                 });
@@ -191,10 +190,10 @@ namespace Ecommerce.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int?>("id_category")
+                    b.Property<int>("id_category")
                         .HasColumnType("int");
 
-                    b.Property<int?>("id_supplier")
+                    b.Property<int>("id_supplier")
                         .HasColumnType("int");
 
                     b.Property<string>("name")
@@ -323,9 +322,6 @@ namespace Ecommerce.Migrations
 
                     b.HasKey("id_supplier");
 
-                    b.HasIndex("name_company")
-                        .IsUnique();
-
                     b.ToTable("Suppliers", (string)null);
                 });
 
@@ -451,11 +447,14 @@ namespace Ecommerce.Migrations
                     b.HasOne("Ecommerce.Data.Staff", "Staff")
                         .WithMany("Orders")
                         .HasForeignKey("id_staff")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .IsRequired();
 
                     b.HasOne("Ecommerce.Data.Voucher_User", "Voucher_User")
                         .WithOne("Order")
-                        .HasForeignKey("Ecommerce.Data.Order", "id_voucher", "id_user");
+                        .HasForeignKey("Ecommerce.Data.Order", "id_voucher", "id_user")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Staff");
 
@@ -486,12 +485,14 @@ namespace Ecommerce.Migrations
                     b.HasOne("Ecommerce.Data.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("id_category")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .IsRequired();
 
                     b.HasOne("Ecommerce.Data.Supplier", "Supplier")
                         .WithMany("Products")
                         .HasForeignKey("id_supplier")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .IsRequired();
 
                     b.Navigation("Category");
 
@@ -522,13 +523,13 @@ namespace Ecommerce.Migrations
                     b.HasOne("Ecommerce.Data.User", "User")
                         .WithMany("Voucher_Users")
                         .HasForeignKey("id_user")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Ecommerce.Data.Voucher", "Voucher")
                         .WithMany("Voucher_Users")
                         .HasForeignKey("id_voucher")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");

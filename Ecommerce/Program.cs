@@ -12,7 +12,7 @@ builder.Services.AddDbContext<MyDBContext>(option =>
 });
 builder.Services.AddScoped<CategoryService>();
 builder.Services.AddScoped<SupplierService>();
-builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<ProductServicecs>();
 
 
 var app = builder.Build();
