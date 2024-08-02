@@ -4,10 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Services
 {
-    public class ProductServicecs : Iservice<Product, ProductVM>
+    public class ProductService : Iservice<Product, ProductVM>
     {
         private readonly MyDBContext _dbContext;
-        public ProductServicecs (MyDBContext dbContext)
+        public ProductService (MyDBContext dbContext)
         {
             _dbContext = dbContext;
         }
