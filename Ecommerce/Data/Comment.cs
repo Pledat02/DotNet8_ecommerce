@@ -12,9 +12,9 @@ namespace Ecommerce.Data
         public int rating { get; set; }
 
         public int id_user { get; set; }
-        public User User { get; set; }
+        public User? User { get; set; }
 
         public int id_product { get; set; }
-        public Product Product { get; set; }
+        public Product? Product { get; set; }
     }
 }

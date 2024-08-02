@@ -14,11 +14,11 @@ namespace Ecommerce.Data
 
        
 
-        public int id_staff { get; set; }
+        public int? id_staff { get; set; }
         public Staff Staff { get; set; }
 
-        public int id_voucher { get; set; }
-        public int id_user { get; set; }
+        public int? id_voucher { get; set; }
+        public int? id_user { get; set; }
         public Voucher_User Voucher_User { get; set; }
 
         public Bill Bill { get; set; }

@@ -1,24 +1,25 @@
-﻿    using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Ecommerce.Models;
 
-    namespace Ecommerce.Data
+namespace Ecommerce.Data
+{
+    public class MyDBContext : DbContext
     {
-        public class MyDBContext : DbContext
-        {
-            public MyDBContext(DbContextOptions options) : base(options) { }
+        public MyDBContext(DbContextOptions<MyDBContext> options) : base(options) { }
 
-            public DbSet<User> Users { get; set; }
-            public DbSet<Comment> Comments { get; set; }
-            public DbSet<Category> Categories { get; set; }
-            public DbSet<Product> Products { get; set; }
-            public DbSet<Supplier> Suppliers { get; set; }
-            public DbSet<Order> Orders { get; set; }
-            public DbSet<Bill> Bills { get; set; }
-            public DbSet<OrderDetail> OrderDetails { get; set; }
-            public DbSet<Voucher> Vouchers { get; set; }
-            public DbSet<Staff> Staffs { get; set; }
-            public DbSet<Role> Roles { get; set; }
-            public DbSet<StaffRole> StaffRoles { get; set; }
-            public DbSet<Voucher_User> Voucher_Users { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Bill> Bills { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<Voucher> Vouchers { get; set; }
+        public DbSet<Staff> Staffs { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<StaffRole> StaffRoles { get; set; }
+        public DbSet<Voucher_User> Voucher_Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -72,6 +73,12 @@
                 e.Property(p => p.description).HasMaxLength(500);
                 e.Property(p => p.url_image).HasMaxLength(200);
 
+                e.Property(p => p.id_category)
+                 .IsRequired(false);
+
+                e.Property(p => p.id_supplier)
+                 .IsRequired(false);
+
                 e.HasOne(p => p.Category)
                  .WithMany(c => c.Products)
                  .HasForeignKey(p => p.id_category)
@@ -102,13 +109,22 @@
                 e.Property(o => o.price).IsRequired().HasColumnType("decimal(18,2)");
                 e.Property(o => o.status).IsRequired().HasMaxLength(50);
 
+                e.Property(o => o.id_staff)
+                 .IsRequired(false);
+
+                e.Property(o => o.id_voucher)
+                 .IsRequired(false);
+
+                e.Property(o => o.id_user)
+                 .IsRequired(false);
+
                 e.HasOne(o => o.Staff)
                  .WithMany(s => s.Orders)
                  .HasForeignKey(o => o.id_staff)
                  .OnDelete(DeleteBehavior.SetNull);
 
                 e.HasOne(o => o.Voucher_User)
-                .WithOne(vu => vu.Order) // Assuming there's a navigation property in Voucher_User
+                 .WithOne(vu => vu.Order)
                  .HasForeignKey<Order>(o => new { o.id_voucher, o.id_user });
             });
 
@@ -161,11 +177,13 @@
 
                 e.HasOne(vu => vu.Voucher)
                  .WithMany(v => v.Voucher_Users)
-                 .HasForeignKey(vu => vu.id_voucher);
+                 .HasForeignKey(vu => vu.id_voucher)
+                 .OnDelete(DeleteBehavior.SetNull);
 
                 e.HasOne(vu => vu.User)
                  .WithMany(u => u.Voucher_Users)
-                 .HasForeignKey(vu => vu.id_user);
+                 .HasForeignKey(vu => vu.id_user)
+                 .OnDelete(DeleteBehavior.SetNull);
             });
 
             modelBuilder.Entity<Staff>(e =>
@@ -204,6 +222,5 @@
                  .OnDelete(DeleteBehavior.SetNull);
             });
         }
-
     }
 }

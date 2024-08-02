@@ -14,10 +14,10 @@ namespace Ecommerce.Data
         public string description { get; set; }
         public string url_image { get; set; }
 
-        public int id_category { get; set; }
+        public int? id_category { get; set; }
         public Category Category { get; set; }
 
-        public int id_supplier { get; set; }
+        public int? id_supplier { get; set; }
         public Supplier Supplier { get; set; }
 
         public ICollection<Comment> Comments { get; set; }

@@ -1,10 +1,12 @@
 ﻿using Ecommerce.Data;
-using Ecommerce.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Ecommerce.Services
 {
-    public class SupplierService : Iservice<Supplier, SupplierVM>
+    public class SupplierService
     {
         private readonly MyDBContext _dbContext;
 
@@ -12,9 +14,11 @@ namespace Ecommerce.Services
         {
             _dbContext = context;
         }
-        public async Task DeleteAsync(int id)
+
+        public async Task DeleteAsync(int? id)
         {
-            var supplier = _dbContext.Suppliers.SingleOrDefault(sup => sup.id_supplier == id);
+            var supplier = await _dbContext.Suppliers
+                .SingleOrDefaultAsync(s => s.id_supplier == id);
             if (supplier != null)
             {
                 _dbContext.Suppliers.Remove(supplier);
@@ -22,49 +26,33 @@ namespace Ecommerce.Services
             }
         }
 
-        public async Task<List<SupplierVM>> GetAllAsync()
+        public async Task<List<Supplier>> GetAllAsync()
         {
-            var list = await _dbContext.Suppliers.Select(
-               c => new SupplierVM
-               {
-                   IdSupplier = c.id_supplier,
-                   NameCompany = c.name_company,
-                   Address = c.address
-               }).ToListAsync();
-            return list;
+            return await _dbContext.Suppliers.ToListAsync();
         }
 
-        public async Task<SupplierVM> GetOneAsync(int id)
+        public async Task<Supplier> GetOneAsync(int? id)
         {
-           var  supplier = await _dbContext.Suppliers
-                .Where( sup => sup.id_supplier == id)
-                .Select( sup => new SupplierVM
-                {
-                    IdSupplier = sup.id_supplier,
-                    NameCompany = sup.name_company,
-                    Address = sup.address
-                })
-                .SingleOrDefaultAsync();
+            return await _dbContext.Suppliers
+                .SingleOrDefaultAsync(s => s.id_supplier == id);
+        }
+
+        public async Task<Supplier> InsertAsync(Supplier supplier)
+        {
+            _dbContext.Suppliers.Add(supplier);
+            await _dbContext.SaveChangesAsync();
             return supplier;
         }
 
-        public async Task<SupplierVM> InsertAsync(Supplier entity)
+        public async Task UpdateAsync(Supplier supplier)
         {
-            _dbContext.Suppliers.Add(entity);
+            _dbContext.Suppliers.Update(supplier);
             await _dbContext.SaveChangesAsync();
-            return new SupplierVM {
-                IdSupplier = entity.id_supplier,
-                NameCompany = entity.name_company,
-                Address = entity.address
-            };
         }
 
-        public async Task UpdateAsync(Supplier entity)
+        public bool IsExists(int id)
         {
-            _dbContext.Suppliers.Update(entity);
-           await _dbContext.SaveChangesAsync();
-
+            return _dbContext.Suppliers.Any(e => e.id_supplier == id);
         }
     }
-
 }
