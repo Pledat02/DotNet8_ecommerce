@@ -23,576 +23,564 @@ namespace Ecommerce.Migrations
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Ecommerce.Data.Bill", b =>
-                {
-                    b.Property<int>("id_order")
-                        .HasColumnType("int");
+            {
+                b.Property<int>("id_order")
+                    .HasColumnType("int");
 
-                    b.Property<decimal>("amount")
-                        .HasColumnType("decimal(18,2)");
+                b.Property<decimal>("amount")
+                    .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime>("date")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("date")
+                    .HasColumnType("datetime2");
 
-                    b.Property<string>("payment_method")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                b.Property<string>("payment_method")
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("id_order");
+                b.HasKey("id_order");
 
-                    b.ToTable("Bills", (string)null);
-                });
+                b.ToTable("Bills", (string)null);
+            });
 
             modelBuilder.Entity("Ecommerce.Data.Category", b =>
-                {
-                    b.Property<int>("id_category")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("id_category")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_category"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_category"));
 
-                    b.Property<string>("description")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                b.Property<string>("description")
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .HasColumnType("nvarchar(200)");
 
-                    b.Property<string>("name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                b.Property<string>("name")
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("id_category");
+                b.HasKey("id_category");
 
-                    b.ToTable("Categories", (string)null);
-                });
+                b.ToTable("Categories", (string)null);
+            });
 
             modelBuilder.Entity("Ecommerce.Data.Comment", b =>
-                {
-                    b.Property<int>("id_comment")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("id_comment")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_comment"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_comment"));
 
-                    b.Property<DateTime>("created_date")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("created_date")
+                    .HasColumnType("datetime2");
 
-                    b.Property<int>("id_product")
-                        .HasColumnType("int");
+                b.Property<int>("id_product")
+                    .HasColumnType("int");
 
-                    b.Property<int>("id_user")
-                        .HasColumnType("int");
+                b.Property<int>("id_user")
+                    .HasColumnType("int");
 
-                    b.Property<int>("rating")
-                        .HasColumnType("int");
+                b.Property<int>("rating")
+                    .HasColumnType("int");
 
-                    b.Property<string>("text")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                b.Property<string>("text")
+                    .IsRequired()
+                    .HasMaxLength(500)
+                    .HasColumnType("nvarchar(500)");
 
-                    b.HasKey("id_comment");
+                b.HasKey("id_comment");
 
-                    b.HasIndex("id_product");
+                b.HasIndex("id_product");
 
-                    b.HasIndex("id_user");
+                b.HasIndex("id_user");
 
-                    b.ToTable("Comments", (string)null);
-                });
+                b.ToTable("Comments", (string)null);
+            });
 
             modelBuilder.Entity("Ecommerce.Data.Order", b =>
-                {
-                    b.Property<int>("id_order")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("id_order")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_order"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_order"));
 
-                    b.Property<int?>("Userid_user")
-                        .HasColumnType("int");
+                b.Property<int?>("Userid_user")
+                    .HasColumnType("int");
 
-                    b.Property<string>("description")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                b.Property<string>("description")
+                    .IsRequired()
+                    .HasMaxLength(500)
+                    .HasColumnType("nvarchar(500)");
 
-                    b.Property<int>("id_staff")
-                        .HasColumnType("int");
+                b.Property<int>("id_staff")
+                    .HasColumnType("int");
 
-                    b.Property<int>("id_user")
-                        .HasColumnType("int");
+                b.Property<int>("id_user")
+                    .HasColumnType("int");
 
-                    b.Property<int>("id_voucher")
-                        .HasColumnType("int");
+                b.Property<int>("id_voucher")
+                    .HasColumnType("int");
 
-                    b.Property<string>("name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                b.Property<string>("name")
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .HasColumnType("nvarchar(100)");
 
-                    b.Property<DateTime>("order_time")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("order_time")
+                    .HasColumnType("datetime2");
 
-                    b.Property<decimal>("price")
-                        .HasColumnType("decimal(18,2)");
+                b.Property<decimal>("price")
+                    .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("status")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                b.Property<string>("status")
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("id_order");
+                b.HasKey("id_order");
 
-                    b.HasIndex("Userid_user");
+                b.HasIndex("Userid_user");
 
-                    b.HasIndex("id_staff");
+                b.HasIndex("id_staff");
 
-                    b.HasIndex("id_voucher", "id_user")
-                        .IsUnique();
+                b.HasIndex("id_voucher", "id_user")
+                    .IsUnique();
 
-                    b.ToTable("Orders", (string)null);
-                });
+                b.ToTable("Orders", (string)null);
+            });
 
             modelBuilder.Entity("Ecommerce.Data.OrderDetail", b =>
-                {
-                    b.Property<int>("id_order")
-                        .HasColumnType("int");
+            {
+                b.Property<int>("id_order")
+                    .HasColumnType("int");
 
-                    b.Property<int>("id_product")
-                        .HasColumnType("int");
+                b.Property<int>("id_product")
+                    .HasColumnType("int");
 
-                    b.Property<decimal>("price")
-                        .HasColumnType("decimal(18,2)");
+                b.Property<decimal>("price")
+                    .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("quantity")
-                        .HasColumnType("int");
+                b.Property<int>("quantity")
+                    .HasColumnType("int");
 
-                    b.Property<decimal>("total_price")
-                        .HasColumnType("decimal(18,2)");
+                b.Property<decimal>("total_price")
+                    .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("id_order", "id_product");
+                b.HasKey("id_order", "id_product");
 
-                    b.HasIndex("id_product");
+                b.HasIndex("id_product");
 
-                    b.ToTable("OrderDetails", (string)null);
-                });
+                b.ToTable("OrderDetails", (string)null);
+            });
 
             modelBuilder.Entity("Ecommerce.Data.Product", b =>
-                {
-                    b.Property<int>("id_product")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("id_product")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_product"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_product"));
 
-                    b.Property<string>("description")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                b.Property<string>("description")
+                    .IsRequired()
+                    .HasMaxLength(500)
+                    .HasColumnType("nvarchar(500)");
 
-                    b.Property<int>("id_category")
-                        .HasColumnType("int");
+                b.Property<int>("id_category")
+                    .HasColumnType("int");
 
-                    b.Property<int>("id_supplier")
-                        .HasColumnType("int");
+                b.Property<int>("id_supplier")
+                    .HasColumnType("int");
 
-                    b.Property<string>("name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                b.Property<string>("name")
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .HasColumnType("nvarchar(100)");
 
-                    b.Property<decimal>("price")
-                        .HasColumnType("decimal(18,2)");
+                b.Property<decimal>("price")
+                    .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("quantity_in_stock")
-                        .HasColumnType("int");
+                b.Property<int>("quantity_in_stock")
+                    .HasColumnType("int");
 
-                    b.Property<string>("url_image")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                b.Property<string>("url_image")
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .HasColumnType("nvarchar(200)");
 
-                    b.HasKey("id_product");
+                b.HasKey("id_product");
 
-                    b.HasIndex("id_category");
+                b.HasIndex("id_category");
 
-                    b.HasIndex("id_supplier");
+                b.HasIndex("id_supplier");
 
-                    b.ToTable("Products", (string)null);
-                });
+                b.ToTable("Products", (string)null);
+            });
 
             modelBuilder.Entity("Ecommerce.Data.Role", b =>
-                {
-                    b.Property<int>("id_role")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("id_role")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_role"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_role"));
 
-                    b.Property<string>("role_name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                b.Property<string>("role_name")
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("id_role");
+                b.HasKey("id_role");
 
-                    b.ToTable("Roles", (string)null);
-                });
+                b.ToTable("Roles", (string)null);
+            });
 
             modelBuilder.Entity("Ecommerce.Data.Staff", b =>
-                {
-                    b.Property<int>("id_staff")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("id_staff")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_staff"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_staff"));
 
-                    b.Property<string>("email")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                b.Property<string>("email")
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("name_staff")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                b.Property<string>("name_staff")
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("password")
-                        .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("nvarchar(16)");
+                b.Property<string>("password")
+                    .IsRequired()
+                    .HasMaxLength(16)
+                    .HasColumnType("nvarchar(16)");
 
-                    b.Property<string>("position")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                b.Property<string>("position")
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("sex")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                b.Property<string>("sex")
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .HasColumnType("nvarchar(10)");
 
-                    b.Property<string>("type_staff")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                b.Property<string>("type_staff")
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("username")
-                        .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
+                b.Property<string>("username")
+                    .IsRequired()
+                    .HasMaxLength(25)
+                    .HasColumnType("nvarchar(25)");
 
-                    b.HasKey("id_staff");
+                b.HasKey("id_staff");
 
-                    b.ToTable("Staffs", (string)null);
-                });
+                b.ToTable("Staffs", (string)null);
+            });
 
             modelBuilder.Entity("Ecommerce.Data.StaffRole", b =>
-                {
-                    b.Property<int>("id_staff")
-                        .HasColumnType("int");
+            {
+                b.Property<int>("id_staff")
+                    .HasColumnType("int");
 
-                    b.Property<int>("id_role")
-                        .HasColumnType("int");
+                b.Property<int>("id_role")
+                    .HasColumnType("int");
 
-                    b.HasKey("id_staff", "id_role");
+                b.HasKey("id_staff", "id_role");
 
-                    b.HasIndex("id_role");
+                b.HasIndex("id_role");
 
-                    b.ToTable("StaffRoles", (string)null);
-                });
+                b.ToTable("StaffRoles", (string)null);
+            });
 
             modelBuilder.Entity("Ecommerce.Data.Supplier", b =>
-                {
-                    b.Property<int>("id_supplier")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("id_supplier")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_supplier"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_supplier"));
 
-                    b.Property<string>("address")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                b.Property<string>("address")
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .HasColumnType("nvarchar(200)");
 
-                    b.Property<string>("name_company")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                b.Property<string>("name_company")
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("id_supplier");
+                b.HasKey("id_supplier");
 
-                    b.ToTable("Suppliers", (string)null);
-                });
+                b.ToTable("Suppliers", (string)null);
+            });
 
             modelBuilder.Entity("Ecommerce.Data.User", b =>
-                {
-                    b.Property<int>("id_user")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("id_user")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_user"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_user"));
 
-                    b.Property<string>("address")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                b.Property<string>("address")
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .HasColumnType("nvarchar(200)");
 
-                    b.Property<string>("email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("email")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("password")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                b.Property<string>("password")
+                    .IsRequired()
+                    .HasMaxLength(16)
+                    .HasColumnType("nvarchar(16)");
 
-                    b.Property<string>("phone")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                b.Property<string>("phone_number")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("username")
-                        .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
+                b.Property<string>("sex")
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .HasColumnType("nvarchar(10)");
 
-                    b.HasKey("id_user");
+                b.Property<string>("username")
+                    .IsRequired()
+                    .HasMaxLength(25)
+                    .HasColumnType("nvarchar(25)");
 
-                    b.HasIndex("username")
-                        .IsUnique();
+                b.HasKey("id_user");
 
-                    b.ToTable("Users", (string)null);
-                });
+                b.ToTable("Users", (string)null);
+            });
+
+            modelBuilder.Entity("Ecommerce.Data.UserRole", b =>
+            {
+                b.Property<int>("id_user")
+                    .HasColumnType("int");
+
+                b.Property<int>("id_role")
+                    .HasColumnType("int");
+
+                b.HasKey("id_user", "id_role");
+
+                b.HasIndex("id_role");
+
+                b.ToTable("UserRoles", (string)null);
+            });
 
             modelBuilder.Entity("Ecommerce.Data.Voucher", b =>
-                {
-                    b.Property<int>("id_voucher")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("id_voucher")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_voucher"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_voucher"));
 
-                    b.Property<DateTime>("finish_date")
-                        .HasColumnType("datetime2");
+                b.Property<string>("code")
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnType("nvarchar(50)");
 
-                    b.Property<decimal>("percent_discount")
-                        .HasColumnType("decimal(5,2)");
+                b.Property<DateTime>("end_date")
+                    .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("start_date")
-                        .HasColumnType("datetime2");
+                b.Property<string>("name")
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("id_voucher");
+                b.Property<DateTime>("start_date")
+                    .HasColumnType("datetime2");
 
-                    b.ToTable("Vouchers", (string)null);
-                });
+                b.Property<decimal>("value")
+                    .HasColumnType("decimal(18,2)");
 
-            modelBuilder.Entity("Ecommerce.Data.Voucher_User", b =>
-                {
-                    b.Property<int>("id_voucher")
-                        .HasColumnType("int");
+                b.HasKey("id_voucher");
 
-                    b.Property<int?>("id_user")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("id_order")
-                        .HasColumnType("int");
-
-                    b.Property<int>("state")
-                        .HasColumnType("int");
-
-                    b.HasKey("id_voucher", "id_user");
-
-                    b.HasIndex("id_user");
-
-                    b.ToTable("Voucher_Users", (string)null);
-                });
-
-            modelBuilder.Entity("Ecommerce.Data.Bill", b =>
-                {
-                    b.HasOne("Ecommerce.Data.Order", "Order")
-                        .WithOne("Bill")
-                        .HasForeignKey("Ecommerce.Data.Bill", "id_order")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-                });
+                b.ToTable("Vouchers", (string)null);
+            });
 
             modelBuilder.Entity("Ecommerce.Data.Comment", b =>
-                {
-                    b.HasOne("Ecommerce.Data.Product", "Product")
-                        .WithMany("Comments")
-                        .HasForeignKey("id_product")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .IsRequired();
+            {
+                b.HasOne("Ecommerce.Data.Product", "Product")
+                    .WithMany("Comments")
+                    .HasForeignKey("id_product")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.HasOne("Ecommerce.Data.User", "User")
-                        .WithMany("Comments")
-                        .HasForeignKey("id_user")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .IsRequired();
+                b.HasOne("Ecommerce.Data.User", "User")
+                    .WithMany("Comments")
+                    .HasForeignKey("id_user")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.Navigation("Product");
+                b.Navigation("Product");
 
-                    b.Navigation("User");
-                });
+                b.Navigation("User");
+            });
 
             modelBuilder.Entity("Ecommerce.Data.Order", b =>
-                {
-                    b.HasOne("Ecommerce.Data.User", null)
-                        .WithMany("Orders")
-                        .HasForeignKey("Userid_user");
+            {
+                b.HasOne("Ecommerce.Data.User", "User")
+                    .WithMany()
+                    .HasForeignKey("Userid_user")
+                    .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("Ecommerce.Data.Staff", "Staff")
-                        .WithMany("Orders")
-                        .HasForeignKey("id_staff")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .IsRequired();
+                b.HasOne("Ecommerce.Data.Staff", "Staff")
+                    .WithMany("Orders")
+                    .HasForeignKey("id_staff")
+                    .OnDelete(DeleteBehavior.SetNull)
+                    .IsRequired();
 
-                    b.HasOne("Ecommerce.Data.Voucher_User", "Voucher_User")
-                        .WithOne("Order")
-                        .HasForeignKey("Ecommerce.Data.Order", "id_voucher", "id_user")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                b.HasOne("Ecommerce.Data.Voucher", "Voucher")
+                    .WithOne("Order")
+                    .HasForeignKey("Ecommerce.Data.Order", "id_voucher")
+                    .OnDelete(DeleteBehavior.SetNull)
+                    .IsRequired();
 
-                    b.Navigation("Staff");
+                b.Navigation("Staff");
 
-                    b.Navigation("Voucher_User");
-                });
+                b.Navigation("User");
+
+                b.Navigation("Voucher");
+            });
 
             modelBuilder.Entity("Ecommerce.Data.OrderDetail", b =>
-                {
-                    b.HasOne("Ecommerce.Data.Order", "Order")
-                        .WithMany("OrderDetails")
-                        .HasForeignKey("id_order")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .IsRequired();
+            {
+                b.HasOne("Ecommerce.Data.Order", "Order")
+                    .WithMany("OrderDetails")
+                    .HasForeignKey("id_order")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.HasOne("Ecommerce.Data.Product", "Product")
-                        .WithMany("OrderDetails")
-                        .HasForeignKey("id_product")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .IsRequired();
+                b.HasOne("Ecommerce.Data.Product", "Product")
+                    .WithMany("OrderDetails")
+                    .HasForeignKey("id_product")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.Navigation("Order");
+                b.Navigation("Order");
 
-                    b.Navigation("Product");
-                });
+                b.Navigation("Product");
+            });
 
             modelBuilder.Entity("Ecommerce.Data.Product", b =>
-                {
-                    b.HasOne("Ecommerce.Data.Category", "Category")
-                        .WithMany("Products")
-                        .HasForeignKey("id_category")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .IsRequired();
+            {
+                b.HasOne("Ecommerce.Data.Category", "Category")
+                    .WithMany("Products")
+                    .HasForeignKey("id_category")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.HasOne("Ecommerce.Data.Supplier", "Supplier")
-                        .WithMany("Products")
-                        .HasForeignKey("id_supplier")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .IsRequired();
+                b.HasOne("Ecommerce.Data.Supplier", "Supplier")
+                    .WithMany("Products")
+                    .HasForeignKey("id_supplier")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.Navigation("Category");
+                b.Navigation("Category");
 
-                    b.Navigation("Supplier");
-                });
+                b.Navigation("Supplier");
+            });
 
             modelBuilder.Entity("Ecommerce.Data.StaffRole", b =>
-                {
-                    b.HasOne("Ecommerce.Data.Role", "Role")
-                        .WithMany("StaffRoles")
-                        .HasForeignKey("id_role")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .IsRequired();
+            {
+                b.HasOne("Ecommerce.Data.Role", "Role")
+                    .WithMany("StaffRoles")
+                    .HasForeignKey("id_role")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.HasOne("Ecommerce.Data.Staff", "Staff")
-                        .WithMany("StaffRoles")
-                        .HasForeignKey("id_staff")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .IsRequired();
+                b.HasOne("Ecommerce.Data.Staff", "Staff")
+                    .WithMany("StaffRoles")
+                    .HasForeignKey("id_staff")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.Navigation("Role");
+                b.Navigation("Role");
 
-                    b.Navigation("Staff");
-                });
+                b.Navigation("Staff");
+            });
 
-            modelBuilder.Entity("Ecommerce.Data.Voucher_User", b =>
-                {
-                    b.HasOne("Ecommerce.Data.User", "User")
-                        .WithMany("Voucher_Users")
-                        .HasForeignKey("id_user")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            modelBuilder.Entity("Ecommerce.Data.UserRole", b =>
+            {
+                b.HasOne("Ecommerce.Data.Role", "Role")
+                    .WithMany("UserRoles")
+                    .HasForeignKey("id_role")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.HasOne("Ecommerce.Data.Voucher", "Voucher")
-                        .WithMany("Voucher_Users")
-                        .HasForeignKey("id_voucher")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                b.HasOne("Ecommerce.Data.User", "User")
+                    .WithMany("UserRoles")
+                    .HasForeignKey("id_user")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.Navigation("User");
+                b.Navigation("Role");
 
-                    b.Navigation("Voucher");
-                });
+                b.Navigation("User");
+            });
 
             modelBuilder.Entity("Ecommerce.Data.Category", b =>
-                {
-                    b.Navigation("Products");
-                });
+            {
+                b.Navigation("Products");
+            });
 
             modelBuilder.Entity("Ecommerce.Data.Order", b =>
-                {
-                    b.Navigation("Bill")
-                        .IsRequired();
-
-                    b.Navigation("OrderDetails");
-                });
+            {
+                b.Navigation("OrderDetails");
+            });
 
             modelBuilder.Entity("Ecommerce.Data.Product", b =>
-                {
-                    b.Navigation("Comments");
+            {
+                b.Navigation("Comments");
 
-                    b.Navigation("OrderDetails");
-                });
+                b.Navigation("OrderDetails");
+            });
 
             modelBuilder.Entity("Ecommerce.Data.Role", b =>
-                {
-                    b.Navigation("StaffRoles");
-                });
+            {
+                b.Navigation("StaffRoles");
+
+                b.Navigation("UserRoles");
+            });
 
             modelBuilder.Entity("Ecommerce.Data.Staff", b =>
-                {
-                    b.Navigation("Orders");
+            {
+                b.Navigation("Orders");
 
-                    b.Navigation("StaffRoles");
-                });
+                b.Navigation("StaffRoles");
+            });
 
             modelBuilder.Entity("Ecommerce.Data.Supplier", b =>
-                {
-                    b.Navigation("Products");
-                });
+            {
+                b.Navigation("Products");
+            });
 
             modelBuilder.Entity("Ecommerce.Data.User", b =>
-                {
-                    b.Navigation("Comments");
+            {
+                b.Navigation("Comments");
 
-                    b.Navigation("Orders");
-
-                    b.Navigation("Voucher_Users");
-                });
+                b.Navigation("UserRoles");
+            });
 
             modelBuilder.Entity("Ecommerce.Data.Voucher", b =>
-                {
-                    b.Navigation("Voucher_Users");
-                });
-
-            modelBuilder.Entity("Ecommerce.Data.Voucher_User", b =>
-                {
-                    b.Navigation("Order")
-                        .IsRequired();
-                });
+            {
+                b.Navigation("Order");
+            });
 #pragma warning restore 612, 618
         }
     }
