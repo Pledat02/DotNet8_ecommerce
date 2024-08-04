@@ -25,3 +25,12 @@ C:\Users\MSI DAT\OneDrive\Máy tính\DotNet8_ecommerce\Ecommerce\obj\Debug\net8.
 C:\Users\MSI DAT\OneDrive\Máy tính\DotNet8_ecommerce\Ecommerce\obj\Debug\net8.0\Ecommerce.RazorAssemblyInfo.cache
 C:\Users\MSI DAT\OneDrive\Máy tính\DotNet8_ecommerce\Ecommerce\obj\Debug\net8.0\Ecommerce.RazorAssemblyInfo.cs
 C:\Users\MSI DAT\OneDrive\Máy tính\DotNet8_ecommerce\Ecommerce\obj\Debug\net8.0\Ecommerce.sourcelink.json
+E:\LapTrinh.Net\DotNet8_ecommerce\Ecommerce\obj\Debug\net8.0\Ecommerce.csproj.AssemblyReference.cache
+E:\LapTrinh.Net\DotNet8_ecommerce\Ecommerce\obj\Debug\net8.0\Ecommerce.GeneratedMSBuildEditorConfig.editorconfig
+E:\LapTrinh.Net\DotNet8_ecommerce\Ecommerce\obj\Debug\net8.0\Ecommerce.AssemblyInfoInputs.cache
+E:\LapTrinh.Net\DotNet8_ecommerce\Ecommerce\obj\Debug\net8.0\Ecommerce.AssemblyInfo.cs
+E:\LapTrinh.Net\DotNet8_ecommerce\Ecommerce\obj\Debug\net8.0\Ecommerce.csproj.CoreCompileInputs.cache
+E:\LapTrinh.Net\DotNet8_ecommerce\Ecommerce\obj\Debug\net8.0\Ecommerce.MvcApplicationPartsAssemblyInfo.cache
+E:\LapTrinh.Net\DotNet8_ecommerce\Ecommerce\obj\Debug\net8.0\Ecommerce.RazorAssemblyInfo.cache
+E:\LapTrinh.Net\DotNet8_ecommerce\Ecommerce\obj\Debug\net8.0\Ecommerce.RazorAssemblyInfo.cs
+E:\LapTrinh.Net\DotNet8_ecommerce\Ecommerce\obj\Debug\net8.0\Ecommerce.sourcelink.json
