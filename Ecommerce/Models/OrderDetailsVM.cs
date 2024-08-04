@@ -12,7 +12,7 @@
 
         public decimal Price { get; set; }
 
-        public OrderVM? Order { get; set; }
+        // public OrderVM? Order { get; set; }
         public ProductVM? Product { get; set; }
     }
 }

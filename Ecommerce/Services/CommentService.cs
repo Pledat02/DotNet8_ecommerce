@@ -1,6 +1,5 @@
 using Ecommerce.Data;
 using Ecommerce.Models;
-using Ecommerce.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -33,7 +32,7 @@ namespace Ecommerce.Services
                 new CommentVM
                 {
                     IdComment = c.id_comment,
-                    IdUser = c.id_user,
+                    // IdUser = c.id_user,
                     Product = new ProductVM
                     {
                         IdProduct = c.Product.id_product,
@@ -57,7 +56,7 @@ namespace Ecommerce.Services
                 .Select(c => new CommentVM
                 {
                   IdComment = c.id_comment,
-                    IdUser = c.id_user,
+                    // IdUser = c.id_user,
                     Product = new ProductVM
                     {
                         IdProduct = c.Product.id_product,
@@ -82,7 +81,7 @@ namespace Ecommerce.Services
             return new CommentVM
             {
                 IdComment = entity.id_comment,
-                IdUser = entity.IdUser,
+                // IdUser = entity.IdUser,
                Product = new ProductVM
                     {
                         IdProduct = entity.Product.id_product,
@@ -103,5 +102,9 @@ namespace Ecommerce.Services
             _dbContext.Comments.Update(entity);
             await _dbContext.SaveChangesAsync();
         }
+    }
+
+    public class Iservice<T1, T2>
+    {
     }
 }
