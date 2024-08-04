@@ -4111,11 +4111,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\ledat\\Ecommerce\\Ecommerce.csproj",
+      "projectUniqueName": "D:\\ledatfinal\\Ecommerce\\Ecommerce.csproj",
       "projectName": "Ecommerce",
-      "projectPath": "D:\\ledat\\Ecommerce\\Ecommerce.csproj",
+      "projectPath": "D:\\ledatfinal\\Ecommerce\\Ecommerce.csproj",
       "packagesPath": "C:\\Users\\84828\\.nuget\\packages\\",
-      "outputPath": "D:\\ledat\\Ecommerce\\obj\\",
+      "outputPath": "D:\\ledatfinal\\Ecommerce\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\84828\\AppData\\Roaming\\NuGet\\NuGet.Config",
