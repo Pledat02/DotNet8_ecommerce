@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "E:\\LapTrinh.Net\\DotNet8_ecommerce\\Ecommerce\\Ecommerce.csproj": {}
+    "C:\\Users\\ADMIN\\OneDrive - st.hcmuaf.edu.vn\\Desktop\\DotNet8_ecommerce\\Ecommerce\\Ecommerce.csproj": {}
   },
   "projects": {
-    "E:\\LapTrinh.Net\\DotNet8_ecommerce\\Ecommerce\\Ecommerce.csproj": {
+    "C:\\Users\\ADMIN\\OneDrive - st.hcmuaf.edu.vn\\Desktop\\DotNet8_ecommerce\\Ecommerce\\Ecommerce.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\LapTrinh.Net\\DotNet8_ecommerce\\Ecommerce\\Ecommerce.csproj",
+        "projectUniqueName": "C:\\Users\\ADMIN\\OneDrive - st.hcmuaf.edu.vn\\Desktop\\DotNet8_ecommerce\\Ecommerce\\Ecommerce.csproj",
         "projectName": "Ecommerce",
-        "projectPath": "E:\\LapTrinh.Net\\DotNet8_ecommerce\\Ecommerce\\Ecommerce.csproj",
-        "packagesPath": "C:\\Users\\trant\\.nuget\\packages\\",
-        "outputPath": "E:\\LapTrinh.Net\\DotNet8_ecommerce\\Ecommerce\\obj\\",
+        "projectPath": "C:\\Users\\ADMIN\\OneDrive - st.hcmuaf.edu.vn\\Desktop\\DotNet8_ecommerce\\Ecommerce\\Ecommerce.csproj",
+        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ADMIN\\OneDrive - st.hcmuaf.edu.vn\\Desktop\\DotNet8_ecommerce\\Ecommerce\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\trant\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,7 +22,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
