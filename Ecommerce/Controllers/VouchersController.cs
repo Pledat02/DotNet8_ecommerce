@@ -11,61 +11,61 @@ using Ecommerce.Models;
 
 namespace Ecommerce.Controllers
 {
-    public class UsersController : Controller
+    public class VouchersController : Controller
     {
-        private readonly UserService _service;
+        private readonly VoucherService _service;
 
-        public UsersController(UserService service)
+
+        public VouchersController(VoucherService service)
         {
             _service = service;
         }
 
-        // GET: Users
+        // GET: Vouchers
         public async Task<IActionResult> Index()
         {
-            var user = await _service.GetAllAsync();
-            return View(user);
+            var voucher = await _service.GetAllAsync();
+            return View(voucher);
         }
 
-        // GET: Users/Details/5
+        // GET: Vouchers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var user = await _service.GetOneAsync(id);
-            if (user == null)
+            var voucher = await _service.GetOneAsync(id);
+            if (voucher == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(voucher);
         }
 
-        // GET: Users/Create
+        // GET: Vouchers/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Users/Create
+        // POST: Vouchers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id_user,username,email,password,address,phone")] User user)
+        public async Task<IActionResult> Create([Bind("id_voucher,percent_discount,start_date,finish_date")] Voucher voucher)
         {
             if (ModelState.IsValid)
             {
-                await _service.InsertAsync(user);
+                await _service.InsertAsync(voucher);
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(voucher);
         }
 
-        // GET: Users/Edit/5
+        // GET: Vouchers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,23 @@ namespace Ecommerce.Controllers
                 return NotFound();
             }
 
-            var user = await _service.GetOneAsync(id);
-            if (user == null)
+            var voucher = await _service.GetOneAsync(id);
+            if (voucher == null)
             {
                 return NotFound();
             }
-            return View(user);
+
+            return View(voucher);
         }
 
-        // POST: Users/Edit/5
+        // POST: Vouchers/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id_user,username,email,password,address,phone")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("id_voucher,percent_discount,start_date,finish_date")] Voucher voucher)
         {
-            if (id != user.id_user)
+            if (id != voucher.id_voucher)
             {
                 return NotFound();
             }
@@ -97,11 +98,11 @@ namespace Ecommerce.Controllers
             {
                 try
                 {
-                    await _service.UpdateAsync(user);
+                    await _service.UpdateAsync(voucher);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UserExists(user.id_user))
+                    if (!VoucherExists(voucher.id_voucher))
                     {
                         return NotFound();
                     }
@@ -112,10 +113,10 @@ namespace Ecommerce.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(voucher);
         }
 
-        // GET: Users/Delete/5
+        // GET: Vouchers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,21 +124,20 @@ namespace Ecommerce.Controllers
                 return NotFound();
             }
 
-            var user = await _service.GetOneAsync(id);
-            if (user == null)
+            var voucher = await _service.GetOneAsync(id);
+            if (voucher == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(voucher);
         }
 
-        // POST: Users/Delete/5
+        // POST: Vouchers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-
             try
             {
                 await _service.DeleteAsync(id);
@@ -149,7 +149,7 @@ namespace Ecommerce.Controllers
             }
         }
 
-        private bool UserExists(int id)
+        private bool VoucherExists(int id)
         {
             return _service.IsExists(id);
         }
