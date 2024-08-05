@@ -192,7 +192,10 @@ namespace Ecommerce.Migrations
                 columns: table => new
                 {
                     id_voucher = table.Column<int>(type: "int", nullable: false),
-                    id_user = table.Column<int>(type: "int", nullable: false)
+                    id_user = table.Column<int>(type: "int", nullable: false),
+                    state = table.Column<int>(type: "int", nullable: false),
+                    id_order = table.Column<int>(type: "int", nullable: false)
+
                 },
                 constraints: table =>
                 {
@@ -209,6 +212,13 @@ namespace Ecommerce.Migrations
                         principalTable: "Vouchers",
                         principalColumn: "id_voucher",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Voucher_Users_Order_id",
+                        column: x => x.id_order,
+                        principalTable: "Orders",
+                        principalColumn: "id_order",
+                        onDelete: ReferentialAction.Restrict);
+
                 });
 
             migrationBuilder.CreateTable(

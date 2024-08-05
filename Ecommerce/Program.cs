@@ -13,7 +13,9 @@ builder.Services.AddDbContext<MyDBContext>(option =>
 builder.Services.AddScoped<CategoryService>();
 builder.Services.AddScoped<SupplierService>();
 builder.Services.AddScoped<ProductService>();
-
+builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<Voucher_User>();
+builder.Services.AddScoped<Voucher>();
 
 var app = builder.Build();
 
