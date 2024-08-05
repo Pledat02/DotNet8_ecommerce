@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Services
 {
+    /*
     public class OrderDetailsService : Iservice<OrderDetail, OrderDetailsVM>
     {
         private readonly MyDBContext _dbContext;
@@ -74,4 +75,5 @@ namespace Ecommerce.Services
             await _dbContext.SaveChangesAsync();
         }
     }
+    */
 }

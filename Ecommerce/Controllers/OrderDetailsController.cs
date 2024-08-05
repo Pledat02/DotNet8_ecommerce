@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.Controllers
 {
+    /*
     [Route("api/[controller]")]
     [ApiController]
     public class OrderDetailsController : ControllerBase
@@ -99,4 +100,5 @@ namespace Ecommerce.Controllers
             }
         }
     }
+    */
 }

@@ -1,12 +1,12 @@
 using Ecommerce.Data;
 using Ecommerce.Models;
-using Ecommerce.ViewModels;
+//using Ecommerce.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Ecommerce.Services
-{
+{/*
     public class CommentService : Iservice<Comment, CommentVM>
     {
         private readonly MyDBContext _dbContext;
@@ -104,4 +104,5 @@ namespace Ecommerce.Services
             await _dbContext.SaveChangesAsync();
         }
     }
+    */
 }
