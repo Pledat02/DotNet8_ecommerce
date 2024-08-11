@@ -6,11 +6,13 @@ namespace Ecommerce.Data
     {
         [Key]
         public int id_user { get; set; }
-        public string username { get; set; }
+        public string fullname { get; set; }
         public string email { get; set; }
-        public string password { get; set; }
         public string address { get; set; }
         public string phone { get; set; }
+
+        public int id_account { get; set; }
+        public Account Account { get; set; }
 
         public ICollection<Comment> Comments { get; set; }
         public ICollection<Order> Orders { get; set; }

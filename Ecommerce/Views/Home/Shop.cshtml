@@ -1,0 +1,129 @@
+﻿@model PaginatedList<Ecommerce.Data.Product>
+@using Ecommerce.PaginatedList
+@{
+    ViewData["Title"] = "Shop";
+}
+
+<!-- Single Page Header start -->
+<div class="container-fluid page-header py-5">
+    <h1 class="text-center text-white display-6">Shop</h1>
+    <ol class="breadcrumb justify-content-center mb-0">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+        <li class="breadcrumb-item active text-white">Shop</li>
+    </ol>
+</div>
+<!-- Single Page Header End -->
+<!-- Fruits Shop Start-->
+<div class="container-fluid fruite py-5">
+    <div class="container py-5">
+        <h1 class="mb-4">Fresh fruits shop</h1>
+        <div class="row g-4">
+            <div class="col-lg-12">
+                <div class="row g-4">
+                    <div class="col-xl-3">
+                        <div class="input-group w-100 mx-auto d-flex">
+                            <input type="search" id="search-input" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
+                            <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-6"></div>
+                    <div class="col-xl-3">
+                        <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
+                            <label for="sorting">Default Sorting:</label>
+                            <select id="sorting" name="sorting" class="border-0 form-select-sm bg-light me-3">
+                                <option value="">Nothing</option>
+                                <option value="popularity">Popularity</option>
+                                <option value="organic">Organic</option>
+                                <option value="fantastic">Fantastic</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+              
+                <div class="row g-4">
+                    <div class="col-lg-3">
+                        <div class="row g-4">
+                          @await Html.PartialAsync("_NavInfoProductPartial", Model)
+                        </div>
+                    </div>
+                    <div class="col-lg-9">
+                        <div class="row g-4 justify-content-center" id="product-list">
+                            @await Html.PartialAsync("_ProductListShop", Model)
+                        </div>
+
+                        <div class="col-12">
+                            <div class="pagination d-flex justify-content-center mt-5">
+                                @if (Model.HasPreviousPage)
+                                {
+                                    <a href="@Url.Action("Shop", new { pageIndex = Model.PageIndex - 1 })" class="rounded">&laquo;</a>
+                                }
+                                @for (int i = 1; i <= Model.TotalPages; i++)
+                                {
+                                    <a href="@Url.Action("Shop", new { pageIndex = i })" class="@(i == Model.PageIndex ? "active" : "") rounded">@i</a>
+                                    @if (i % 10 == 0 && i != Model.TotalPages)
+                                    {
+                                        <br />
+                                    }
+                                }
+                                @if (Model.HasNextPage)
+                                {
+                                    <a href="@Url.Action("Shop", new { pageIndex = Model.PageIndex + 1 })" class="rounded">&raquo;</a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fruits Shop End-->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var debounce = function (func, wait) {
+            var timeout;
+            return function () {
+                clearTimeout(timeout);
+                timeout = setTimeout(func, wait);
+            };
+        };
+
+        function updateProductList() {
+            var keyword = $('#search-input').val();
+            var category = $('input[name="Categories"]:checked').val();
+            var price = $('#price-range').val();
+
+            $.ajax({
+                url: '/Home/SearchShop',
+                type: 'GET',
+                data: {
+                    keyword: keyword,
+                    category: category,
+                    price: price
+                },
+                success: function (result) {
+                    $('#product-list').html(result);
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX Error:", status, error);
+                }
+            });
+        }
+
+        function updatePriceAmount() {
+            $('#price-amount').text($('#price-range').val());
+        }
+
+        $('#search-input').on('input', debounce(updateProductList, 300));
+        $('input[name="Categories"]').on('change', updateProductList);
+        $('#price-range').on('input', function () {
+            updatePriceAmount();
+            updateProductList();
+        });
+
+        updatePriceAmount();
+    });
+</script>

@@ -16,5 +16,11 @@ namespace Ecommerce.Data
 
         public int id_product { get; set; }
         public Product Product { get; set; }
+
+        public override string ToString()
+        {
+            return $"Comment [ID: {id_comment}, Text: {text}, Created Date: {created_date}, Rating: {rating}, User ID: {id_user}, Product ID: {id_product}]";
+        }
     }
+
 }

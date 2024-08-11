@@ -1,0 +1,32 @@
+﻿
+
+@{  
+    ViewData["Title"] = "Login Page";
+    Layout = "_LayoutLogin";
+}
+    <div class="wrapper">
+         <form asp-action="Login" asp-controller="Home" method="post">
+            <h2>Login</h2>
+            <div class="input-field">
+            <input type="text" name="username" required>
+            <label for="username" >Enter your username</label>
+            </div>
+            <div class="input-field">
+            <input type="password"  name="password" required>
+            <label for="password">Enter your password</label>
+            </div>
+            <div class="forget">
+                <label for="remember">
+                    <input type="checkbox" id="remember">
+                    <p>Remember me</p>
+                </label>
+                <a href="#">Forgot password?</a>
+            </div>
+        <div style="color:Red">@ViewBag.MessageLogin</div>
+        <br />
+            <button type="submit">Log In</button>
+            <div class="register">
+            <p>Don't have an account?  <a asp-action="Register" asp-controller="Home">Register</a></p>
+            </div>
+        </form>
+    </div>

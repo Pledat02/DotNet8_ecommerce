@@ -1,107 +1,48 @@
+﻿
 using Ecommerce.Data;
-using Ecommerce.Models;
-using Ecommerce.ViewModels;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Ecommerce.Services
 {
-    public class CommentService : Iservice<Comment, CommentVM>
+    public class CommentService : Iservice<Comment>
     {
         private readonly MyDBContext _dbContext;
 
-        public CommentService(MyDBContext dbContext)
+        public CommentService(MyDBContext context)
         {
-            _dbContext = dbContext;
+            _dbContext = context;
+
         }
 
-        public async Task DeleteAsync(int id)
+        public Task DeleteAsync(int? id)
         {
-            var comment = await _dbContext.Comments
-                .FirstOrDefaultAsync(c => c.id_comment == id);
-            if (comment != null)
-            {
-                _dbContext.Comments.Remove(comment);
-                await _dbContext.SaveChangesAsync();
-            }
+            throw new NotImplementedException();
         }
 
-        public async Task<List<CommentVM>> GetAllAsync()
+        public Task<List<Comment>> GetAllAsync()
         {
-            var list = await _dbContext.Comments.Select(c =>
-                new CommentVM
-                {
-                    IdComment = c.id_comment,
-                    IdUser = c.id_user,
-                    Product = new ProductVM
-                    {
-                        IdProduct = c.Product.id_product,
-                        Name = c.Product.name,
-                        UrlImage = c.Product.url_image,
-                        Price = c.Product.price,
-                        Description = c.Product.description,
-                        QuantityInStock = c.Product.quantity_in_stock
-                    },
-                    CreatedDate = c.created_date,
-                    Text = c.text,
-                    Rating = c.rating
-                }).ToListAsync();
-            return list;
+            throw new NotImplementedException();
         }
 
-        public async Task<CommentVM> GetOneAsync(int id)
+        public async Task<Comment> GetOneAsync(int? id)
         {
-            var comment = await _dbContext.Comments
-                .Where(c => c.id_comment == id)
-                .Select(c => new CommentVM
-                {
-                  IdComment = c.id_comment,
-                    IdUser = c.id_user,
-                    Product = new ProductVM
-                    {
-                        IdProduct = c.Product.id_product,
-                        Name = c.Product.name,
-                        UrlImage = c.Product.url_image,
-                        Price = c.Product.price,
-                        Description = c.Product.description,
-                        QuantityInStock = c.Product.quantity_in_stock
-                    },
-                    CreatedDate = c.created_date,
-                    Text = c.text,
-                    Rating = c.rating
-                }).SingleOrDefaultAsync();
-            return comment;
+           return await _dbContext.Comments.FindAsync(id);
         }
 
-        public async Task<CommentVM> InsertAsync(Comment entity)
+        public async Task<Comment> InsertAsync(Comment entity)
         {
             _dbContext.Comments.Add(entity);
             await _dbContext.SaveChangesAsync();
-
-            return new CommentVM
-            {
-                IdComment = entity.id_comment,
-                IdUser = entity.IdUser,
-               Product = new ProductVM
-                    {
-                        IdProduct = entity.Product.id_product,
-                        Name = entity.Product.name,
-                        UrlImage = entity.Product.url_image,
-                        Price = entity.Product.price,
-                        Description = entity.Product.description,
-                        QuantityInStock = entity.Product.quantity_in_stock
-                    },
-                CreatedDate = entity.created_date,
-                Text = entity.text,
-                Rating = entity.rating
-            };
+            return await GetOneAsync(entity.id_comment);
         }
 
-        public async Task UpdateAsync(Comment entity)
+        public bool IsExists(int id)
         {
-            _dbContext.Comments.Update(entity);
-            await _dbContext.SaveChangesAsync();
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateAsync(Comment entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,0 +1,35 @@
+﻿@model PaginatedList<Ecommerce.Data.Product>
+@using Ecommerce.PaginatedList
+@foreach (var item in Model)
+{
+
+    <div class="col-md-6 col-lg-6 col-xl-4">
+
+        <div class="rounded position-relative fruite-item">
+            <a asp-action="Details" asp-controller="Products" asp-route-id="@item.id_product">
+                <div class="fruite-img">
+                    <img src="~/@item.url_image" class="img-fluid w-100 h-120 rounded-top" alt="">
+                </div>
+            </a>
+
+            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">@item.Category.name</div>
+            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                <h4>@item.name</h4>
+                <p>@item.description</p>
+                <div class="d-flex justify-content-between flex-lg-wrap">
+                    <p class="text-dark fs-5 fw-bold mb-0">$@item.price / kg     </p>
+                    <!-- Form để thêm sản phẩm vào giỏ hàng -->
+                    <form asp-action="AddToCart" asp-controller="Cart" method="post">
+                        <input type="hidden" name="id_product" value="@item.id_product" />
+                        <input type="hidden" name="quantity" value="1" />
+                        <button type="submit" class="btn border border-secondary rounded-pill px-3 text-primary">
+                            <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+}

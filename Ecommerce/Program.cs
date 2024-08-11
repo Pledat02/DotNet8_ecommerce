@@ -1,31 +1,62 @@
-using Ecommerce.Data;
+﻿using Ecommerce.Data;
 using Ecommerce.Services;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Ecommerce.Helper;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
 builder.Services.AddDbContext<MyDBContext>(option =>
 {
     option.UseSqlServer(builder.Configuration.GetConnectionString("Ecommerce"));
 });
+
+// Config session
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromSeconds(15);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
+// Configure cookie authentication
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Home/Login";
+        options.AccessDeniedPath = "/AccessDenied";
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(60); // Set cookie expiration time
+    });
+
+// Add application services
 builder.Services.AddScoped<CategoryService>();
 builder.Services.AddScoped<SupplierService>();
 builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<HomeService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<Voucher_User>();
 builder.Services.AddScoped<Voucher>();
+builder.Services.AddScoped<ICartService, CartService>();
 
-var app = builder.Build();
+builder.Services.AddHttpContextAccessor();
 
-// Configure the HTTP request pipeline.
+// Register custom services
+builder.Services.AddHostedService<CartCleanupService>();
+
+var app = builder.Build(); // Ensure this is only called once
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
 // Apply migrations automatically
 using (var scope = app.Services.CreateScope())
 {
@@ -42,17 +73,30 @@ using (var scope = app.Services.CreateScope())
         Console.WriteLine(ex.Message);
     }
 }
-
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseRouting();
+// Session middleware
+app.UseSession();
 
+// Authentication and Authorization middleware
+app.UseAuthentication();
 app.UseAuthorization();
 
+// Routing
+app.UseRouting();
+
+// Map routes
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.Run();
+// Configure JSON settings globally
+JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+{
+    Formatting = Newtonsoft.Json.Formatting.Indented,
+    ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+};
+
+
+app.Run(); // Ensure this is called only once
