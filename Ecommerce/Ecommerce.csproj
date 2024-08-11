@@ -5,10 +5,29 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <ContentRoot>\\RemoteMachineName\C$\Users\MSI DAT\source\repos\DotNet8_ecommerce\Ecommerce\wwwroot</ContentRoot>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Remove="Views\Products\_ProductListPartial.cshtml" />
+  </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AspNetCore.Authentication.Cookies.Owin" Version="1.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.7" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Products\_ProductListPartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Products\_ProductListPartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 </Project>

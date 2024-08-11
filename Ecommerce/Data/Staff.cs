@@ -11,9 +11,9 @@ namespace Ecommerce.Data
         public string position { get; set; }
         public string sex { get; set; }
         public string email { get; set; }
+        public int id_account { get; set; }
+        public Account Account { get; set; }
 
-        public string username { get; set; }
-        public string password { get; set; }
 
         public ICollection<Order> Orders { get; set; }
         public ICollection<StaffRole> StaffRoles { get; set; }
@@ -23,5 +23,6 @@ namespace Ecommerce.Data
             Orders = new List<Order>();
             StaffRoles = new List<StaffRole>();
         }
+       
     }
 }

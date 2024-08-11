@@ -27,7 +27,11 @@ namespace Ecommerce.Services
                 throw new KeyNotFoundException("User not found.");
             }
         }
-
+        public User GetOneByIdAccount(int? id)
+        {
+            var User = _dbContext.Users.FirstOrDefault(s => s.id_account == id);
+            return User;
+        }
         public async Task<List<User>> GetAllAsync()
         {
             return await _dbContext.Users              

@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ADMIN\\OneDrive - st.hcmuaf.edu.vn\\Desktop\\DotNet8_ecommerce\\Ecommerce\\Ecommerce.csproj": {}
+    "C:\\Users\\MSI DAT\\source\\repos\\DotNet8_ecommerce\\Ecommerce\\Ecommerce.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ADMIN\\OneDrive - st.hcmuaf.edu.vn\\Desktop\\DotNet8_ecommerce\\Ecommerce\\Ecommerce.csproj": {
+    "C:\\Users\\MSI DAT\\source\\repos\\DotNet8_ecommerce\\Ecommerce\\Ecommerce.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ADMIN\\OneDrive - st.hcmuaf.edu.vn\\Desktop\\DotNet8_ecommerce\\Ecommerce\\Ecommerce.csproj",
+        "projectUniqueName": "C:\\Users\\MSI DAT\\source\\repos\\DotNet8_ecommerce\\Ecommerce\\Ecommerce.csproj",
         "projectName": "Ecommerce",
-        "projectPath": "C:\\Users\\ADMIN\\OneDrive - st.hcmuaf.edu.vn\\Desktop\\DotNet8_ecommerce\\Ecommerce\\Ecommerce.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ADMIN\\OneDrive - st.hcmuaf.edu.vn\\Desktop\\DotNet8_ecommerce\\Ecommerce\\obj\\",
+        "projectPath": "C:\\Users\\MSI DAT\\source\\repos\\DotNet8_ecommerce\\Ecommerce\\Ecommerce.csproj",
+        "packagesPath": "C:\\Users\\MSI DAT\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\MSI DAT\\source\\repos\\DotNet8_ecommerce\\Ecommerce\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\MSI DAT\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -45,6 +50,18 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "AspNetCore.Authentication.Cookies.Owin": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.Cookies": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.7, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.7, )"
@@ -56,6 +73,10 @@
             "Microsoft.EntityFrameworkCore.Tools": {
               "target": "Package",
               "version": "[8.0.7, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
             }
           },
           "imports": [
@@ -77,7 +98,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.302/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

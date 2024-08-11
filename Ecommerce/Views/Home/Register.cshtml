@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Register Page";
+    Layout = "_LayoutLogin";
+}
+<div class="wrapper">
+    <form asp-action ="Register" asp-controller="Home" method="post">
+        <h2>Register</h2>
+        <div class="input-field">
+            <input type="text" name="username" required>
+            <label>Enter your username</label>
+        </div>
+        <div class="input-field">
+            <input type="password" name="password" required>
+            <label>Enter your password</label>
+        </div>
+        <div class="input-field">
+            <input type="text" name="fullname" required>
+            <label>Enter your FullName</label>
+        </div>
+        <div class="input-field">
+            <input type="email" name="email" required>
+            <label>Enter your email</label>
+        </div>
+        <div class="input-field">
+            <input type="text" name="address" required>
+            <label>Enter your address</label>
+        </div>
+        <div class="input-field">
+            <input type="text" name="phone" required>
+            <label>Enter your phone</label>
+        </div>
+        <div style="color:Red">@ViewBag.MessageRegister</div>
+        <br />
+        <button type="submit">Register</button>
+        <div class="register">
+            <p>Do you have an account? <a asp-action="Login" asp-controller="Home">Login</a></p>
+        </div>
+    </form>
+</div>
