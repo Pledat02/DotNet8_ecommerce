@@ -53,16 +53,52 @@ namespace Ecommerce.Migrations
                     b.Property<int>("id_order")
                         .HasColumnType("int");
 
+                    b.Property<string>("CountryCode")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<string>("PostalCode")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("address")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
                     b.Property<decimal>("amount")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("city")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
                     b.Property<DateTime>("date")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("email")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("firstname")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("lastname")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("payment_method")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("shipping")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("id_order");
 
@@ -140,27 +176,11 @@ namespace Ecommerce.Migrations
                     b.Property<int?>("Userid_user")
                         .HasColumnType("int");
 
-                    b.Property<string>("description")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<int>("id_user")
+                    b.Property<int>("id_voucher_user")
                         .HasColumnType("int");
-
-                    b.Property<int>("id_voucher")
-                        .HasColumnType("int");
-
-                    b.Property<string>("name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("order_time")
                         .HasColumnType("datetime2");
-
-                    b.Property<decimal>("price")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("status")
                         .IsRequired()
@@ -173,9 +193,6 @@ namespace Ecommerce.Migrations
 
                     b.HasIndex("Userid_user");
 
-                    b.HasIndex("id_voucher", "id_user")
-                        .IsUnique();
-
                     b.ToTable("Orders", (string)null);
                 });
 
@@ -186,9 +203,6 @@ namespace Ecommerce.Migrations
 
                     b.Property<int>("id_product")
                         .HasColumnType("int");
-
-                    b.Property<decimal>("price")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("quantity")
                         .HasColumnType("int");
@@ -422,21 +436,33 @@ namespace Ecommerce.Migrations
 
             modelBuilder.Entity("Ecommerce.Data.Voucher_User", b =>
                 {
-                    b.Property<int>("id_voucher")
+                    b.Property<int>("id_voucher_User")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_voucher_User"));
+
+                    b.Property<int?>("id_order")
                         .HasColumnType("int");
 
                     b.Property<int?>("id_user")
                         .HasColumnType("int");
 
-                    b.Property<int?>("id_order")
+                    b.Property<int?>("id_voucher")
                         .HasColumnType("int");
 
                     b.Property<int>("state")
                         .HasColumnType("int");
 
-                    b.HasKey("id_voucher", "id_user");
+                    b.HasKey("id_voucher_User");
+
+                    b.HasIndex("id_order")
+                        .IsUnique()
+                        .HasFilter("[id_order] IS NOT NULL");
 
                     b.HasIndex("id_user");
+
+                    b.HasIndex("id_voucher");
 
                     b.ToTable("Voucher_Users", (string)null);
                 });
@@ -446,7 +472,7 @@ namespace Ecommerce.Migrations
                     b.HasOne("Ecommerce.Data.Order", "Order")
                         .WithOne("Bill")
                         .HasForeignKey("Ecommerce.Data.Bill", "id_order")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Order");
@@ -480,14 +506,6 @@ namespace Ecommerce.Migrations
                     b.HasOne("Ecommerce.Data.User", null)
                         .WithMany("Orders")
                         .HasForeignKey("Userid_user");
-
-                    b.HasOne("Ecommerce.Data.Voucher_User", "Voucher_User")
-                        .WithOne("Order")
-                        .HasForeignKey("Ecommerce.Data.Order", "id_voucher", "id_user")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Voucher_User");
                 });
 
             modelBuilder.Entity("Ecommerce.Data.OrderDetail", b =>
@@ -571,17 +589,22 @@ namespace Ecommerce.Migrations
 
             modelBuilder.Entity("Ecommerce.Data.Voucher_User", b =>
                 {
+                    b.HasOne("Ecommerce.Data.Order", "Order")
+                        .WithOne("Voucher_User")
+                        .HasForeignKey("Ecommerce.Data.Voucher_User", "id_order")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Ecommerce.Data.User", "User")
                         .WithMany("Voucher_Users")
                         .HasForeignKey("id_user")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Ecommerce.Data.Voucher", "Voucher")
                         .WithMany("Voucher_Users")
                         .HasForeignKey("id_voucher")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Order");
 
                     b.Navigation("User");
 
@@ -608,6 +631,9 @@ namespace Ecommerce.Migrations
                         .IsRequired();
 
                     b.Navigation("OrderDetails");
+
+                    b.Navigation("Voucher_User")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Ecommerce.Data.Product", b =>
@@ -646,12 +672,6 @@ namespace Ecommerce.Migrations
             modelBuilder.Entity("Ecommerce.Data.Voucher", b =>
                 {
                     b.Navigation("Voucher_Users");
-                });
-
-            modelBuilder.Entity("Ecommerce.Data.Voucher_User", b =>
-                {
-                    b.Navigation("Order")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

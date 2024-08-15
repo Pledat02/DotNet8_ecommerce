@@ -1,0 +1,64 @@
+﻿
+@model Ecommerce.Data.Voucher
+
+<div>
+    <h4>Voucher</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2" style="width:150px">
+            Discount
+        </dt>
+        <dd class="col-sm-10" style="width:300px ">
+            @Html.DisplayFor(model => model.percent_discount)
+        </dd>
+        <dt class="col-sm-2" style="width:150px">
+           Start date
+        </dt>
+        <dd class="col-sm-10" style="width:300px ">
+            @Html.DisplayFor(model => model.start_date)
+        </dd>
+        <dt class="col-sm-2" style="width:150px">
+            Finish date
+        </dt>
+        <dd class="col-sm-10" style="width:300px ">
+            @Html.DisplayFor(model => model.finish_date)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete" method="post" id="deleteVoucherForm">
+        @Html.AntiForgeryToken()
+        <div class="modal-footer">
+            <input type="hidden" asp-for="id_voucher" />
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                Close
+            </button>
+            <button type="submit" value="Delete" class="btn btn-danger" >Delete</button>
+        </div>
+       
+
+
+       
+    </form>
+</div>
+<script>
+    $(document).on('submit', '#deleteVoucherForm', function (e) {
+        e.preventDefault();
+
+        var form = $(this);
+        $.ajax({
+            url: form.attr('action'),
+            method: form.attr('method'),
+            data: form.serialize(),
+            success: function (response) {
+                if (response.success) {
+                    $('#deleteVoucherModal').modal('hide');
+                    var voucherId = form.find('input[name="id_voucher"]').val();
+                    $('#voucherid_' + voucherId).remove();
+                }
+            },
+            error: function (error) {
+                console.error('Error:', error);
+            }
+        });
+    });
+</script>

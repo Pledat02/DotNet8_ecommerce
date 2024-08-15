@@ -77,5 +77,42 @@ namespace Ecommerce.Services
         {
             return _dbContext.Orders.Any(o => o.id_order == id);
         }
+        public async Task<List<Voucher>> GetVouchersAsync()
+        {
+            return await _dbContext.Vouchers.ToListAsync();
+
+        }
+
+        public async Task<List<Voucher_User>> GetVoucher_UserAsync()
+        {
+            return await _dbContext.Voucher_Users.ToListAsync();
+
+        }
+        public async Task<List<Voucher_User>> GetVoucher_UserAsync(int id)
+        {
+            return await _dbContext.Voucher_Users
+         .Where(v => v.id_user == id)
+         .ToListAsync();
+            ;
+        }
+
+        public async Task<List<User>> GetUserAsync2(int id)
+        {
+            return await _dbContext.Users
+         .Where(u => u.Voucher_Users.Any(v => v.id_voucher == id))
+        .ToListAsync();
+
+        }
+        public async Task<List<User>> GetUsersAsync()
+        {
+            return await _dbContext.Users
+                .ToListAsync();
+        }
+        public async Task<List<Voucher_User>> GetVoucherWithoutOrdersAsync()
+        {
+            return await _dbContext.Voucher_Users
+                .Where(a => a.Order == null)
+                .ToListAsync();
+        }
     }
 }

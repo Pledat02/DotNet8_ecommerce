@@ -43,6 +43,7 @@ namespace Ecommerce.Controllers
                         new Claim(ClaimTypes.Email, account.User.email),
                         new Claim(ClaimTypes.Name, account.User.fullname),
                         new Claim("Phone", account.User.phone),
+                        new Claim("Address", account.User.address),
                         new Claim(ClaimTypes.Role, "Customer"),
                         new Claim("IDUser", account.User.id_user+"")
                     };

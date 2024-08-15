@@ -34,7 +34,7 @@ namespace Ecommerce.Services
         }
         public async Task<List<User>> GetAllAsync()
         {
-            return await _dbContext.Users              
+            return await _dbContext.Users
                 .ToListAsync();
         }
 
@@ -69,13 +69,20 @@ namespace Ecommerce.Services
             return _dbContext.Users.Any(e => e.id_user == id);
         }
 
+
+
         // Lấy danh sách tất cả các danh mục
-        public async Task<List<Category>> GetCategoriesAsync()
+        public async Task<List<Account>> GetAccountAsync()
         {
-            return await _dbContext.Categories
+            return await _dbContext.Accounts
+                .ToListAsync();
+        }
+        public async Task<List<Account>> GetAccountsWithoutUsersAsync()
+        {
+            return await _dbContext.Accounts
+                .Where(a => a.User == null)
                 .ToListAsync();
         }
 
-        
     }
 }

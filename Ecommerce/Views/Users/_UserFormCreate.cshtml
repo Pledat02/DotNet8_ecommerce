@@ -1,0 +1,46 @@
+﻿
+@model Ecommerce.Data.User
+<div class="row">
+    <div class="col-md-4" style="width:100%; padding: 20px;">
+        <form asp-action="Create" method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="fullname" class="control-label">Tên đầy đủ</label>
+                <input asp-for="fullname" class="form-control" required/>
+                <span asp-validation-for="fullname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="email" class="control-label">Email</label>
+                <input asp-for="email" class="form-control" required/>
+                <span asp-validation-for="email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="address" class="control-label">Địa chỉ</label>
+                <input asp-for="address" class="form-control" required/>
+                <span asp-validation-for="address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="phone" class="control-label">SĐT</label>
+                <input asp-for="phone" class="form-control" required />
+                <span asp-validation-for="phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="id_account" class="control-label">Account</label>
+                <select asp-for="id_account" class="form-control" asp-items="ViewBag.Accounts"></select>
+                <span asp-validation-for="id_account" class="text-danger"></span> 
+            </div>
+            <div class="modal-footer" style="display:flex">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="submit" value="Create" class="btn btn-primary">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="~/lib/jquery/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>

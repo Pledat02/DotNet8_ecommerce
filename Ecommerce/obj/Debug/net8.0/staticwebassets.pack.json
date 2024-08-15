@@ -9,6 +9,10 @@
       "PackagePath": "staticwebassets\\404.html"
     },
     {
+      "Id": "C:\\Users\\MSI DAT\\source\\repos\\DotNet8_ecommerce\\Ecommerce\\wwwroot\\admin.html",
+      "PackagePath": "staticwebassets\\admin.html"
+    },
+    {
       "Id": "C:\\Users\\MSI DAT\\source\\repos\\DotNet8_ecommerce\\Ecommerce\\wwwroot\\cart.html",
       "PackagePath": "staticwebassets\\cart.html"
     },

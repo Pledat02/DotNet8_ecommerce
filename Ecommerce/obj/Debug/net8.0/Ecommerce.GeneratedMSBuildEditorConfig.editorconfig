@@ -18,28 +18,16 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\MSI DAT\source\repos\DotNet8_ecommerce\Ecommerce
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Admin/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Cart/Chackout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FydFxDaGFja291dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Cart/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FydFxJbmRleC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Categories/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmllc1xDcmVhdGUuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Categories/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmllc1xEZWxldGUuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Categories/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmllc1xEZXRhaWxzLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Categories/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmllc1xFZGl0LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Categories/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmllc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Home/Index.cshtml]
@@ -60,6 +48,26 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Home/Shop.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTaG9wLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Orders/_OrderDelete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJzXF9PcmRlckRlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Orders/_OrderFormCreate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJzXF9PcmRlckZvcm1DcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Orders/_OrderFormEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJzXF9PcmRlckZvcm1FZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Orders/_OrderList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJzXF9PcmRlckxpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Payment/VnpayReturn.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudFxWbnBheVJldHVybi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Products/Create.cshtml]
@@ -110,64 +118,36 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Suppliers/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VwcGxpZXJzXENyZWF0ZS5jc2h0bWw=
+[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Users/_UserDelete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcX1VzZXJEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Suppliers/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VwcGxpZXJzXERlbGV0ZS5jc2h0bWw=
+[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Users/_UserFormCreate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcX1VzZXJGb3JtQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Suppliers/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VwcGxpZXJzXERldGFpbHMuY3NodG1s
+[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Users/_UserFormEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcX1VzZXJGb3JtRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Suppliers/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VwcGxpZXJzXEVkaXQuY3NodG1s
+[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Users/_UserList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcX1VzZXJMaXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Suppliers/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VwcGxpZXJzXEluZGV4LmNzaHRtbA==
+[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Vouchers/_VoucherDeleteInfor.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVm91Y2hlcnNcX1ZvdWNoZXJEZWxldGVJbmZvci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Users/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcQ3JlYXRlLmNzaHRtbA==
+[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Vouchers/_VoucherFormCreate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVm91Y2hlcnNcX1ZvdWNoZXJGb3JtQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Users/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcRGVsZXRlLmNzaHRtbA==
+[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Vouchers/_VoucherFormEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVm91Y2hlcnNcX1ZvdWNoZXJGb3JtRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Users/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcRGV0YWlscy5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Users/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcRWRpdC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Users/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcSW5kZXguY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Vouchers/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVm91Y2hlcnNcQ3JlYXRlLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Vouchers/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVm91Y2hlcnNcRGVsZXRlLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Vouchers/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVm91Y2hlcnNcRGV0YWlscy5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Vouchers/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVm91Y2hlcnNcRWRpdC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Vouchers/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVm91Y2hlcnNcSW5kZXguY3NodG1s
+[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Vouchers/_VoucherList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVm91Y2hlcnNcX1ZvdWNoZXJMaXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Voucher_User/Create.cshtml]

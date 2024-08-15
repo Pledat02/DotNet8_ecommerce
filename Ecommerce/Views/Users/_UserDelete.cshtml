@@ -1,0 +1,45 @@
+﻿
+@model Ecommerce.Data.User
+<div>
+    <h4>Khách hàng</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2" style="width:150px">
+            Tên đầy đủ
+        </dt>
+        <dd class="col-sm-10" style="width:300px">
+            @Html.DisplayFor(model => model.fullname)
+        </dd>
+        <dt class="col-sm-2" style="width:150px">
+            Email
+        </dt>
+        <dd class="col-sm-10" style="width:300px">
+            @Html.DisplayFor(model => model.email)
+        </dd>
+       
+        <dt class="col-sm-2" style="width:150px">
+           Địa chỉ
+        </dt>
+        <dd class="col-sm-10" style="width:300px">
+            @Html.DisplayFor(model => model.address)
+        </dd>
+        <dt class="col-sm-2" style="width:150px">
+            SĐT
+        </dt>
+        <dd class="col-sm-10" style="width:300px">
+            @Html.DisplayFor(model => model.phone)
+        </dd>
+       
+    </dl>
+    
+    <form asp-action="Delete" method="post">
+        @Html.AntiForgeryToken()
+        <div class="modal-footer">
+            <input type="hidden" asp-for="id_user" />
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                Close
+            </button>
+            <button type="submit" value="Delete" class="btn btn-danger">Delete</button>
+        </div>
+    </form>
+</div>

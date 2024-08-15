@@ -10,7 +10,6 @@ namespace Ecommerce.Data
 
         public decimal total_price { get; set; }
         public int quantity { get; set; }
-        public decimal price { get; set; }
 
         public Order Order { get; set; }
         public Product Product { get; set; }
