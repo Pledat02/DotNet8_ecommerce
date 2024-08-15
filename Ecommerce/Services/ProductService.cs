@@ -195,7 +195,7 @@ namespace Ecommerce.Services
                                   detail => detail.id_order,    // Key from OrderDetails table
                                   order => order.id_order,      // Key from Orders table
                                   (detail, order) => new { detail, order }) // Result selector
-                            .Where(od => od.order.id_user == id_user && od.detail.id_product == id_product)
+                            .Where(od => od.order.Voucher_User.id_user == id_user && od.detail.id_product == id_product)
                             .AnyAsync();
             return isSold;
         }
@@ -210,6 +210,10 @@ namespace Ecommerce.Services
         public async Task<Comment> PostComment(Comment comment)
         {
            return  await new CommentService(_dbContext).InsertAsync(comment);
+        }
+        public async Task<Bill> Chackout(Bill bill)
+        {
+            return await new BillService(_dbContext).InsertAsync(bill);
         }
     }
 

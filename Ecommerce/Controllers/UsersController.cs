@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Ecommerce.Data;
 using Ecommerce.Services;
 using Ecommerce.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Ecommerce.Controllers
 {
@@ -24,7 +25,7 @@ namespace Ecommerce.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await _service.GetAllAsync();
-            return View(user);
+            return PartialView("_UserList", user);
         }
 
         // GET: Users/Details/5
@@ -45,9 +46,11 @@ namespace Ecommerce.Controllers
         }
 
         // GET: Users/Create
-        public IActionResult Create()
+        [HttpGet]
+        public async Task<IActionResult> Create()
         {
-            return View();
+           await PopulateAccountsAsync();
+            return PartialView("_UserFormCreate");
         }
 
         // POST: Users/Create
@@ -55,14 +58,10 @@ namespace Ecommerce.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id_user,username,email,password,address,phone")] User user)
+        public async Task<IActionResult> Create([Bind("id_user,fullname,email, address,phone,id_account")] User user)
         {
-            if (ModelState.IsValid)
-            {
-                await _service.InsertAsync(user);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(user);
+            await _service.InsertAsync(user);
+            return Redirect("/admin.html");
         }
 
         // GET: Users/Edit/5
@@ -74,11 +73,14 @@ namespace Ecommerce.Controllers
             }
 
             var user = await _service.GetOneAsync(id);
+
             if (user == null)
             {
                 return NotFound();
             }
-            return View(user);
+            await PopulateAccountsAsync(user.id_account);
+
+            return PartialView("_UserFormEdit", user);
         }
 
         // POST: Users/Edit/5
@@ -86,33 +88,15 @@ namespace Ecommerce.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id_user,username,email,password,address,phone")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("id_user,fullname,email,address,phone,id_account")] User user)
         {
             if (id != user.id_user)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    await _service.UpdateAsync(user);
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserExists(user.id_user))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(user);
+            await _service.UpdateAsync(user);
+            return Redirect("/admin.html");
         }
 
         // GET: Users/Delete/5
@@ -129,7 +113,7 @@ namespace Ecommerce.Controllers
                 return NotFound();
             }
 
-            return View(user);
+            return PartialView("_UserDelete", user);
         }
 
         // POST: Users/Delete/5
@@ -141,7 +125,7 @@ namespace Ecommerce.Controllers
             try
             {
                 await _service.DeleteAsync(id);
-                return RedirectToAction(nameof(Index));
+                return Redirect("/admin.html");
             }
             catch (DbUpdateException e)
             {
@@ -153,5 +137,15 @@ namespace Ecommerce.Controllers
         {
             return _service.IsExists(id);
         }
+
+
+        private async Task PopulateAccountsAsync(int? selectedAccountId = null)
+        {
+            var accounts = await _service.GetAccountsWithoutUsersAsync();
+
+            ViewBag.Accounts = new SelectList(accounts, "id_account", "username", selectedAccountId);
+            
+        }
+
     }
 }

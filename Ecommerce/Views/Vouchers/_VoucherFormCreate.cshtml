@@ -1,0 +1,54 @@
+﻿@model Ecommerce.Data.Voucher
+
+<div class="row" style="width:100%; padding: 20px;">
+    <div class="col-md-4" style="width: 100%;">
+        <form asp-action="Create" method="post" id="createVoucherForm">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="percent_discount" class="control-label"></label>
+                <input asp-for="percent_discount" class="form-control" />
+                <span asp-validation-for="percent_discount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="start_date" class="control-label"></label>
+                <input asp-for="start_date" class="form-control" />
+                <span asp-validation-for="start_date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="finish_date" class="control-label"></label>
+                <input asp-for="finish_date" class="form-control" />
+                <span asp-validation-for="finish_date" class="text-danger"></span>
+            </div>
+            <div class="modal-footer" style="display:flex" >
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+           
+        </form>
+    </div>
+</div>
+<script>
+    $(document).on('submit', '#createVoucherForm', function (e) {
+        e.preventDefault();
+
+        var form = $(this);
+        $.ajax({
+            url: form.attr('action'),
+            method: form.attr('method'),
+            data: form.serialize(),
+            success: function (response) {
+                if (response.success) {
+                    $('#createVoucherModal').modal('hide');
+                       
+                }
+            },
+            error: function (error) {
+                console.error('Error:', error);
+            }
+        });
+    });
+</script>

@@ -3,5 +3,6 @@
     public class SettingKey
     {
         public static  string CART_KEY = "MYCART";
+        public static string Bill_KEY = "MYBILL";
     }
 }

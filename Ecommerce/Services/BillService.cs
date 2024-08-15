@@ -39,11 +39,22 @@ namespace Ecommerce.Services
                 throw new ArgumentNullException(nameof(bill), "Bill cannot be null.");
             }
 
-            _dbContext.Bills.Add(bill);
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                _dbContext.Bills.Add(bill);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it as needed
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                // Optionally rethrow or handle the exception
+                throw;
+            }
 
             return bill;
         }
+
 
         public async Task UpdateAsync(Bill bill)
         {

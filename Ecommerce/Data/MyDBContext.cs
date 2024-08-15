@@ -3,24 +3,24 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Data
     {
-        public class MyDBContext : DbContext
-        {
-            public MyDBContext(DbContextOptions options) : base(options) { }
+    public class MyDBContext : DbContext
+    {
+        public MyDBContext(DbContextOptions options) : base(options) { }
 
-            public DbSet<User> Users { get; set; }
-            public DbSet<Comment> Comments { get; set; }
-            public DbSet<Category> Categories { get; set; }
-            public DbSet<Product> Products { get; set; }
-            public DbSet<Supplier> Suppliers { get; set; }
-            public DbSet<Order> Orders { get; set; }
-            public DbSet<Bill> Bills { get; set; }
-            public DbSet<OrderDetail> OrderDetails { get; set; }
-            public DbSet<Voucher> Vouchers { get; set; }
-            public DbSet<Staff> Staffs { get; set; }
-            public DbSet<Role> Roles { get; set; }
-            public DbSet<StaffRole> StaffRoles { get; set; }
-            public DbSet<Voucher_User> Voucher_Users { get; set; }
-            public DbSet<Account> Accounts { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Bill> Bills { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<Voucher> Vouchers { get; set; }
+        public DbSet<Staff> Staffs { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<StaffRole> StaffRoles { get; set; }
+        public DbSet<Voucher_User> Voucher_Users { get; set; }
+        public DbSet<Account> Accounts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -43,6 +43,15 @@ namespace Ecommerce.Data
                 e.Property(b => b.date).IsRequired();
                 e.Property(b => b.amount).IsRequired().HasColumnType("decimal(18,2)");
 
+                e.Property(b => b.shipping).HasMaxLength(100);
+                e.Property(b => b.firstname).HasMaxLength(50);
+                e.Property(b => b.lastname).HasMaxLength(50);
+                e.Property(b => b.address).HasMaxLength(200);
+                e.Property(b => b.city).HasMaxLength(100);
+                e.Property(b => b.Phone).HasMaxLength(15);
+                e.Property(b => b.PostalCode).HasMaxLength(20);
+                e.Property(b => b.CountryCode).HasMaxLength(10);
+                e.Property(b => b.email).HasMaxLength(100);
                 e.HasOne(b => b.Order)
                  .WithOne(o => o.Bill)
                  .HasForeignKey<Bill>(b => b.id_order)
@@ -95,7 +104,7 @@ namespace Ecommerce.Data
                 e.HasKey(p => p.id_product);
                 e.Property(p => p.average_rate).IsRequired().HasDefaultValue(0);
                 e.Property(p => p.percent_discount).IsRequired()
-                  .HasColumnType("decimal(3,2)") 
+                  .HasColumnType("decimal(3,2)")
                   .HasDefaultValue(0);
                 e.Property(p => p.name).IsRequired().HasMaxLength(100);
                 e.Property(p => p.quantity_in_stock).IsRequired();
@@ -127,18 +136,21 @@ namespace Ecommerce.Data
             {
                 e.ToTable("Orders");
                 e.HasKey(o => o.id_order);
-                e.Property(o => o.name).IsRequired().HasMaxLength(100);
                 e.Property(o => o.order_time).IsRequired();
-                e.Property(o => o.description).HasMaxLength(500);
-                e.Property(o => o.price).IsRequired().HasColumnType("decimal(18,2)");
                 e.Property(o => o.status).IsRequired().HasMaxLength(50);
 
+                // Optional relationship with Voucher_User
                 e.HasOne(o => o.Voucher_User)
-                .WithOne(vu => vu.Order) // Assuming there's a navigation property in Voucher_User
-                 .HasForeignKey<Order>(o => new { o.id_voucher, o.id_user });
+                 .WithOne(vu => vu.Order) // Assuming Voucher_User has a collection of Orders
+                 .HasForeignKey<Order>(o => o.id_voucher_user)
+                 .OnDelete(DeleteBehavior.Restrict); // Or specify the behavior you need
+
+                e.HasOne(o => o.Bill)
+                 .WithOne(b => b.Order)
+                 .HasForeignKey<Bill>(b => b.id_order) // Assuming Bill has a foreign key to Order
+                 .OnDelete(DeleteBehavior.Restrict); // Or specify the behavior you need
             });
 
-           
 
             modelBuilder.Entity<OrderDetail>(e =>
             {
@@ -146,7 +158,6 @@ namespace Ecommerce.Data
                 e.HasKey(od => new { od.id_order, od.id_product });
                 e.Property(od => od.total_price).IsRequired().HasColumnType("decimal(18,2)");
                 e.Property(od => od.quantity).IsRequired();
-                e.Property(od => od.price).IsRequired().HasColumnType("decimal(18,2)");
 
                 e.HasOne(od => od.Order)
                  .WithMany(o => o.OrderDetails)
@@ -171,15 +182,24 @@ namespace Ecommerce.Data
             modelBuilder.Entity<Voucher_User>(e =>
             {
                 e.ToTable("Voucher_Users");
-                e.HasKey(vu => new { vu.id_voucher, vu.id_user });
+                e.HasKey(vu => vu.id_voucher_User);
+
+                e.Property(vu => vu.state).IsRequired();
 
                 e.HasOne(vu => vu.Voucher)
                  .WithMany(v => v.Voucher_Users)
-                 .HasForeignKey(vu => vu.id_voucher);
+                 .HasForeignKey(vu => vu.id_voucher)
+                 .OnDelete(DeleteBehavior.Restrict); 
 
                 e.HasOne(vu => vu.User)
                  .WithMany(u => u.Voucher_Users)
-                 .HasForeignKey(vu => vu.id_user);
+                 .HasForeignKey(vu => vu.id_user)
+                 .OnDelete(DeleteBehavior.Restrict); 
+
+                e.HasOne(vu => vu.Order)
+                 .WithOne(o => o.Voucher_User) 
+                 .HasForeignKey<Voucher_User>(vu => vu.id_order)
+                 .OnDelete(DeleteBehavior.Restrict); 
             });
 
             modelBuilder.Entity<Staff>(e =>
@@ -221,46 +241,6 @@ namespace Ecommerce.Data
             });
         }
 
-        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
 
-            // Gọi phương thức gốc để lưu thay đổi vào cơ sở dữ liệu
-            var result = await base.SaveChangesAsync(cancellationToken);
-
-            // Thực hiện hành động sau khi lưu thay đổi
-            await OnAfterSaveChangesAsync();
-
-            return result;
-        }
-
-        private async Task OnAfterSaveChangesAsync()
-        {
-            // Lấy danh sách các đánh giá mới hoặc bị thay đổi
-            var comments = ChangeTracker.Entries<Comment>()
-                .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified)
-                .Select(e => e.Entity)
-                .ToList();
-
-            // Lấy danh sách ID sản phẩm có đánh giá
-            var productIds = comments.Select(c => c.id_product).Distinct().ToList();
-
-            foreach (var productId in productIds)
-            {
-                // Tính toán giá trị trung bình của các đánh giá cho sản phẩm
-                var avgRate = await Comments
-                    .Where(c => c.id_product == productId)
-                    .AverageAsync(c => c.rating);
-
-                // Cập nhật giá trị average_rate của sản phẩm
-                var product = await Products.FindAsync(productId);
-                if (product != null)
-                {
-                    product.average_rate = (int) avgRate;
-                    Products.Update(product);
-                }
-            }
-
-            await base.SaveChangesAsync(); // Lưu các thay đổi đã cập nhật
-        }
     }
 }

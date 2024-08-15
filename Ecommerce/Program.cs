@@ -11,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// Add DbContext
 builder.Services.AddDbContext<MyDBContext>(option =>
 {
     option.UseSqlServer(builder.Configuration.GetConnectionString("Ecommerce"));
@@ -20,7 +21,7 @@ builder.Services.AddDbContext<MyDBContext>(option =>
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromSeconds(15);
+    options.IdleTimeout = TimeSpan.FromMinutes(5);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
@@ -31,25 +32,26 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     {
         options.LoginPath = "/Home/Login";
         options.AccessDeniedPath = "/AccessDenied";
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(60); // Set cookie expiration time
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
     });
 
 // Add application services
 builder.Services.AddScoped<CategoryService>();
 builder.Services.AddScoped<SupplierService>();
 builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<HomeService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<Voucher_User>();
 builder.Services.AddScoped<Voucher>();
-builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<VnPayLibrary>();
 
 builder.Services.AddHttpContextAccessor();
 
-// Register custom services
-builder.Services.AddHostedService<CartCleanupService>();
+// Add utility configuration
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); // Ensure IHttpContextAccessor is available
 
-var app = builder.Build(); // Ensure this is only called once
+var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
 {
@@ -73,20 +75,14 @@ using (var scope = app.Services.CreateScope())
         Console.WriteLine(ex.Message);
     }
 }
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
-// Session middleware
 app.UseSession();
-
-// Authentication and Authorization middleware
 app.UseAuthentication();
 app.UseAuthorization();
-
-// Routing
 app.UseRouting();
 
-// Map routes
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
@@ -97,6 +93,4 @@ JsonConvert.DefaultSettings = () => new JsonSerializerSettings
     Formatting = Newtonsoft.Json.Formatting.Indented,
     ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
 };
-
-
-app.Run(); // Ensure this is called only once
+app.Run();

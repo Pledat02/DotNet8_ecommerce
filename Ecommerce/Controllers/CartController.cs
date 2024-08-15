@@ -3,6 +3,8 @@ using Ecommerce.Models;
 using Microsoft.AspNetCore.Mvc;
 using Ecommerce.Helper;
 using Ecommerce.Services;
+using System.Security.Claims;
+using Azure.Core;
 namespace Ecommerce.Controllers
 {
     public class CartController : BaseController
@@ -22,6 +24,97 @@ namespace Ecommerce.Controllers
             ViewBag.Total = GetTotal();
             return View(Cart);
         }
+        public IActionResult Chackout()
+        {
+            ViewBag.Cart = Cart;
+            ViewBag.Total = GetTotal();
+
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            if (claimsIdentity != null && claimsIdentity.IsAuthenticated)
+            {
+                var email = claimsIdentity.FindFirst(ClaimTypes.Email)?.Value;
+                var fullname = claimsIdentity.FindFirst(ClaimTypes.Name)?.Value;
+                var phone = claimsIdentity.FindFirst("Phone")?.Value;
+                var address = claimsIdentity.FindFirst("Address")?.Value;
+
+                // Assuming fullname contains more than two parts (firstname, middlename, lastname)
+                string[] nameCpn = fullname?.Split(" ");
+                var firstname = nameCpn?.FirstOrDefault();
+                var lastname = nameCpn?.Length > 1 ? string.Join(" ", nameCpn.Skip(1)) : string.Empty;
+
+                BillingDetailViewModel bill = new BillingDetailViewModel
+                {
+                    email = email,
+                    firstname = firstname,
+                    lastname = lastname,
+                    address = address,
+                    Phone = phone,
+                    // You might want to add city, Country, PostalCode, etc. if available in claims
+                };
+
+                return View(bill);
+            }
+
+            return View(new BillingDetailViewModel{}); 
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Chackout([Bind("firstname,lastname,address,city,Country,Phone,PostalCode,email,shipping,amount,payment_method")] BillingDetailViewModel bill)
+        {
+            // Check if the model state is valid
+            if (!ModelState.IsValid)
+            {
+                return View(bill);
+            }
+
+            List<OrderDetail> list = new List<OrderDetail>();
+            foreach (var product in Cart)
+            {
+                list.Add(new OrderDetail
+                {
+                    id_product = product.id_product,
+                    quantity = product.quantity,
+                    total_price = Convert.ToDecimal(product.amount),
+                });
+            }
+
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            string? idUserClaim = null;
+            if (claimsIdentity != null && claimsIdentity.IsAuthenticated)
+            {
+                idUserClaim = claimsIdentity.FindFirst("IDUser")?.Value;
+            }
+            Order order = new Order
+            {
+                OrderDetails = list,
+                order_time = DateTime.Now,
+                status = "Đặt hàng thành công",
+            };
+
+            Bill billInsert = new Bill
+            {
+                Order = order,
+                address = bill.address,
+                amount = Convert.ToDecimal(bill.amount),
+                firstname = bill.firstname,
+                lastname = bill.lastname,
+                CountryCode = bill.Country,
+                PostalCode = bill.PostalCode,
+                email = bill.email,
+                Phone = bill.Phone,
+                city = bill.city,
+                payment_method = bill.payment_method,
+                shipping = bill.shipping,
+            };
+            //
+            HttpContext.Session.Set<Bill>(SettingKey.Bill_KEY, billInsert); 
+                //  await _service.Chackout(billInsert);
+
+            return RedirectToAction("SendToPaymen", "Payment");
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> AddToCart (int id_product, int quantity)
         {
@@ -140,5 +233,5 @@ namespace Ecommerce.Controllers
           return total;
         }
     }
-  
+
 }

@@ -25,7 +25,7 @@ namespace Ecommerce.Controllers
         public async Task<IActionResult> Index()
         {
             var voucher = await _service.GetAllAsync();
-            return View(voucher);
+            return PartialView("_VoucherList", voucher);
         }
 
         // GET: Vouchers/Details/5
@@ -45,9 +45,10 @@ namespace Ecommerce.Controllers
         }
 
         // GET: Vouchers/Create
-        public IActionResult Create()
+        [HttpGet]
+        public async Task<IActionResult> Create()
         {
-            return View();
+            return  PartialView("_VoucherFormCreate");
         }
 
         // POST: Vouchers/Create
@@ -55,14 +56,14 @@ namespace Ecommerce.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id_voucher,percent_discount,start_date,finish_date")] Voucher voucher)
+        public async Task<IActionResult> Create([Bind("percent_discount,start_date,finish_date")] Voucher voucher)
         {
             if (ModelState.IsValid)
             {
                 await _service.InsertAsync(voucher);
-                return RedirectToAction(nameof(Index));
+                return Json(new { success = true });
             }
-            return View(voucher);
+            return PartialView("_VoucherFormCreate");
         }
 
         // GET: Vouchers/Edit/5
@@ -79,7 +80,7 @@ namespace Ecommerce.Controllers
                 return NotFound();
             }
 
-            return View(voucher);
+            return PartialView("_VoucherFormEdit", voucher);
         }
 
         // POST: Vouchers/Edit/5
@@ -99,6 +100,7 @@ namespace Ecommerce.Controllers
                 try
                 {
                     await _service.UpdateAsync(voucher);
+                  return  Redirect("/admin.html");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -130,7 +132,7 @@ namespace Ecommerce.Controllers
                 return NotFound();
             }
 
-            return View(voucher);
+            return PartialView("_VoucherDeleteInfor", voucher);
         }
 
         // POST: Vouchers/Delete/5
@@ -141,7 +143,7 @@ namespace Ecommerce.Controllers
             try
             {
                 await _service.DeleteAsync(id);
-                return RedirectToAction(nameof(Index));
+                return Redirect("/admin.html");
             }
             catch (DbUpdateException e)
             {
@@ -152,6 +154,10 @@ namespace Ecommerce.Controllers
         private bool VoucherExists(int id)
         {
             return _service.IsExists(id);
+        }
+        public IActionResult PartialVoucherForm()
+        {
+            return PartialView("VoucherForm");
         }
     }
 }
