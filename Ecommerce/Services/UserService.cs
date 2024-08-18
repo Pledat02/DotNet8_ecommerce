@@ -1,5 +1,7 @@
 ﻿using Ecommerce.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Ecommerce.Services
 {
@@ -34,7 +36,7 @@ namespace Ecommerce.Services
         }
         public async Task<List<User>> GetAllAsync()
         {
-            return await _dbContext.Users
+            return await _dbContext.Users.Include(a => a.Account)
                 .ToListAsync();
         }
 
@@ -82,6 +84,34 @@ namespace Ecommerce.Services
             return await _dbContext.Accounts
                 .Where(a => a.User == null)
                 .ToListAsync();
+        }
+        public async Task<Account> InsertAccount(Account acc)
+        {
+            // Check if username already exists
+            acc.password = HashPassword(acc.password);
+            var existingAccount = await _dbContext.Accounts.SingleOrDefaultAsync(a => a.username == acc.username);
+            if (existingAccount != null)
+            {
+                throw new InvalidOperationException("Username already exists.");
+            }
+
+            _dbContext.Accounts.Add(acc);
+            await _dbContext.SaveChangesAsync();
+
+            return await _dbContext.Accounts.AsNoTracking().SingleOrDefaultAsync(a => a.username == acc.username);
+        }
+        private string HashPassword(string password)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                var bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                var builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+                return builder.ToString();
+            }
         }
 
     }

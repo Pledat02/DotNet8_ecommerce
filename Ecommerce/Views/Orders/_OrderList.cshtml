@@ -10,13 +10,13 @@
             Thời gian
         </th>
         <th>
-            Mô tả
-        </th>
-        <th>
            Giá
         </th>
         <th>
            Trạng thái
+        </th>
+        <th>
+            Sản phẩm
         </th>
         <th>
             Voucher
@@ -30,17 +30,33 @@
     @foreach (var item in Model)
     {
         <tr>
-           
+         
             <td>
                 @Html.DisplayFor(modelItem => item.order_time)
             </td>
-          
+                <td>
+                    @Html.DisplayFor(modelItem => item.order_time)
+                </td>
+             <td>
+                 @item.OrderDetails.Sum(od => od.total_price)
+             </td>
+              
             <td>
                 @Html.DisplayFor(modelItem => item.status)
             </td>
+                <td>
+                    <ul>
+                        @foreach (var detail in item.OrderDetails)
+                        {
+                            <li>
+                                Sản phẩm: @detail.Product.name
+                            </li>
+                        }
+                    </ul>
+                </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Voucher_User.id_voucher)
-            </td>
+                    @Html.DisplayFor(modelItem => item.id_voucher_user)
+                </td>
                 <td>
                     <div class="action-buttons">
                         <button class="edit-button"

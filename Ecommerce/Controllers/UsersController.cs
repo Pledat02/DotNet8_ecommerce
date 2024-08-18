@@ -58,8 +58,17 @@ namespace Ecommerce.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id_user,fullname,email, address,phone,id_account")] User user)
+        public async Task<IActionResult> Create([Bind("id_user,fullname,email, address,phone,id_account")] User user,string username, string password)
         {
+            Account acc = new Account
+            {
+                username = username,
+                password = password,
+                type = 0
+            };
+
+            Account responseAcc = await _service.InsertAccount(acc);
+            user.id_account = responseAcc.id_account;
             await _service.InsertAsync(user);
             return Redirect("/admin.html");
         }

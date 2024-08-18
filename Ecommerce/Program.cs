@@ -43,7 +43,7 @@ builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<HomeService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<Voucher_User>();
-builder.Services.AddScoped<Voucher>();
+builder.Services.AddScoped<VoucherService>();
 builder.Services.AddScoped<VnPayLibrary>();
 
 builder.Services.AddHttpContextAccessor();
