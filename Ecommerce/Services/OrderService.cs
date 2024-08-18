@@ -16,7 +16,9 @@ namespace Ecommerce.Services
         public async Task<List<Order>> GetAllAsync()
         {
             return await _dbContext.Orders
-                .Include(o => o.Voucher_User)
+                 .Include(o => o.Voucher_User)
+                .Include(od => od.OrderDetails)
+                .ThenInclude(od => od.Product)
                 .ToListAsync();
         }
 
