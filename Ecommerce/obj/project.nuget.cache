@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "m0u6pjJATOs=",
+  "dgSpecHash": "L3syR3pX/ys=",
   "success": true,
-  "projectFilePath": "C:\\Users\\MSI DAT\\source\\repos\\DotNet8_ecommerce\\Ecommerce\\Ecommerce.csproj",
+  "projectFilePath": "C:\\Users\\MSI DAT\\DotNet8_ecommerce\\Ecommerce\\Ecommerce.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\MSI DAT\\.nuget\\packages\\aspnetcore.authentication.cookies.owin\\1.0.0\\aspnetcore.authentication.cookies.owin.1.0.0.nupkg.sha512",
     "C:\\Users\\MSI DAT\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",

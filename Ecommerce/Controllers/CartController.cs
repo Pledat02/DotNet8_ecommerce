@@ -109,9 +109,9 @@ namespace Ecommerce.Controllers
             };
             //
             HttpContext.Session.Set<Bill>(SettingKey.Bill_KEY, billInsert); 
-                //  await _service.Chackout(billInsert);
+            await _service.Chackout(billInsert);
 
-            return RedirectToAction("SendToPaymen", "Payment");
+            return RedirectToAction("Index", "Home");
         }
 
 

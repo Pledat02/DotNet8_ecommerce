@@ -21,7 +21,7 @@ namespace Ecommerce.Controllers
         public async Task<IActionResult> Index()
         {
             var products = await _service.GetAllAsync();
-            return View(products);
+            return PartialView("Index",products);
         }
 
         // GET: Products/Details/5
@@ -174,16 +174,34 @@ namespace Ecommerce.Controllers
         public async Task<IActionResult> Create()
         {
             await PopulateCategoriesAndSuppliersAsync();
-            return View(new Product());
+            return PartialView("Create", new Product());
         }
 
         // POST: Products/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("name,quantity_in_stock,price,description,url_image,id_category,id_supplier")] Product product)
+        public async Task<IActionResult> Create([Bind("name,quantity_in_stock,price,description,id_category,id_supplier")] Product product, IFormFile url_image)
         {
-            await _service.InsertAsync(product);
-            return RedirectToAction(nameof(Index));
+        
+                if (url_image != null && url_image.Length > 0)
+                {
+                    // Define the path for the file
+                    var fileName = Path.GetFileName(url_image.FileName);
+                    var filePath = Path.Combine("wwwroot/img", fileName);
+
+                    // Save the new image
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await url_image.CopyToAsync(fileStream);
+                    }
+
+                    // Set the product's image URL to the new file path
+                    product.url_image = "img/" + fileName;
+                }
+
+                await _service.InsertAsync(product);
+
+            return Redirect("/Admin");
         }
 
         // GET: Products/Edit/5
@@ -201,22 +219,64 @@ namespace Ecommerce.Controllers
             }
 
             await PopulateCategoriesAndSuppliersAsync(product.id_category, product.id_supplier);
-            return View(product);
+            return PartialView("Edit", product);
         }
 
         // POST: Products/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id_product,name,quantity_in_stock,price,description,url_image,id_category,id_supplier")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("id_product,name,quantity_in_stock,price,description,id_category,id_supplier")] Product product, IFormFile url_image)
         {
             if (id != product.id_product)
             {
                 return NotFound();
             }
 
-            await _service.UpdateAsync(product);
-            return RedirectToAction(nameof(Index));
+            // Lấy thực thể Product từ dịch vụ
+            var existingProduct = await _service.GetOneAsync(id);
+            if (existingProduct == null)
+            {
+                return NotFound();
+            }
+
+            // Cập nhật các thuộc tính khác
+            existingProduct.name = product.name;
+            existingProduct.quantity_in_stock = product.quantity_in_stock;
+            existingProduct.price = product.price;
+            existingProduct.description = product.description;
+            existingProduct.id_category = product.id_category;
+            existingProduct.id_supplier = product.id_supplier;
+
+            // Xử lý hình ảnh
+            if (url_image != null && url_image.Length > 0)
+            {
+                var fileName = Path.GetFileName(url_image.FileName);
+                var filePath = Path.Combine("wwwroot/img", fileName);
+
+                // Xóa hình ảnh cũ nếu tồn tại
+                if (!string.IsNullOrEmpty(existingProduct.url_image))
+                {
+                    var oldImagePath = Path.Combine("wwwroot", existingProduct.url_image.TrimStart('/'));
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+                }
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await url_image.CopyToAsync(fileStream);
+                }
+
+                // Cập nhật URL hình ảnh
+                existingProduct.url_image = "img/" + fileName;
+            }
+
+            // Cập nhật thực thể trong cơ sở dữ liệu
+            await _service.UpdateAsync(existingProduct);
+            return Redirect("/Admin");
         }
+
 
         // GET: Products/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -232,24 +292,37 @@ namespace Ecommerce.Controllers
                 return NotFound();
             }
 
-            return View(product);
+            return PartialView("Delete", product);
         }
 
         // POST: Products/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
+                var product = await _service.GetOneAsync(id);
+                if (product == null)
+                {
+                    return NotFound();
+                }
+
+                var imagePath = Path.Combine("wwwroot", product.url_image.TrimStart('/'));
+                if (System.IO.File.Exists(imagePath))
+                {
+                    System.IO.File.Delete(imagePath);
+                }
+
                 await _service.DeleteAsync(id);
-                return RedirectToAction(nameof(Index));
+                return Redirect("/Admin");
             }
             catch (Exception)
             {
                 return BadRequest();
             }
         }
+
 
         private bool ProductExists(int id)
         {

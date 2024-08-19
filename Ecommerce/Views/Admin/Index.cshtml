@@ -1,4 +1,25 @@
 ﻿
+<script>
+    function fetchData(url, options = {}) {
+        return fetch(url, options)
+            .then(response => {
+                if (response.status === 401) {
+                    // Chuyển hướng đến trang đăng nhập
+                    window.location.href = '/Home/Login';
+                    throw new Error('Unauthorized');
+                } else if (response.status === 403) {
+                    // Chuyển hướng đến trang lỗi 403
+                    window.location.href = '/Home/Error403';
+                    throw new Error('Forbidden');
+                } else if (!response.ok) {
+                    // Xử lý lỗi khác
+                    throw new Error('Network response was not ok.');
+                }
+                return response.text(); // Hoặc response.json() nếu dữ liệu là JSON
+            });
+    }
+
+</script>
 <style>
     .sidebar {
         width: 200px;
@@ -95,12 +116,21 @@
 </style>
 <div style="display: flex; align-items: start; margin-top: 170px" class="container">
     <div class="sidebar">
-        <a href="#" onclick="showTable('customers')">Quản lý khách hàng</a>
-        <a href="#" onclick="showTable('products')">Quản lý sản phẩm</a>
-        <a href="#" onclick="showTable('employees')">Quản lý nhân viên</a>
-        <a href="#" onclick="showTable('vouchers')">Quản lý voucher</a>
-        <a href="#" onclick="showTable('orders')">Quản lý đơn hàng</a>
+        <a href="#" onclick="ShowTable('customers')">Quản lý khách hàng</a>
+        <a href="#" onclick="ShowTable('products')">Quản lý sản phẩm</a>
+        <a href="#" onclick="ShowTable('employees')">Quản lý nhân viên</a>
+        <a href="#" onclick="ShowTable('vouchers')">Quản lý voucher</a>
+        <a href="#" onclick="ShowTable('orders')">Quản lý đơn hàng</a>
     </div>
+    <script>
+           function ShowTable(tableId) {
+            var tables = document.querySelectorAll(".table-container");
+            tables.forEach(function (table) {
+                table.classList.remove("active");
+            });
+            document.getElementById(tableId).classList.add("active");
+        }
+    </script>
     <div class="content">
         <div id="customers" class="table-container active">
             <h1>Quản lý khách hàng</h1>
@@ -113,8 +143,7 @@
 
             <script>
                 document.addEventListener("DOMContentLoaded", function () {
-                    fetch('/Users/Index')
-                        .then(response => response.text())
+                    fetchData('/Users/Index')
                         .then(data => {
                             document.getElementById('user-content').innerHTML = data;
                         })
@@ -129,65 +158,28 @@
             <button class="add-new-btn" data-bs-toggle="modal" data-bs-target="#addProductModal">
                 Tạo mới
             </button>
-            <table id="productTable">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Hình ảnh</th>
-                        <th>Tên sản phẩm</th>
-                        <th>Số lượng</th>
-                        <th>Giá</th>
-                        <th>Hành động</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>
-                            <img src="http://127.0.0.1:5500/img/fruite-item-1.jpg"
-                                 width="50"
-                                 style="object-fit: cover"
-                                 height="50"
-                                 alt="" />
-                        </td>
-                        <td>Sản phẩm A</td>
-                        <td>100</td>
-                        <td>100.000</td>
-                        <td>
-                            <div class="action-buttons">
-                                <button class="edit-button"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#editProductModal"
-                                        onclick="editProduct(this)">
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                         fill="none"
-                                         viewBox="0 0 24 24"
-                                         stroke-width="1.5"
-                                         stroke="currentColor"
-                                         style="width: 20px; height: 20px">
-                                        <path stroke-linecap="round"
-                                              stroke-linejoin="round"
-                                              d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
-                                    </svg>
-                                </button>
-                                <button class="delete-button">
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                         fill="none"
-                                         viewBox="0 0 24 24"
-                                         stroke-width="1.5"
-                                         stroke="currentColor"
-                                         style="width: 20px; height: 20px">
-                                        <path stroke-linecap="round"
-                                              stroke-linejoin="round"
-                                              d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <!-- Các hàng khác -->
-                </tbody>
-            </table>
+            <div id="product-content">   </div>
+
+            <script>
+
+                document.addEventListener("DOMContentLoaded", function () {
+                    fetchData('/Products/Index')
+                        .then(data => {
+                            document.getElementById('product-content').innerHTML = data;
+                            setTimeout(function () {
+                                $('#productTable').DataTable({
+                                    "paging": true,
+                                    "searching": true,
+                                    "ordering": true,       // Bật sắp xếp
+                                    "pageLength": 10        // Số hàng mỗi trang
+                                });
+                            }, 300);
+                        })
+                        .catch(error => console.error('Error:', error));
+                });
+
+            </script>
+
         </div>
 
         <div id="employees" class="table-container">
@@ -197,61 +189,26 @@
                     data-bs-target="#addEmployeeModal">
                 Tạo mới
             </button>
-            <table id="employeeTable">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Tên nhân viên</th>
-                        <th>Loại nhân viên</th>
-                        <th>Vị trí</th>
-                        <th>Giới tính</th>
-                        <th>Email</th>
-                        <th>Hành động</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Nhân viên A</td>
-                        <td>Nhân viên kho</td>
-                        <td>Quản lý</td>
-                        <td>Nam</td>
-                        <td>nva@example.com</td>
-                        <td>
-                            <div class="action-buttons">
-                                <button class="edit-button"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#editEmployeeModal"
-                                        onclick="editEmployee(this)">
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                         fill="none"
-                                         viewBox="0 0 24 24"
-                                         stroke-width="1.5"
-                                         stroke="currentColor"
-                                         style="width: 20px; height: 20px">
-                                        <path stroke-linecap="round"
-                                              stroke-linejoin="round"
-                                              d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
-                                    </svg>
-                                </button>
-                                <button class="delete-button">
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                         fill="none"
-                                         viewBox="0 0 24 24"
-                                         stroke-width="1.5"
-                                         stroke="currentColor"
-                                         style="width: 20px; height: 20px">
-                                        <path stroke-linecap="round"
-                                              stroke-linejoin="round"
-                                              d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <!-- Các hàng khác -->
-                </tbody>
-            </table>
+            <div id="staff-content">   </div>
+            <script>
+
+                document.addEventListener("DOMContentLoaded", function () {
+                    fetchData('/Staffs/Index')
+                        .then(data => {
+                            document.getElementById('staff-content').innerHTML = data;
+                            setTimeout(function () {
+                                $('#staffTable').DataTable({
+                                    "paging": true,
+                                    "searching": true,
+                                    "ordering": true,       // Bật sắp xếp
+                                    "pageLength": 10        // Số hàng mỗi trang
+                                });
+                            }, 300);
+                        })
+                        .catch(error => console.error('Error:', error));
+                });
+
+            </script>
         </div>
 
         <div id="vouchers" class="table-container">
@@ -263,8 +220,7 @@
 
             <script>
                 document.addEventListener("DOMContentLoaded", function () {
-                    fetch('/Vouchers/Index')
-                        .then(response => response.text())
+                    fetchData('/Vouchers/Index')
                         .then(data => {
                             document.getElementById('voucher-content').innerHTML = data;
                             $('#voucherTable').DataTable({
@@ -289,8 +245,7 @@
 
             <script>
                 document.addEventListener("DOMContentLoaded", function () {
-                    fetch('/Orders/Index')
-                        .then(response => response.text())
+                    fetchData('/Orders/Index')
                         .then(data => {
                             document.getElementById('order-content').innerHTML = data;
                             $('#orderTable').DataTable({
@@ -329,8 +284,7 @@
 
                 <script>
                     document.addEventListener("DOMContentLoaded", function () {
-                        fetch('/Users/Create')
-                            .then(response => response.text())
+                        fetchData('/Users/Create')
                             .then(data => {
                                 document.getElementById('user-create-content').innerHTML = data;
                             })
@@ -362,8 +316,7 @@
 
                 <script>
                     document.addEventListener("DOMContentLoaded", function () {
-                        fetch('/Users/Delete')
-                            .then(response => response.text())
+                        fetchData('/Users/Delete')
                             .then(data => {
                                 document.getElementById('customer-delete-content').innerHTML = data;
                             })
@@ -395,8 +348,7 @@
 
                 <script>
                     document.addEventListener("DOMContentLoaded", function () {
-                        fetch('/Users/Edit')
-                            .then(response => response.text())
+                        fetchData('/Users/Edit')
                             .then(data => {
                                 document.getElementById('customer-edit-content').innerHTML = data;
                             })
@@ -425,31 +377,49 @@
             </div>
             <div class="modal-body">
                 <!-- Form to add new product -->
-                <form>
-                    <div class="mb-3">
-                        <label for="productImage" class="form-label">Hình ảnh</label>
-                        <input type="text" class="form-control" required />
-                    </div>
-                    <div class="mb-3">
-                        <label for="productName" class="form-label">Tên sản phẩm</label>
-                        <input type="text" class="form-control" required />
-                    </div>
-                    <div class="mb-3">
-                        <label for="productQuantity" class="form-label">Số lượng</label>
-                        <input type="number" class="form-control" required />
-                    </div>
-                    <div class="mb-3">
-                        <label for="productPrice" class="form-label">Giá</label>
-                        <input type="number" class="form-control" required />
-                    </div>
-                </form>
+                <div id="product-add-content" >
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            fetchData('/Products/Create')
+                                .then(data => {
+                                    document.getElementById('product-add-content').innerHTML = data;
+                                })
+                                .catch(error => console.error('Error:', error));
+                        });
+                    </script>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    Close
-                </button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+    </div>
+</div>
+<div class="modal fade"
+     id="deleteProductModal"
+     tabindex="-1"
+     aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Xóa khách hàng</h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
             </div>
+            <div class="modal-body">
+                <div id="product-delete-content"></div>
+
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        fetchData('/Products/Delete')
+                            .then(data => {
+                                document.getElementById('product-delete-content').innerHTML = data;
+                            })
+                            .catch(error => console.error('Error:', error));
+                    });
+                </script>
+            </div>
+
         </div>
     </div>
 </div>
@@ -469,32 +439,19 @@
                         aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!-- Form to edit product -->
-                <form>
-                    <div class="mb-3">
-                        <label for="editProductImage" class="form-label">Hình ảnh</label>
-                        <input type="text" class="form-control" required />
-                    </div>
-                    <div class="mb-3">
-                        <label for="editProductName" class="form-label">Tên sản phẩm</label>
-                        <input type="text" class="form-control" required />
-                    </div>
-                    <div class="mb-3">
-                        <label for="editProductQuantity" class="form-label">Số lượng</label>
-                        <input type="number" class="form-control" required />
-                    </div>
-                    <div class="mb-3">
-                        <label for="editProductPrice" class="form-label">Giá</label>
-                        <input type="number" class="form-control" required />
-                    </div>
-                </form>
+                <div id="product-edit-content"> </div>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            fetchData('/Products/Edit')
+                                .then(data => {
+                                    document.getElementById('product-edit-content').innerHTML = data;
+                                })
+                                .catch(error => console.error('Error:', error));
+                        });
+                    </script>
+               
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    Close
-                </button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+           
         </div>
     </div>
 </div>
@@ -514,56 +471,18 @@
                         aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!-- Form to add new employee -->
-                <form>
-                    <div class="mb-3">
-                        <label for="employeeName" class="form-label">Tên nhân viên</label>
-                        <input type="text" class="form-control" required />
-                    </div>
-                    <div class="mb-3">
-                        <label for="employeeType" class="form-label">Loại nhân viên</label>
-                        <div>
-                            <input style="width: 15px; height: 15px"
-                                   type="checkbox"
-                                   name="employeeType"
-                                   value="Nhân viên kho"
-                                   required />
-                            Nhân viên kho
-                            <br />
-                            <input style="width: 15px; height: 15px"
-                                   type="checkbox"
-                                   name="employeeType"
-                                   value="Nhân viên bán hàng" />
-                            Nhân viên bán hàng
-                            <br />
-                            <input style="width: 15px; height: 15px"
-                                   type="checkbox"
-                                   name="employeeType"
-                                   value="Nhân viên tư vấn" />
-                            Nhân viên tư vấn
-                            <br />
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="employeePosition" class="form-label">Vị trí</label>
-                        <input type="text" class="form-control" required />
-                    </div>
-                    <div class="mb-3">
-                        <label for="employeeGender" class="form-label">Giới tính</label>
-                        <input type="text" class="form-control" required />
-                    </div>
-                    <div class="mb-3">
-                        <label for="employeeEmail" class="form-label">Email</label>
-                        <input type="email" class="form-control" required />
-                    </div>
-                </form>
+                <div id="staff-add-content"> </div>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        fetchData('/Staffs/Create')
+                            .then(data => {
+                                document.getElementById('staff-add-content').innerHTML = data;
+                            })
+                            .catch(error => console.error('Error:', error));
+                    });
+                </script>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    Close
-                </button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+           
         </div>
     </div>
 </div>
@@ -583,54 +502,47 @@
                         aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!-- Form to edit employee -->
-                <form>
-                    <div class="mb-3">
-                        <label for="editEmployeeName" class="form-label">Tên nhân viên</label>
-                        <input type="text" class="form-control" required />
-                    </div>
-                    <div class="mb-3">
-                        <label for="editEmployeeType" class="form-label">Loại nhân viên</label>
-                        <div>
-                            <input style="width: 15px; height: 15px"
-                                   type="checkbox"
-                                   name="editEmployeeType"
-                                   value="Nhân viên kho"
-                                   required />
-                            Nhân viên kho<br />
-                            <input style="width: 15px; height: 15px"
-                                   type="checkbox"
-                                   name="editEmployeeType"
-                                   value="Nhân viên bán hàng" />
-                            Nhân viên bán hàng<br />
-                            <input style="width: 15px; height: 15px"
-                                   type="checkbox"
-                                   name="editEmployeeType"
-                                   value="Nhân viên tư vấn" />
-                            Nhân viên tư vấn<br />
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="editEmployeePosition" class="form-label">Vị trí</label>
-                        <input type="text" class="form-control" required />
-                    </div>
-                    <div class="mb-3">
-                        <label for="editEmployeeGender" class="form-label">Giới tính</label>
-                        <input type="text" class="form-control" required />
-                    </div>
-                    <div class="mb-3">
-                        <label for="editEmployeeEmail" class="form-label">Email</label>
-                        <input type="email" class="form-control" required />
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    Close
-                </button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <div id="staff-edit-content"> </div>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        fetchData('/Staffs/Edit')
+                            .then(data => {
+                                document.getElementById('staff-edit-content').innerHTML = data;
+                            })
+                            .catch(error => console.error('Error:', error));
+                    });
+                </script>
             </div>
         </div>
+    </div>
+</div>
+<div class="modal fade"
+         id="deleteEmployeeModal"
+         tabindex="-1"
+         aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Xóa nhân viên</h5>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="staff-delete-content"> </div>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            fetchData('/Staffs/Delete')
+                                .then(data => {
+                                    document.getElementById('staff-delete-content').innerHTML = data;
+                                })
+                                .catch(error => console.error('Error:', error));
+                        });
+                    </script>
+                </div>
+            </div>
     </div>
 </div>
 
@@ -654,8 +566,7 @@
 
                 <script>
                     document.addEventListener("DOMContentLoaded", function () {
-                        fetch('/Vouchers/Create')
-                            .then(response => response.text())
+                        fetchData('/Vouchers/Create')
                             .then(data => {
                                 document.getElementById('voucher-create-content').innerHTML = data;
                             })
@@ -688,8 +599,7 @@
 
                 <script>
                     document.addEventListener("DOMContentLoaded", function () {
-                        fetch('/Vouchers/Edit')
-                            .then(response => response.text())
+                        fetchData('/Vouchers/Edit')
                             .then(data => {
                                 document.getElementById('voucher-edit-content').innerHTML = data;
                             })
@@ -722,8 +632,7 @@
 
                 <script>
                     document.addEventListener("DOMContentLoaded", function () {
-                        fetch('/Vouchers/Delete')
-                            .then(response => response.text())
+                        fetchData('/Vouchers/Delete')
                             .then(data => {
                                 document.getElementById('voucher-edit-content').innerHTML = data;
                             })
@@ -756,8 +665,7 @@
 
                 <script>
                     document.addEventListener("DOMContentLoaded", function () {
-                        fetch('/Orders/Create')
-                            .then(response => response.text())
+                        fetchData('/Orders/Create')
                             .then(data => {
                                 document.getElementById('order-create-content').innerHTML = data;
                             })
@@ -787,8 +695,7 @@
 
                 <script>
                     document.addEventListener("DOMContentLoaded", function () {
-                        fetch('/Orders/Delete')
-                            .then(response => response.text())
+                        fetchData('/Orders/Delete')
                             .then(data => {
                                 document.getElementById('order-delete-content').innerHTML = data;
                             })
@@ -819,8 +726,7 @@
 
                 <script>
                     document.addEventListener("DOMContentLoaded", function () {
-                        fetch('/Orders/Edit')
-                            .then(response => response.text())
+                        fetchData('/Orders/Edit')
                             .then(data => {
                                 document.getElementById('customer-edit-content').innerHTML = data;
                             })
@@ -831,16 +737,23 @@
         </div>
     </div>
 </div>
-<script>
-
-    function showTable(tableId) {
-        var tables = document.querySelectorAll(".table-container");
-        tables.forEach(function (table) {
-            table.classList.remove("active");
+<script type="text/javascript">
+    // Function to open edit modal for Employee
+    function editEmployee(id) {
+        $.ajax({
+            url: '/Staffs/Edit/' + id,
+            method: 'GET',
+            success: function (data) {
+                $('#editEmployeeModal .modal-body').html(data);
+                $('#editEmployeeModal').modal('show');
+            },
+            error: function (error) {
+                console.error('Error:', error);
+            }
         });
-        document.getElementById(tableId).classList.add("active");
     }
 
+    // Function to open edit modal for Customer
     function editCustomer(id) {
         $.ajax({
             url: '/Users/Edit/' + id,
@@ -854,6 +767,8 @@
             }
         });
     }
+
+    // Function to open edit modal for Voucher
     function editVoucher(id) {
         $.ajax({
             url: '/Vouchers/Edit/' + id,
@@ -867,6 +782,8 @@
             }
         });
     }
+
+    // Function to open edit modal for Order
     function editOrder(id) {
         $.ajax({
             url: '/Orders/Edit/' + id,
@@ -881,27 +798,52 @@
         });
     }
 
-    function editProduct(button) {
-        var row = $(button).closest("tr");
-        $("#editProductImage").val(row.find("td:eq(1) img").attr("src"));
-        $("#editProductName").val(row.find("td:eq(2)").text());
-        $("#editProductQuantity").val(row.find("td:eq(3)").text());
-        $("#editProductPrice").val(row.find("td:eq(4)").text());
+    // Function to open edit modal for Product
+    function editProduct(id) {
+        $.ajax({
+            url: '/Products/Edit/' + id,
+            method: 'GET',
+            success: function (data) {
+                $('#editProductModal .modal-body').html(data);
+                $('#editProductModal').modal('show');
+            },
+            error: function (error) {
+                console.error('Error:', error);
+            }
+        });
     }
 
-    function editEmployee(button) {
-        var row = $(button).closest("tr");
-        $("#editEmployeeName").val(row.find("td:eq(1)").text());
-        $('input[name="editEmployeeType"][value="' + row.find("td:eq(2)").text() + '"]').prop(
-            "checked",
-            true
-        );
-        $("#editEmployeePosition").val(row.find("td:eq(3)").text());
-        $("#editEmployeeGender").val(row.find("td:eq(4)").text());
-        $("#editEmployeeEmail").val(row.find("td:eq(5)").text());
+    // Function to open delete modal for Product
+    function deleteProduct(id) {
+        $.ajax({
+            url: '/Products/Delete/' + id,
+            method: 'GET',
+            success: function (data) {
+                $('#deleteProductModal .modal-body').html(data);
+                $('#deleteProductModal').modal('show');
+            },
+            error: function (error) {
+                console.error('Error:', error);
+            }
+        });
     }
 
+    // Function to open delete modal for Employee
+    function deleteEmployee(id) {
+        $.ajax({
+            url: '/Staffs/Delete/' + id,
+            method: 'GET',
+            success: function (data) {
+                $('#deleteEmployeeModal .modal-body').html(data);
+                $('#deleteEmployeeModal').modal('show'); // Fixed incorrect modal id
+            },
+            error: function (error) {
+                console.error('Error:', error);
+            }
+        });
+    }
 
+    // Function to open delete modal for Customer
     function deleteCustomer(id) {
         $.ajax({
             url: '/Users/Delete/' + id,
@@ -916,6 +858,7 @@
         });
     }
 
+    // Function to open delete modal for Voucher
     function deleteVoucher(id) {
         $.ajax({
             url: '/Vouchers/Delete/' + id,
@@ -929,6 +872,8 @@
             }
         });
     }
+
+    // Function to open delete modal for Order
     function deleteOrder(id) {
         $.ajax({
             url: '/Orders/Delete/' + id,
@@ -943,6 +888,7 @@
         });
     }
 
+    // Function to get users by selected voucher (first dropdown)
     function GetIdVoucher() {
         var voucherDropdown = document.getElementById('voucherDropdown');
         var selectedVoucherId = voucherDropdown.value;
@@ -968,6 +914,8 @@
             }
         });
     }
+
+    // Function to get users by selected voucher (second dropdown)
     function GetIdVoucher2() {
         var voucherDropdown = document.getElementById('voucherDropdown2');
         var selectedVoucherId = voucherDropdown.value;
@@ -993,14 +941,14 @@
             }
         });
     }
-    $(document).ready(function () {
-        $("#customerTable").DataTable();
-        $("#productTable").DataTable();
-        $("#employeeTable").DataTable();
-        $("#voucherTable").DataTable();
-        $("#orderTable").DataTable();
-        console.log('Script is loaded and running'); // Debug: Kiểm tra xem script có được nạp hay không
 
-
-    });
+    // Initialize DataTables and log message on document ready
+ //   $(document).ready(function () {
+    //      $("#customerTable").DataTable();
+    //      $("#productTable").DataTable();
+    //     $("#employeeTable").DataTable();
+    //    $("#voucherTable").DataTable();
+    //   $("#orderTable").DataTable();
+          //   console.log('Script is loaded and running'); // Debug: Kiểm tra xem script có được nạp hay không
+    //  });
 </script>

@@ -213,7 +213,14 @@ namespace Ecommerce.Services
         }
         public async Task<Bill> Chackout(Bill bill)
         {
-            return await new BillService(_dbContext).InsertAsync(bill);
+           Bill insertBill = await new BillService(_dbContext).InsertAsync(bill);
+                foreach(var item in bill.Order.OrderDetails)
+            {
+                Product product = await GetOneAsync(item.id_product);
+                product.quantity_in_stock -= item.quantity;
+                await UpdateAsync(product);
+            }
+            return insertBill;
         }
     }
 

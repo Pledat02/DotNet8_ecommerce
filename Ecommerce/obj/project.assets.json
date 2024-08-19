@@ -5106,11 +5106,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\MSI DAT\\source\\repos\\DotNet8_ecommerce\\Ecommerce\\Ecommerce.csproj",
+      "projectUniqueName": "C:\\Users\\MSI DAT\\DotNet8_ecommerce\\Ecommerce\\Ecommerce.csproj",
       "projectName": "Ecommerce",
-      "projectPath": "C:\\Users\\MSI DAT\\source\\repos\\DotNet8_ecommerce\\Ecommerce\\Ecommerce.csproj",
+      "projectPath": "C:\\Users\\MSI DAT\\DotNet8_ecommerce\\Ecommerce\\Ecommerce.csproj",
       "packagesPath": "C:\\Users\\MSI DAT\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\MSI DAT\\source\\repos\\DotNet8_ecommerce\\Ecommerce\\obj\\",
+      "outputPath": "C:\\Users\\MSI DAT\\DotNet8_ecommerce\\Ecommerce\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

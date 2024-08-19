@@ -1,0 +1,39 @@
+﻿@model Ecommerce.Data.Staff
+
+
+<div>
+    <h4>Xóa nhân viên</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Tên nhân viên
+        </dt>
+        <dd class="col-sm-10">
+            @Model.name_staff
+        </dd>
+        <dt class="col-sm-2">
+            Email
+        </dt>
+        <dd class="col-sm-10">
+            @Model.email
+        </dd>
+        <dt class="col-sm-2">
+            Giới tính
+        </dt>
+        <dd class="col-sm-10">
+            @Model.sex
+        </dd>
+        
+    </dl>
+
+    <form asp-action="Delete" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="id_staff" />
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                Close
+            </button>
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </div>
+    </form>
+</div>

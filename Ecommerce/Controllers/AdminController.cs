@@ -3,9 +3,10 @@
 namespace Ecommerce.Controllers
 {
     public class AdminController : BaseController
-    {
-        public IActionResult Index()
+    {   
+        public  IActionResult Index()
         {
+
             return View();
         }
     }

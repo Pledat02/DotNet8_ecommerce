@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Ecommerce.Helper;
+using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,8 +32,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     .AddCookie(options =>
     {
         options.LoginPath = "/Home/Login";
-        options.AccessDeniedPath = "/AccessDenied";
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+        options.LogoutPath = "/Home/Logout";
+        options.AccessDeniedPath = "/Shared/Error403";
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(25);
     });
 
 // Add application services
@@ -44,6 +46,8 @@ builder.Services.AddScoped<HomeService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<Voucher_User>();
 builder.Services.AddScoped<VoucherService>();
+builder.Services.AddScoped<RoleService>();
+builder.Services.AddScoped<StaffService>();
 builder.Services.AddScoped<VnPayLibrary>();
 
 builder.Services.AddHttpContextAccessor();
@@ -82,10 +86,10 @@ app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseRouting();
-
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}"
+    );
 
 // Configure JSON settings globally
 JsonConvert.DefaultSettings = () => new JsonSerializerSettings

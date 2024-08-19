@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using Ecommerce.Filter;
 using Microsoft.EntityFrameworkCore;
 using Ecommerce.Data;
 using Ecommerce.Services;
 
 namespace Ecommerce.Controllers
 {
+    [OrderAuthorizationFilter]
     public class OrdersController : Controller
     {
         private readonly OrderService _service;
@@ -101,7 +100,7 @@ namespace Ecommerce.Controllers
             }
 
             await _service.UpdateAsync(order);
-            return Redirect("/admin.html");
+            return Redirect("/Admin");
         }
 
         // GET: Orders/Delete/5
@@ -129,7 +128,7 @@ namespace Ecommerce.Controllers
             try
             {
                 await _service.DeleteAsync(id);
-                return Redirect("/admin.html");
+                return Redirect("/Admin");
             }
             catch (DbUpdateException e)
             {

@@ -1,0 +1,73 @@
+﻿@model Ecommerce.Data.Staff
+@{
+    Layout = "_noneLayoutView";
+}
+
+<div class="row">
+    <div class="col-md-6" style="width:100%; padding: 20px;">
+        <form asp-action="Edit" asp-controller="Staffs" method="post">
+            @Html.AntiForgeryToken()
+
+            <!-- Hidden field for the staff ID -->
+            <input type="hidden" asp-for="id_staff" />
+
+            <!-- Staff Name -->
+            <div class="form-group">
+                <label for="employeeName" class="form-label">Tên nhân viên</label>
+                <input asp-for="name_staff" class="form-control" required="required" />
+                <span asp-validation-for="name_staff" class="text-danger"></span>
+            </div>
+
+            <!-- Staff Role -->
+            <div class="form-group">
+                <label for="roles" class="form-label">Quyền nhân viên</label>
+                <div>
+                    @foreach (var role in ViewBag.Roles as List<Ecommerce.Data.Role>)
+                    {
+                        <input style="width: 15px; height: 15px"
+                               type="checkbox"
+                               name="roles"
+                               value="@role.id_role"
+                        @(Model.StaffRoles.Any(sr => sr.id_role == role.id_role) ? "checked" : "") />
+                        <label>@role.role_name</label>
+                        <br />
+                    }
+                </div>
+            </div>
+
+            <!-- Username -->
+            <div class="form-group">
+                <label for="username" class="form-label">Tên đăng nhập</label>
+                <input type="text" name="username" class="form-control" required="required" value="@Model.Account.username" />
+                <span asp-validation-for="Account.username" class="text-danger"></span>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label for="password" class="form-label">Mật khẩu</label>
+                <input type="password" name="password" class="form-control" required="required" value="@Model.Account.password" />
+                <span asp-validation-for="Account.password" class="text-danger"></span>
+            </div>
+
+            <!-- Gender -->
+            <div class="form-group">
+                <label for="sex" class="form-label">Giới tính</label>
+                <input asp-for="sex" class="form-control" required="required" />
+                <span asp-validation-for="sex" class="text-danger"></span>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input asp-for="email" type="email" class="form-control" required="required" />
+                <span asp-validation-for="email" class="text-danger"></span>
+            </div>
+
+            <!-- Submit buttons -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+        </form>
+    </div>
+</div>

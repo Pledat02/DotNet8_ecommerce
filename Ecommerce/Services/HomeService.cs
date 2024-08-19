@@ -37,7 +37,7 @@ namespace Ecommerce.Services
         {
             string hashedPassword = HashPassword(password);
             var account = await _dbContext.Accounts
-         .Where(a => a.username ==username && a.password== password)
+         .Where(a => a.username ==username && a.password== HashPassword(password))
          .SingleOrDefaultAsync();
             if (account == null)
             {

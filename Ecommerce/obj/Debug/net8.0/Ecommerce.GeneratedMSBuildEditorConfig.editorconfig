@@ -9,175 +9,203 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Ecommerce
 build_property.RootNamespace = Ecommerce
-build_property.ProjectDir = C:\Users\MSI DAT\source\repos\DotNet8_ecommerce\Ecommerce\
+build_property.ProjectDir = C:\Users\MSI DAT\DotNet8_ecommerce\Ecommerce\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\MSI DAT\source\repos\DotNet8_ecommerce\Ecommerce
+build_property.MSBuildProjectDirectory = C:\Users\MSI DAT\DotNet8_ecommerce\Ecommerce
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Admin/Index.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Admin/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Cart/Chackout.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Cart/Chackout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FydFxDaGFja291dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Cart/Index.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Cart/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FydFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Home/Index.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Home/Error403.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFcnJvcjQwMy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Home/Error404.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFcnJvcjQwNC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Home/Login.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Home/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Home/Privacy.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Home/Register.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Home/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Home/Shop.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Home/Shop.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTaG9wLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Orders/_OrderDelete.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Orders/_OrderDelete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJzXF9PcmRlckRlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Orders/_OrderFormCreate.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Orders/_OrderFormCreate.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJzXF9PcmRlckZvcm1DcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Orders/_OrderFormEdit.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Orders/_OrderFormEdit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJzXF9PcmRlckZvcm1FZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Orders/_OrderList.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Orders/_OrderList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJzXF9PcmRlckxpc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Payment/VnpayReturn.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Payment/VnpayReturn.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudFxWbnBheVJldHVybi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Products/Create.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Products/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdHNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Products/Delete.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Products/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdHNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Products/Details.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Products/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdHNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Products/Edit.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Products/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdHNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Products/Index.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Products/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdHNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Shared/Error.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Shared/Contact.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbnRhY3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Shared/_LayoutLogin.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Shared/_LayoutLogin.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXRMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Shared/_NavInfoProductPartial.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Shared/_NavInfoProductPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9OYXZJbmZvUHJvZHVjdFBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Shared/_PartialReview.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Shared/_noneLayoutView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9ub25lTGF5b3V0Vmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Shared/_PartialReview.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9QYXJ0aWFsUmV2aWV3LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Shared/_ProductListHome.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Shared/_ProductListHome.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Qcm9kdWN0TGlzdEhvbWUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Shared/_ProductListShop.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Shared/_ProductListShop.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Qcm9kdWN0TGlzdFNob3AuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Users/_UserDelete.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Staffs/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3RhZmZzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Staffs/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3RhZmZzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Staffs/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3RhZmZzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Staffs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3RhZmZzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Users/_UserDelete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcX1VzZXJEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Users/_UserFormCreate.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Users/_UserFormCreate.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcX1VzZXJGb3JtQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Users/_UserFormEdit.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Users/_UserFormEdit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcX1VzZXJGb3JtRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Users/_UserList.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Users/_UserList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcX1VzZXJMaXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Vouchers/_VoucherDeleteInfor.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Vouchers/_VoucherDeleteInfor.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVm91Y2hlcnNcX1ZvdWNoZXJEZWxldGVJbmZvci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Vouchers/_VoucherFormCreate.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Vouchers/_VoucherFormCreate.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVm91Y2hlcnNcX1ZvdWNoZXJGb3JtQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Vouchers/_VoucherFormEdit.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Vouchers/_VoucherFormEdit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVm91Y2hlcnNcX1ZvdWNoZXJGb3JtRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Vouchers/_VoucherList.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Vouchers/_VoucherList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVm91Y2hlcnNcX1ZvdWNoZXJMaXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Voucher_User/Create.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Voucher_User/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVm91Y2hlcl9Vc2VyXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Voucher_User/Delete.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Voucher_User/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVm91Y2hlcl9Vc2VyXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Voucher_User/Details.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Voucher_User/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVm91Y2hlcl9Vc2VyXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Voucher_User/Edit.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Voucher_User/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVm91Y2hlcl9Vc2VyXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Voucher_User/Index.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Voucher_User/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVm91Y2hlcl9Vc2VyXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/_ViewImports.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/_ViewStart.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MSI DAT/source/repos/DotNet8_ecommerce/Ecommerce/Views/Shared/_Layout.cshtml]
+[C:/Users/MSI DAT/DotNet8_ecommerce/Ecommerce/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-jnmo08unka

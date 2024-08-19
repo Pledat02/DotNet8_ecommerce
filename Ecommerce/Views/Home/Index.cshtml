@@ -16,8 +16,6 @@
             };
         };
 
-
-
         $('.filter-categories').on('click', function updateProductList() {
             console.log('Element data:', $(this).attr('data-category'));
             // Retrieve the category using data method
@@ -49,7 +47,17 @@
 <div class="container-fluid py-5 mb-5 hero-header">
  
     <div class="container py-5">
-        @Context.User.FindFirst(ClaimTypes.Name)?.Value
+        @{
+            var role = Context.User.FindFirst(ClaimTypes.Role)?.Value;
+            if (role != null)
+            {
+                <p>User Role: @role</p>
+            }
+            else
+            {
+                <p>No role assigned to this user.</p>
+            }
+        }
         <div class="row g-5 align-items-center">
             <div class="col-md-12 col-lg-7">
                 <h4 class="mb-3 text-secondary">100% Organic Foods</h4>
@@ -432,10 +440,12 @@
             @foreach(var item in ViewBag.Vegetables)
             {
                 <div class="border border-primary rounded position-relative vesitable-item">
+                  <a asp-action="Details" asp-controller="Products" asp-route-id="@item.id_product">
                     <div class="vesitable-img">
-                        <img src="~/@item.url_image" class="img-fluid w-100 rounded-top" alt="">
+                        <img style="height:300px" src="~/@item.url_image" class="img-fluid w-100 rounded-top" alt="">
                     </div>
-                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Vegetable</div>
+                  </a>
+                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">@item.Category.name</div>
                     <div class="p-4 rounded-bottom">
                         <h4>@item.name</h4>
                         <p>@item.description</p>
@@ -494,16 +504,24 @@
                     <div class="p-4 rounded bg-light">
                         <div class="row align-items-center">
                             <div class="col-6">
+                             <a asp-action="Details" asp-controller="Products" asp-route-id="@item.id_product">
                                 <img src="~/@item.url_image" class="img-fluid rounded-circle w-100" alt="@item.name">
-                            </div>
+                             </a>
+                             </div>
                             <div class="col-6">
                                 <a href="#" class="h5">@item.name</a>
                                 <div class="d-flex my-3">
-                                    <i class="fas fa-star text-primary"></i>
-                                    <i class="fas fa-star text-primary"></i>
-                                    <i class="fas fa-star text-primary"></i>
-                                    <i class="fas fa-star text-primary"></i>
-                                    <i class="fas fa-star"></i>
+                                    @for (int i = 0; i < 5; i++)
+                                    {
+                                        @if (@item.getAvgRate() > i)
+                                        {
+                                            <i class="fa fa-star text-secondary"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="fa fa-star"></i>
+                                        }
+                                    }
                                 </div>
                                 <h4 class="mb-3">@item.price $</h4>
                                 <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
@@ -516,17 +534,27 @@
             @foreach (var item in ViewBag.BestSeller4)
             {
                 <div class="col-md-6 col-lg-6 col-xl-3">
+                   
                     <div class="text-center">
-                        <img src="~/@item.url_image" class="img-fluid rounded" alt="@item.name">
-                    <div class="py-4">
+                        <a asp-action="Details" asp-controller="Products" asp-route-id="@item.id_product">
+                            <img style="height:200px" src="~/@item.url_image" class="img-fluid rounded" alt="@item.name">
+                        </a>
+                            <div class="py-4">
+                  
                             <a href="#" class="h5">@item.name</a>
                             <!--Avarage_rate-->
                         <div class="d-flex my-3 justify-content-center">
-                            <i class="fas fa-star text-primary"></i>
-                            <i class="fas fa-star text-primary"></i>
-                            <i class="fas fa-star text-primary"></i>
-                            <i class="fas fa-star text-primary"></i>
-                            <i class="fas fa-star"></i>
+                                @for (int i = 0; i < 5; i++)
+                                {
+                                    @if (@item.getAvgRate() > i)
+                                    {
+                                        <i class="fa fa-star text-secondary"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa fa-star"></i>
+                                    }
+                                }
                         </div>
                             <h4 class="mb-3">@item.price $</h4>
                         <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>

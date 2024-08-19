@@ -1,6 +1,4 @@
 ﻿using Ecommerce.Data;
-using Microsoft.EntityFrameworkCore;
-using System.Security.Authentication;
 using System.Security.Cryptography;
 using System.Text;
 

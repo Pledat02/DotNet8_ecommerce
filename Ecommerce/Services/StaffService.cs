@@ -24,22 +24,27 @@ namespace Ecommerce.Services
 
         public async Task<List<Staff>> GetAllAsync()
         {
-           return await _dbContext.Staffs.ToListAsync();
+           return await _dbContext.Staffs.Include(s => s.Account).Include(s => s.StaffRoles).ThenInclude(sr => sr.Role).ToListAsync();
         }
 
         public async Task<Staff> GetOneAsync(int? id)
         {
-            var Staff = await _dbContext.Staffs.FirstOrDefaultAsync(s => s.id_staff == id);
+            var Staff = await _dbContext.Staffs.Include(s => s.Account).Include(s => s.StaffRoles).ThenInclude(sr => sr.Role).FirstOrDefaultAsync(s => s.id_staff == id);
             return Staff;
         }
         public Staff GetOneByIdAccount(int? id)
         {
-            var Staff =  _dbContext.Staffs.FirstOrDefault(s => s.id_account == id);
+            var Staff =  _dbContext.Staffs.
+                Include(s => s.StaffRoles)
+                .ThenInclude(sr => sr.Role)
+                .FirstOrDefault(s => s.id_account == id)
+                ;
             return Staff;
         }
         public async Task<Staff> InsertAsync(Staff entity)
         {
             await _dbContext.Staffs.AddAsync(entity);
+            await _dbContext.SaveChangesAsync();
             return entity;
         }
 

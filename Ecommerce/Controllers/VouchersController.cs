@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Ecommerce.Data;
 using Ecommerce.Services;
-using Ecommerce.Models;
+using Ecommerce.Filter;
 
 namespace Ecommerce.Controllers
 {
+    [VoucherAuthorizationFilter]
     public class VouchersController : Controller
     {
         private readonly VoucherService _service;
@@ -100,7 +96,7 @@ namespace Ecommerce.Controllers
                 try
                 {
                     await _service.UpdateAsync(voucher);
-                  return  Redirect("/admin.html");
+                  return  Redirect("/Admin");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -143,7 +139,7 @@ namespace Ecommerce.Controllers
             try
             {
                 await _service.DeleteAsync(id);
-                return Redirect("/admin.html");
+                return Redirect("/Admin");
             }
             catch (DbUpdateException e)
             {

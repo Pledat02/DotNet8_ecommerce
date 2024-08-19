@@ -4,60 +4,68 @@
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete</h1>
+<h1>Xác nhận xóa</h1>
 
-<h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Product</h4>
+    <h4>Sản phẩm</h4>
     <hr />
     <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.name)
+        <dt class="col-sm-2" style="width:150px">
+            Tên sản phẩm
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-10" style="width:300px">
             @Html.DisplayFor(model => model.name)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.quantity_in_stock)
+        <dt class="col-sm-2" style="width:150px">
+            Hình ảnh
         </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.quantity_in_stock)
+        <dd class="col-sm-10" style="width:300px">
+            <img src="~/@Model.url_image"
+                 width="80"
+                 height="80"
+                 style="object-fit: cover"
+                 alt="Product Image" />
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.price)
+        <dt class="col-sm-2" style="width:150px">
+            Đơn giá
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-10" style="width:300px">
             @Html.DisplayFor(model => model.price)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.description)
+        <dt class="col-sm-2" style="width:150px">
+            Mô tả
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-10" style="width:300px">
             @Html.DisplayFor(model => model.description)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.url_image)
+        <dt class="col-sm-2" style="width:150px">
+            Loại
         </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.url_image)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Category.name)
-        </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-10" style="width:300px">
             @Html.DisplayFor(model => model.Category.name)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Supplier.address)
+        <dt class="col-sm-2" style="width:150px">
+            Địa chỉ cung cấp
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-10" style="width:300px">
             @Html.DisplayFor(model => model.Supplier.address)
+        </dd>
+        <dt class="col-sm-2" style="width:150px">
+            Số lượng tồn kho
+        </dt>
+        <dd class="col-sm-10" style="width:300px">
+            @Html.DisplayFor(model => model.quantity_in_stock)
         </dd>
     </dl>
 
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="id_product" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+    <form asp-action="Delete" method="post">
+        @Html.AntiForgeryToken()
+        <div class="modal-footer">
+            <input type="hidden" asp-for="id_product" />
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                Close
+            </button>
+            <button type="submit" value="Delete" class="btn btn-danger">Delete</button>
+        </div>
     </form>
 </div>

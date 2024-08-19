@@ -20,6 +20,7 @@ namespace Ecommerce.Controllers
 
         public IActionResult Login()
         {
+            ViewData["Layout"] = "_LayoutLogin";
             return View();
         }
 
@@ -27,7 +28,14 @@ namespace Ecommerce.Controllers
         {
             return View();
         }
-
+        public IActionResult Error403()
+        {
+            return View(); 
+        }
+        public IActionResult Error404()
+        {
+            return View();
+        }
         [HttpPost]
         public async Task<IActionResult> Login(string username, string password)
         {
@@ -151,6 +159,10 @@ namespace Ecommerce.Controllers
             var pagedProducts = await PaginatedList<Product>.CreateAsync(products.AsQueryable(), pageIndex, pageSize);
 
             return PartialView("_ProductListShop", pagedProducts);
+        }
+        public IActionResult Contact()
+        {
+            return View();
         }
 
         [HttpGet]

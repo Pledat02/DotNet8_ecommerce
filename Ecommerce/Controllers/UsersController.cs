@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Ecommerce.Data;
 using Ecommerce.Services;
-using Ecommerce.Models;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Ecommerce.Filter;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace Ecommerce.Controllers
 {
+    [UserAuthorizationFilter]
     public class UsersController : Controller
     {
         private readonly UserService _service;
@@ -63,14 +62,14 @@ namespace Ecommerce.Controllers
             Account acc = new Account
             {
                 username = username,
-                password = password,
+                password = HashPassword(password),
                 type = 0
             };
 
             Account responseAcc = await _service.InsertAccount(acc);
             user.id_account = responseAcc.id_account;
             await _service.InsertAsync(user);
-            return Redirect("/admin.html");
+            return Redirect("/Admin");
         }
 
         // GET: Users/Edit/5
@@ -105,7 +104,7 @@ namespace Ecommerce.Controllers
             }
 
             await _service.UpdateAsync(user);
-            return Redirect("/admin.html");
+            return Redirect("/Admin");
         }
 
         // GET: Users/Delete/5
@@ -134,7 +133,7 @@ namespace Ecommerce.Controllers
             try
             {
                 await _service.DeleteAsync(id);
-                return Redirect("/admin.html");
+                return Redirect("/Admin");
             }
             catch (DbUpdateException e)
             {
@@ -154,6 +153,19 @@ namespace Ecommerce.Controllers
 
             ViewBag.Accounts = new SelectList(accounts, "id_account", "username", selectedAccountId);
             
+        }
+        private string HashPassword(string password)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                var bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                var builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+                return builder.ToString();
+            }
         }
 
     }
