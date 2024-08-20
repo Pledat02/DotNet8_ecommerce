@@ -18,10 +18,11 @@ namespace Ecommerce.Services
         {
             var user = await _dbContext.Users
                 .FirstOrDefaultAsync(p => p.id_user == id);
-
+            var accout = await _dbContext.Accounts.Where(a => a.User.id_user == id).FirstOrDefaultAsync();
             if (user != null)
             {
                 _dbContext.Users.Remove(user);
+                _dbContext.Accounts.Remove(accout);
                 await _dbContext.SaveChangesAsync();
             }
             else
@@ -47,8 +48,19 @@ namespace Ecommerce.Services
                 throw new ArgumentNullException(nameof(id), "User ID cannot be null.");
             }
 
-            return await _dbContext.Users
+            return await _dbContext.Users.Include(u => u.Account)
                 .FirstOrDefaultAsync(c => c.id_user == id)
+                ?? throw new KeyNotFoundException("User not found.");
+        }
+        public async Task<Account> GetAccountAsync(int? id)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id), "User ID cannot be null.");
+            }
+
+            return await _dbContext.Accounts
+                .FirstOrDefaultAsync(c => c.User.id_user == id)
                 ?? throw new KeyNotFoundException("User not found.");
         }
 
@@ -63,6 +75,11 @@ namespace Ecommerce.Services
         public async Task UpdateAsync(User user)
         {
             _dbContext.Users.Update(user);
+            await _dbContext.SaveChangesAsync();
+        }
+        public async Task UpdateAsync2(Account account)
+        {
+            _dbContext.Accounts.Update(account);
             await _dbContext.SaveChangesAsync();
         }
 
@@ -87,6 +104,7 @@ namespace Ecommerce.Services
         }
         public async Task<Account> InsertAccount(Account acc)
         {
+            
             // Check if username already exists
             acc.password = HashPassword(acc.password);
             var existingAccount = await _dbContext.Accounts.SingleOrDefaultAsync(a => a.username == acc.username);

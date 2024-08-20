@@ -236,9 +236,29 @@
     <script src="~/lib/waypoints/waypoints.min.js"></script>
     <script src="~/lib/lightbox/js/lightbox.min.js"></script>
     <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" />
 
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- DataTables JS -->
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#customerTable").DataTable();
+              $("#productTable").DataTable();
+            $("#employeeTable").DataTable();
+            $("#voucherTable").DataTable();
+           $("#orderTable").DataTable();
+           console.log('Script is loaded and running'); // Debug: Kiểm tra xem script có được nạp hay không
+          });
+    </script>
+   
     <!-- Template Javascript -->
     <script src="~/js/main.js"></script>
+    
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
