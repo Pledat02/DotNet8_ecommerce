@@ -128,6 +128,7 @@ namespace Ecommerce.Services
             var topProducts = await _dbContext.Products
                 .Where(p => topProductIds.Contains(p.id_product)) // Lọc theo danh sách id_product
                 .Include(p => p.Category) // Bao gồm thông tin danh mục
+                .Include(p=> p.Comments)
                 .ToListAsync();
 
             return topProducts;

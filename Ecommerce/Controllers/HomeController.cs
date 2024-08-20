@@ -154,7 +154,7 @@ namespace Ecommerce.Controllers
             await Populate4BestSellerAsync();
             await PopulateCategoriesAsync();
             await PopulateVegetableAsync();
-            decimal maxPriceDecimal = decimal.Parse(price);
+            decimal maxPriceDecimal = decimal.Parse(price)*100;
             var products = await _service.SearchAsync(keyword, category, maxPriceDecimal);
             var pagedProducts = await PaginatedList<Product>.CreateAsync(products.AsQueryable(), pageIndex, pageSize);
 

@@ -17,7 +17,7 @@
                 <h4>@item.name</h4>
                 <p>@item.description</p>
                 <div class="d-flex justify-content-between flex-lg-wrap">
-                    <p class="text-dark fs-5 fw-bold mb-0">$@item.price / kg     </p>
+                    <p class="text-dark fs-5 fw-bold mb-0">@item.price VND / kg     </p>
                     <!-- Form để thêm sản phẩm vào giỏ hàng -->
                     <form asp-action="AddToCart" asp-controller="Cart" method="post">
                         <input type="hidden" name="id_product" value="@item.id_product" />

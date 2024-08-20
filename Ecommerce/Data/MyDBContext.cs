@@ -195,11 +195,7 @@ namespace Ecommerce.Data
                  .WithMany(u => u.Voucher_Users)
                  .HasForeignKey(vu => vu.id_user)
                  .OnDelete(DeleteBehavior.Restrict); 
-
-                e.HasOne(vu => vu.Order)
-                 .WithOne(o => o.Voucher_User) 
-                 .HasForeignKey<Voucher_User>(vu => vu.id_order)
-                 .OnDelete(DeleteBehavior.Restrict); 
+               
             });
 
             modelBuilder.Entity<Staff>(e =>

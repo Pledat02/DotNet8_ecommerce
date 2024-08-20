@@ -48,10 +48,40 @@ namespace Ecommerce.Services
                 throw new ArgumentNullException(nameof(id), "User ID cannot be null.");
             }
 
-            return await _dbContext.Users.Include(u => u.Account)
-                .FirstOrDefaultAsync(c => c.id_user == id)
-                ?? throw new KeyNotFoundException("User not found.");
+            // Lấy thông tin người dùng và bao gồm thông tin voucher
+            var user = await _dbContext.Users
+                .Include(u => u.Account)
+                .Include(u => u.Voucher_Users)
+                .ThenInclude(vu => vu.Voucher)
+                .FirstOrDefaultAsync(u => u.id_user == id);
+
+            if (user == null)
+            {
+                throw new KeyNotFoundException("User not found.");
+            }
+            var validVouchers = new List<Voucher_User>();
+            // Kiểm tra trạng thái và thời gian các voucher của người dùng
+            foreach (var voucherUser in user.Voucher_Users)
+            {// Voucher chưa sử dụng
+                if (voucherUser.state == 0) 
+                {   
+                    // neu co voucher
+                    if (voucherUser.Voucher != null)
+                    {
+                        var now = DateTime.UtcNow;
+                        if (voucherUser.Voucher.start_date <= now && voucherUser.Voucher.finish_date >= now)
+                        {
+                            validVouchers.Add(voucherUser);
+                        }
+                    }
+                    
+                }
+            }
+            user.Voucher_Users  = validVouchers;
+
+            return user;
         }
+
         public async Task<Account> GetAccountAsync(int? id)
         {
             if (id == null)
@@ -131,6 +161,46 @@ namespace Ecommerce.Services
                 return builder.ToString();
             }
         }
+        public async Task<Voucher_User> GetOneVouchersAsync(int? id_uservoucher)
+        {
+        
+            // Lấy thông tin voucher_user của người dùng
+            var voucherUser = await _dbContext.Voucher_Users
+                .Include(vu => vu.Voucher)
+                .FirstOrDefaultAsync(vu => vu.id_voucher_User == id_uservoucher);
 
+            if (voucherUser == null)
+            {
+                throw new KeyNotFoundException("Voucher_User not found.");
+            }
+
+            // Kiểm tra trạng thái và thời gian voucher
+            if (voucherUser.state != 0)
+            {
+                throw new InvalidOperationException("Voucher has already been used.");
+            }
+
+            var now = DateTime.UtcNow; 
+            if (voucherUser.Voucher.start_date > now || voucherUser.Voucher.finish_date < now)
+            {
+                throw new InvalidOperationException("Voucher is not valid for the current date.");
+            }
+
+            return voucherUser;
+        }
+        public async Task SetStateVoucher(Voucher_User voucherUser, int state)
+        {
+            if (voucherUser == null)
+            {
+                throw new ArgumentNullException(nameof(voucherUser));
+            }
+
+            var existingVoucherUser = await _dbContext.Voucher_Users
+                .FirstOrDefaultAsync(vu => vu.id_voucher_User == voucherUser.id_voucher_User);
+          
+            existingVoucherUser.state = state;
+            _dbContext.Voucher_Users.Update(existingVoucherUser);
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

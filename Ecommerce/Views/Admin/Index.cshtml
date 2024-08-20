@@ -6,11 +6,9 @@
                 if (response.status === 401) {
                     // Chuyển hướng đến trang đăng nhập
                     window.location.href = '/Home/Login';
-                    throw new Error('Unauthorized');
                 } else if (response.status === 403) {
                     // Chuyển hướng đến trang lỗi 403
                     window.location.href = '/Home/Error403';
-                    throw new Error('Forbidden');
                 } else if (!response.ok) {
                     // Xử lý lỗi khác
                     throw new Error('Network response was not ok.');
@@ -132,7 +130,28 @@
         }
     </script>
     <div class="content">
-        <div id="customers" class="table-container active">
+        <div id="dashboard" class="table-container active">
+                <h1>Giới thiệu về Trang Quản trị</h1>
+                <br/>
+                <p>
+                    Chào mừng đến với Trang Quản trị của hệ thống! Đây là nơi các quản lý <br>
+                    thực hiện các tác vụ quan trọng như theo dõi hoạt động, quản lý người dùng, 
+                    và đảm bảo sự vận hành mượt mà của toàn bộ hệ thống.
+                </p>
+                <p>
+                    Hệ thống của chúng tôi hiện có <strong>5 quản lý</strong> với trách nhiệm đa dạng,
+                mỗi người đóng vai trò then chốt trong việc duy trì và phát triển<br> nền tảng.
+                Mỗi quản lý đều có các quyền hạn riêng biệt, được phân công dựa trên lĩnh vực
+                chuyên môn của họ, đảm bảo mọi khía cạnh <br> của hệ thống đều được quản lý
+                một cách hiệu quả.
+                </p>
+                <p>
+                    Chúng tôi luôn hướng tới việc cung cấp một trải nghiệm quản trị mạnh mẽ
+                và dễ sử dụng, hỗ trợ các quản lý trong việc <br>hoàn thành nhiệm vụ của họ
+                với sự tiện lợi và hiệu quả cao nhất.
+                </p>
+        </div>
+        <div id="customers" class="table-container ">
             <h1>Quản lý khách hàng</h1>
             <button class="add-new-btn"
                     data-bs-toggle="modal"
@@ -143,8 +162,7 @@
 
             <script>
                 document.getElementById('customerTb').addEventListener('click', function () {
-                    fetch('/Users/Index')
-                        .then(response => response.text())  
+                    fetchData('/Users/Index')
                         .then(data => {
                             document.getElementById('user-content').innerHTML = data;
 
@@ -171,8 +189,7 @@
 
             <script>
                 document.getElementById('productTb').addEventListener('click', function () {
-                    fetch('/Products/Index')
-                        .then(response => response.text())  
+                    fetchData('/Products/Index')
                         .then(data => {
                             document.getElementById('product-content').innerHTML = data;
 
@@ -200,8 +217,7 @@
             <div id="staff-content">   </div>
            <script>
                 document.getElementById('employeeTb').addEventListener('click', function () {
-                    fetch('/Staffs/Index')
-                        .then(response => response.text())  // 
+                    fetchData('/Staffs/Index')
                         .then(data => {
                             document.getElementById('staff-content').innerHTML = data;
 
@@ -228,8 +244,7 @@
 
             <script>
                 document.getElementById('voucherTb').addEventListener('click', function () {
-                    fetch('/Vouchers/Index')
-                        .then(response => response.text())  // 
+                    fetchData('/Vouchers/Index')
                         .then(data => {
                             document.getElementById('voucher-content').innerHTML = data;
 
@@ -256,8 +271,7 @@
 
             <script>
                 document.getElementById('orderTb').addEventListener('click', function () {
-                    fetch('/Orders/Index')
-                        .then(response => response.text())  //
+                    fetchData('/Orders/Index')
                         .then(data => {
                             document.getElementById('order-content').innerHTML = data;
 
@@ -296,8 +310,7 @@
                 <div id="user-create-content"></div>
                 <script>
                     document.getElementById('userCreate').addEventListener('click', function () {
-                        fetch('/Users/Create')
-                            .then(response => response.text())  
+                        fetchData('/Users/Create')
                             .then(data => {
                                 document.getElementById('user-create-content').innerHTML = data;
                             })
@@ -329,18 +342,8 @@
 
                 <script>
                     document.getElementById('userDelete').addEventListener('click', function () {
-                        fetch('/Users/Delete', {
-                            method: 'GET',
-                            headers: {
-                                'Content-Type': 'text/html',
-                            }
-                        })
-                            .then(response => {
-                                if (!response.ok) {
-                                    throw new Error('Network response was not ok');
-                                }
-                                return response.text(); 
-                            })
+                        fetchData('/Users/Delete')
+                      
                             .then(data => {
                                 document.getElementById('customer-delete-content').innerHTML = data;
                             })
@@ -374,18 +377,8 @@
 
                 <script>
                     document.getElementById('userEdit').addEventListener('click', function () {
-                        fetch('/Users/Edit', {
-                            method: 'GET',
-                            headers: {
-                                'Content-Type': 'text/html',
-                            }
-                        })
-                            .then(response => {
-                                if (!response.ok) {
-                                    throw new Error('Network response was not ok');
-                                }
-                                return response.text();
-                            })
+                        fetchData('/Users/Edit')
+                            
                             .then(data => {
                                 document.getElementById('customer-edit-content').innerHTML = data;
                             })
@@ -419,8 +412,7 @@
                 <div id="product-add-content" >
                     <script>
                         document.getElementById('productCreate').addEventListener('click', function () {
-                            fetch('/Products/Create')
-                                .then(response => response.text())
+                            fetchData('/Products/Create')
                                 .then(data => {
                                     document.getElementById('product-add-content').innerHTML = data;
                                 })
@@ -451,18 +443,7 @@
 
                 <script>
                     document.getElementById('productDelete').addEventListener('click', function () {
-                        fetch('/Products/Delete', {
-                            method: 'GET',
-                            headers: {
-                                'Content-Type': 'text/html',
-                            }
-                        })
-                            .then(response => {
-                                if (!response.ok) {
-                                    throw new Error('Network response was not ok');
-                                }
-                                return response.text();
-                            })
+                        fetchData('/Products/Delete')
                             .then(data => {
                                 document.getElementById('product-delete-content').innerHTML = data;
                             })
@@ -495,18 +476,8 @@
                 <div id="product-edit-content"> </div>
                 <script>
                     document.getElementById('productEdit').addEventListener('click', function () {
-                        fetch('/Products/Edit', {
-                            method: 'GET',
-                            headers: {
-                                'Content-Type': 'text/html',
-                            }
-                        })
-                            .then(response => {
-                                if (!response.ok) {
-                                    throw new Error('Network response was not ok');
-                                }
-                                return response.text();
-                            })
+                        fetchData('/Products/Edit')
+                           
                             .then(data => {
                                 document.getElementById('product-edit-content').innerHTML = data;
                             })
@@ -540,8 +511,7 @@
                 <div id="staff-add-content"> </div>
                 <script>
                     document.getElementById('staffCreate').addEventListener('click', function () {
-                        fetch('/Staffs/Create')
-                            .then(response => response.text())
+                        fetchData('/Staffs/Create')
                             .then(data => {
                                 document.getElementById('staff-add-content').innerHTML = data;
                             })
@@ -572,18 +542,7 @@
                 <div id="staff-edit-content"> </div>
                 <script>
                     document.getElementById('staffEdit').addEventListener('click', function () {
-                        fetch('/Staffs/Edit', {
-                            method: 'GET',
-                            headers: {
-                                'Content-Type': 'text/html',
-                            }
-                        })
-                            .then(response => {
-                                if (!response.ok) {
-                                    throw new Error('Network response was not ok');
-                                }
-                                return response.text();
-                            })
+                        fetchData('/Staffs/Edit')
                             .then(data => {
                                 document.getElementById('staff-edit-content').innerHTML = data;
                             })
@@ -614,18 +573,8 @@
                     <div id="staff-delete-content"> </div>
                 <script>
                     document.getElementById('staffDelete').addEventListener('click', function () {
-                        fetch('/Staffs/Delete', {
-                            method: 'GET',
-                            headers: {
-                                'Content-Type': 'text/html',
-                            }
-                        })
-                            .then(response => {
-                                if (!response.ok) {
-                                    throw new Error('Network response was not ok');
-                                }
-                                return response.text();
-                            })
+                        fetchData('/Staffs/Delete')
+                           
                             .then(data => {
                                 document.getElementById('staff-delete-content').innerHTML = data;
                             })
@@ -659,8 +608,7 @@
 
                 <script>
                     document.getElementById('voucherCreate').addEventListener('click', function () {
-                        fetch('/Vouchers/Create')
-                            .then(response => response.text())
+                        fetchData('/Vouchers/Create')
                             .then(data => {
                                 document.getElementById('voucher-create-content').innerHTML = data;
                             })
@@ -694,18 +642,8 @@
 
                 <script>
                     document.getElementById('voucherEdit').addEventListener('click', function () {
-                        fetch('/Vouchers/Edit', {
-                            method: 'GET',
-                            headers: {
-                                'Content-Type': 'text/html',
-                            }
-                        })
-                            .then(response => {
-                                if (!response.ok) {
-                                    throw new Error('Network response was not ok');
-                                }
-                                return response.text();
-                            })
+                        fetchData('/Vouchers/Edit', {
+                           )
                             .then(data => {
                                 document.getElementById('voucher-edit-content').innerHTML = data;
                             })
@@ -740,18 +678,8 @@
 
                 <script>
                     document.getElementById('voucherDelete').addEventListener('click', function () {
-                        fetch('/Vouchers/Delete', {
-                            method: 'GET',
-                            headers: {
-                                'Content-Type': 'text/html',
-                            }
-                        })
-                            .then(response => {
-                                if (!response.ok) {
-                                    throw new Error('Network response was not ok');
-                                }
-                                return response.text();
-                            })
+                        fetchData('/Vouchers/Delete')
+                            
                             .then(data => {
                                 document.getElementById('voucher-delete-content').innerHTML = data;
                             })
@@ -786,8 +714,7 @@
 
                 <script>
                     document.getElementById('orderCreate').addEventListener('click', function () {
-                        fetch('/Orders/Create')
-                            .then(response => response.text())
+                        fetchData('/Orders/Create')
                             .then(data => {
                                 document.getElementById('order-create-content').innerHTML = data;
                             })
@@ -817,18 +744,9 @@
 
                 <script>
                     document.getElementById('orderDelete').addEventListener('click', function () {
-                        fetch('/Orders/Delete', {
-                            method: 'GET',
-                            headers: {
-                                'Content-Type': 'text/html',
-                            }
-                        })
-                            .then(response => {
-                                if (!response.ok) {
-                                    throw new Error('Network response was not ok');
-                                }
-                                return response.text();
-                            })
+                        fetchData('/Orders/Delete'
+                           )
+                          
                             .then(data => {
                                 document.getElementById('order-delete-content').innerHTML = data;
                             })
@@ -861,18 +779,8 @@
 
                 <script>
                     document.getElementById('orderEdit').addEventListener('click', function () {
-                        fetch('/Orders/Edit', {
-                            method: 'GET',
-                            headers: {
-                                'Content-Type': 'text/html', 
-                            }
-                        })
-                            .then(response => {
-                                if (!response.ok) {
-                                    throw new Error('Network response was not ok');
-                                }
-                                return response.text(); 
-                            })
+                        fetchData('/Orders/Edit')
+                            
                             .then(data => {
                                 document.getElementById('order-edit-content').innerHTML = data;
                             })

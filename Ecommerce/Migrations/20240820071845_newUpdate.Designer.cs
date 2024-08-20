@@ -4,6 +4,7 @@ using Ecommerce.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ecommerce.Migrations
 {
     [DbContext(typeof(MyDBContext))]
-    partial class MyDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240820071845_newUpdate")]
+    partial class newUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -176,7 +179,7 @@ namespace Ecommerce.Migrations
                     b.Property<int?>("Userid_user")
                         .HasColumnType("int");
 
-                    b.Property<int?>("id_voucher_user")
+                    b.Property<int>("id_voucher_user")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("order_time")
@@ -194,8 +197,7 @@ namespace Ecommerce.Migrations
                     b.HasIndex("Userid_user");
 
                     b.HasIndex("id_voucher_user")
-                        .IsUnique()
-                        .HasFilter("[id_voucher_user] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Orders", (string)null);
                 });
@@ -510,7 +512,8 @@ namespace Ecommerce.Migrations
                     b.HasOne("Ecommerce.Data.Voucher_User", "Voucher_User")
                         .WithOne("Order")
                         .HasForeignKey("Ecommerce.Data.Order", "id_voucher_user")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Voucher_User");
                 });

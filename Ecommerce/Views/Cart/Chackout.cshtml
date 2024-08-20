@@ -118,8 +118,8 @@
                                     <td class="py-5"></td>
                                     <td class="py-5">
                                         <div class="py-3 border-bottom border-top">
-                                            <input type="hidden" value="@ViewBag.Total" class="form-control" asp-for="amount">
-                                            <p class="mb-0 text-dark">$@ViewBag.Total</p>
+                                            <input type="hidden" value="@Model.amount" class="form-control" asp-for="amount">
+                                            <p class="mb-0 text-dark">@Model.amount VND</p>
                                         </div>
                                     </td>
                                 </tr>
