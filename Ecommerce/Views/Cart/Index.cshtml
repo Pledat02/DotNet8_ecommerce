@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Cart Page";
 }
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -101,7 +102,7 @@
 <!-- Single Page Header End -->
 <!-- Cart Page Start -->
 <div class="container-fluid py-5">
-    <div class="container py-5">
+    <form class="container py-5" asp-action="Chackout" asp-controller="Cart" method="get">
         <div class="table-responsive">
             <table class="table">
                 <thead>
@@ -134,13 +135,13 @@
                                 <td>
                                     <div class="input-group quantity mt-4" style="width: 100px;">
                                         <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-minus rounded-circle bg-light border subtract">
+                                            <button type="button" class="btn btn-sm btn-minus rounded-circle bg-light border subtract">
                                                 <i class="fa fa-minus"></i>
                                             </button>
                                         </div>
                                         <input type="text" class="form-control form-control-sm text-center border-0" id="quantity" readonly value="@item.quantity">
                                         <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-plus rounded-circle bg-light border plus">
+                                            <button type="button" class="btn btn-sm btn-plus rounded-circle bg-light border plus">
                                                 <i class="fa fa-plus"></i>
                                             </button>
                                         </div>
@@ -150,7 +151,7 @@
                                     <p id="amount" class="mb-0 mt-4">@item.amount VNĐ</p>
                                 </td>
                                 <td>
-                                        <button class="btn btn-md rounded-circle bg-light border mt-4 remove">
+                                    <button type="button" class="btn btn-md rounded-circle bg-light border mt-4 remove">
                                             <i class="fa fa-times text-danger"></i>
                                         </button>
                                 </td>
@@ -161,10 +162,30 @@
                 </tbody>
             </table>
         </div>
+        <!-- Coupon Section Start -->
         <div class="mt-5">
-            <input type="text" class="border-0 border-bottom rounded me-5 py-3 mb-4" placeholder="Coupon Code">
-            <button class="btn border-secondary rounded-pill px-4 py-3 text-primary" type="button">Apply Coupon</button>
+            <h2 class="mb-4">Apply Coupon</h2>
+            @if (ViewBag.Vouchers != null)
+            {
+                <div class="d-flex align-items-center">
+                    <select name="vouchercode" class="form-select me-3">
+                        <option value="">Select a voucher</option>
+                        @foreach (var voucher in ViewBag.Vouchers)
+                        {
+                            <option value="@voucher.id_voucher_User">Discount @voucher.Voucher.percent_discount %</option>
+                        }
+                    </select>
+                </div>
+            }
+            else
+            {
+                <div class="d-flex align-items-center">
+                    None Voucher
+                </div>
+            }
+            <div id="couponMessage" class="mt-3"></div>
         </div>
+        <!-- Coupon Section End -->
         <div class="row g-4 justify-content-end">
             <div class="col-8"></div>
             <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">
@@ -187,10 +208,11 @@
                         <h5 class="mb-0 ps-4 me-4">Total</h5>
                         <p class="mb-0 pe-4">@ViewBag.Total VND</p>
                     </div>
-                    <a asp-action="Chackout" asp-controller="Cart" class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</a>
+
+                    <button type="submit" class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4">Proceed Checkout</button>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>
 <!-- Cart Page End -->

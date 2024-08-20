@@ -1,5 +1,6 @@
 ﻿
 using Ecommerce.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Services
 {
@@ -25,7 +26,7 @@ namespace Ecommerce.Services
 
         public async Task<Comment> GetOneAsync(int? id)
         {
-           return await _dbContext.Comments.FindAsync(id);
+           return await _dbContext.Comments.Include(c =>c.User).SingleOrDefaultAsync(c => c.id_comment == id);
         }
 
         public async Task<Comment> InsertAsync(Comment entity)

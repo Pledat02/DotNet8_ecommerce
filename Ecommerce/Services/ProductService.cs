@@ -94,23 +94,7 @@ namespace Ecommerce.Services
                 .ToListAsync();
         }
 
-        public async Task<List<Product>> GetTopProduct(int number)
-        {
-            var topProducts = await _dbContext.OrderDetails
-                               .GroupBy(o => o.Product)
-                               .Select(g => new
-                                   {
-                                       Product = g.Key,
-                                       TotalQuantitySold = g.Sum(o => o.quantity)
-                                   })
-                               .OrderByDescending(x => x.TotalQuantitySold)
-                               .Take(number)
-                               .Select(x => x.Product)
-                               .ToListAsync();
-
-            return topProducts;
-
-        }
+     
         public async Task<List<int>> GetTopProductIdsAsync(int number)
         {
             return await _dbContext.OrderDetails
@@ -129,10 +113,10 @@ namespace Ecommerce.Services
         {
             var topProductIds = await GetTopProductIdsAsync(number);
 
-            var topProducts = await _dbContext.Products
-                .Where(p => topProductIds.Contains(p.id_product)) // Lọc theo danh sách id_product
-                .Include(p => p.Category) // Bao gồm thông tin danh mục
-                .ToListAsync();
+            var topProducts = new List<Product> ();
+            foreach (var id in topProductIds) {
+                topProducts.Add(await GetOneAsync(id));
+            }
 
             return topProducts;
         }
@@ -188,17 +172,22 @@ namespace Ecommerce.Services
         {
             return await _dbContext.Products.Where(p => p.id_category == id_category).ToListAsync();
         }
-        public async Task<bool> CheckIsSoldAsync(int id_product , int id_user)
+        public async Task<bool> CheckIsSoldAsync(int productId, int userId)
         {
             bool isSold = await _dbContext.OrderDetails
-                            .Join(_dbContext.Orders,
-                                  detail => detail.id_order,    // Key from OrderDetails table
-                                  order => order.id_order,      // Key from Orders table
-                                  (detail, order) => new { detail, order }) // Result selector
-                            .Where(od => od.order.Voucher_User.id_user == id_user && od.detail.id_product == id_product)
-                            .AnyAsync();
+                .Join(_dbContext.Orders,
+                      detail => detail.id_order,
+                      order => order.id_order,
+                      (detail, order) => new { detail, order })
+                .Join(_dbContext.Voucher_Users,
+                      od => od.order.id_voucher_user,
+                      voucherUser => voucherUser.id_voucher_User,
+                      (od, voucherUser) => new { od, voucherUser })
+                .AnyAsync(od_vu => od_vu.voucherUser.id_user == userId && od_vu.od.detail.id_product == productId);
+
             return isSold;
         }
+
         public async Task<bool> CheckStocking(int id_product)
         {   
             var product = await _dbContext.Products

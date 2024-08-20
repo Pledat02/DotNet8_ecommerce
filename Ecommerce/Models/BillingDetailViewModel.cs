@@ -11,7 +11,7 @@
         public string Country { get; set; }
         public string email { get; set; }
         public string shipping {  get; set; }
-        public double amount { get; set; }
+        public decimal amount { get; set; }
         public string  payment_method { get; set; }
 
         

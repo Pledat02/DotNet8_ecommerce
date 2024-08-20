@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Ecommerce.Data;
+using Ecommerce.Filter;
 using Ecommerce.Services;
-using Newtonsoft.Json;
-using System;
 using System.Security.Claims;
 
 namespace Ecommerce.Controllers
@@ -18,12 +17,34 @@ namespace Ecommerce.Controllers
         }
 
         // GET: Products
+        [ProductAuthorizationFilter]
         public async Task<IActionResult> Index()
         {
             var products = await _service.GetAllAsync();
             return PartialView("Index",products);
         }
+        private Account GetLoggedInUser()
+        {
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            if (claimsIdentity != null && claimsIdentity.IsAuthenticated)
+            {
+                var email = claimsIdentity.FindFirst(ClaimTypes.Email)?.Value;
+                var fullname = claimsIdentity.FindFirst(ClaimTypes.Name)?.Value;
+                var phone = claimsIdentity.FindFirst("Phone")?.Value;
 
+                return new Account
+                {
+                    User = new User
+                    {
+                        email = email,
+                        fullname = fullname,
+                        phone = phone
+                    }
+                };
+            }
+
+            return null;
+        }
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -42,11 +63,11 @@ namespace Ecommerce.Controllers
             await Populate4BestSellerAsync();
             await PopulateVegetableAsync();
             await PopulateRelatedProductsAsync(product.id_category);
+           Account user = GetLoggedInUser();
 
-            var user = GetLoggedInUser();
             if (user != null)
             {
-                ViewBag.account = user;
+                ViewBag.account = user.User;
             }
 
             return View(product);
@@ -144,33 +165,12 @@ namespace Ecommerce.Controllers
             }
         }
 
-        // Helper method to get the logged-in user from the authentication cookie
-        private Account GetLoggedInUser()
-        {
-            var claimsIdentity = User.Identity as ClaimsIdentity;
-            if (claimsIdentity != null && claimsIdentity.IsAuthenticated)
-            {
-                var email = claimsIdentity.FindFirst(ClaimTypes.Email)?.Value;
-                var fullname = claimsIdentity.FindFirst(ClaimTypes.Name)?.Value;
-                var phone = claimsIdentity.FindFirst("Phone")?.Value;
 
-                return new Account
-                {
-                    User = new User
-                    {
-                        email = email,
-                        fullname = fullname,
-                        phone = phone
-                    }
-                };
-            }
-
-            return null;
-        }
 
         // Other methods unchanged...
 
         // GET: Products/Create
+        [ProductAuthorizationFilter]
         public async Task<IActionResult> Create()
         {
             await PopulateCategoriesAndSuppliersAsync();
@@ -180,6 +180,7 @@ namespace Ecommerce.Controllers
         // POST: Products/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ProductAuthorizationFilter]
         public async Task<IActionResult> Create([Bind("name,quantity_in_stock,price,description,id_category,id_supplier")] Product product, IFormFile url_image)
         {
         
@@ -205,6 +206,7 @@ namespace Ecommerce.Controllers
         }
 
         // GET: Products/Edit/5
+        [ProductAuthorizationFilter]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -225,6 +227,7 @@ namespace Ecommerce.Controllers
         // POST: Products/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ProductAuthorizationFilter]
         public async Task<IActionResult> Edit(int id, [Bind("id_product,name,quantity_in_stock,price,description,id_category,id_supplier")] Product product, IFormFile url_image)
         {
             if (id != product.id_product)
@@ -279,6 +282,7 @@ namespace Ecommerce.Controllers
 
 
         // GET: Products/Delete/5
+        [ProductAuthorizationFilter]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -298,6 +302,7 @@ namespace Ecommerce.Controllers
         // POST: Products/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ProductAuthorizationFilter]
         public async Task<IActionResult> Delete(int id)
         {
             try

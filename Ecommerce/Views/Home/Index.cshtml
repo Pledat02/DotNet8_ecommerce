@@ -4,7 +4,9 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         // Debounce function to limit the rate of function calls
@@ -47,17 +49,7 @@
 <div class="container-fluid py-5 mb-5 hero-header">
  
     <div class="container py-5">
-        @{
-            var role = Context.User.FindFirst(ClaimTypes.Role)?.Value;
-            if (role != null)
-            {
-                <p>User Role: @role</p>
-            }
-            else
-            {
-                <p>No role assigned to this user.</p>
-            }
-        }
+        
         <div class="row g-5 align-items-center">
             <div class="col-md-12 col-lg-7">
                 <h4 class="mb-3 text-secondary">100% Organic Foods</h4>
@@ -437,26 +429,33 @@
     <div class="container py-5">
         <h1 class="mb-0">Fresh Organic Vegetables</h1>
         <div class="owl-carousel vegetable-carousel justify-content-center">
-            @foreach(var item in ViewBag.Vegetables)
+            @foreach (var item in ViewBag.Vegetables)
             {
                 <div class="border border-primary rounded position-relative vesitable-item">
-                  <a asp-action="Details" asp-controller="Products" asp-route-id="@item.id_product">
                     <div class="vesitable-img">
-                        <img style="height:300px" src="~/@item.url_image" class="img-fluid w-100 rounded-top" alt="">
+                          <a asp-action="Details" asp-controller="Products" asp-route-id="@item.id_product">
+                        <img src="~/@item.url_image" style="height:250px" class="img-fluid w-100 rounded-top" alt="">
+                        </a>
                     </div>
-                  </a>
-                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">@item.Category.name</div>
+                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Vegetable</div>
                     <div class="p-4 rounded-bottom">
                         <h4>@item.name</h4>
                         <p>@item.description</p>
                         <div class="d-flex justify-content-between flex-lg-wrap">
                             <p class="text-dark fs-5 fw-bold mb-0">$@item.price / kg</p>
-                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                            <!-- Form để thêm sản phẩm vào giỏ hàng -->
+                            <form asp-action="AddToCart" asp-controller="Cart" method="post">
+                                <input type="hidden" name="id_product" value="@item.id_product" />
+                                <input type="hidden" name="quantity" value="1" />
+                                <button type="submit" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                    <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
             }
-           
+
         </div>
     </div>
 </div>
@@ -524,7 +523,13 @@
                                     }
                                 </div>
                                 <h4 class="mb-3">@item.price $</h4>
-                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                <form asp-action="AddToCart" asp-controller="Cart" method="post">
+                                    <input type="hidden" name="id_product" value="@item.id_product" />
+                                    <input type="hidden" name="quantity" value="1" />
+                                    <button type="submit" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                        <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -557,7 +562,13 @@
                                 }
                         </div>
                             <h4 class="mb-3">@item.price $</h4>
-                        <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                            <form asp-action="AddToCart" asp-controller="Cart" method="post">
+                                <input type="hidden" name="id_product" value="@item.id_product" />
+                                <input type="hidden" name="quantity" value="1" />
+                                <button type="submit" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                    <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                                </button>
+                            </form>
                     </div>
                 </div>
             </div>

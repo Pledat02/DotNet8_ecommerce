@@ -16,7 +16,6 @@
     }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
@@ -31,8 +30,8 @@
                 method: 'GET',
                 data: { id_product: id_product },
                 success: function (response) {
-                    console.log(response.message);
-                    if (response.isSold) {
+                    console.log(response.isSold);
+                    if (response.isSold==true) {
                         selectedRating = starElement.data('value');
                         $('.star').each(function (index) {
                             if (index < selectedRating) {
@@ -327,21 +326,24 @@
                         </ul>
                     </div>
                     <div class="col-lg-12">
-                        <h4 class="mb-3">Featured products</h4>
+                        <h4 class="mb-3">BestSeller products</h4>
                         <!-- Repeat similar structure for featured products -->
                         @* Replace with dynamic content as needed *@
                         @foreach (var item in ViewBag.BestSeller4)
                         {
                             <div class="d-flex align-items-center justify-content-start">
                                 <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                    <img src="~/@item.url_image" class="img-fluid rounded" alt="Featured Product 1">
+                                    <a asp-action="Details" asp-controller="Products" asp-route-id="@item.id_product">
+                                        <img src="~/@item.url_image" class="img-fluid rounded" alt="Featured Product 1">
+
+                                    </a>
                                 </div>
                                 <div>
                                     <h6 class="mb-2">@item.name</h6>
                                     <div class="d-flex mb-2">
                                         @for (int i = 0; i < 5; i++)
                                         {
-                                            @if (@item.average_rate > i)
+                                            @if (@item.getAvgRate() > i)
                                             {
                                                 <i class="fa fa-star text-secondary"></i>
                                             }
@@ -353,7 +355,7 @@
 
                                     </div>
                                     <div class="d-flex mb-2">
-                                        <h5 class="fw-bold me-2">@item.price $</h5>
+                                        <h5 class="fw-bold me-2">@item.price VND</h5>
                                         <!--  <h5 class="text-danger text-decoration-line-through">4.11 $</h5> -->
                                     </div>
                                 </div>
@@ -382,20 +384,29 @@
             <div class="owl-carousel vegetable-carousel justify-content-center">
                 @foreach (var item in ViewBag.RelatedProducts)
                 {
-                <div class="border border-primary rounded position-relative vesitable-item">
-                    <div class="vesitable-img">
-                        <img src="~/@item.url_image" class="img-fluid w-100 rounded-top" alt="">
-                    </div>
-                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">@item.Category.name</div>
-                    <div class="p-4 pb-0 rounded-bottom">
-                        <h4>@item.name</h4>
-                        <p>@item.description</p>
-                        <div class="d-flex justify-content-between flex-lg-wrap">
-                            <p class="text-dark fs-5 fw-bold">$@item.price / kg</p>
-                            <a href="#" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                    <div class="border border-primary rounded position-relative vesitable-item">
+                        <div class="vesitable-img">
+                            <a asp-action="Details" asp-controller="Products" asp-route-id="@item.id_product">
+                                <img src="~/@item.url_image" style="height:250px" class="img-fluid w-100 rounded-top" alt="">
+                            </a>
+                        </div>
+                        <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Vegetable</div>
+                        <div class="p-4 rounded-bottom">
+                            <h4>@item.name</h4>
+                            <p>@item.description</p>
+                            <div class="d-flex justify-content-between flex-lg-wrap">
+                                <p class="text-dark fs-5 fw-bold mb-0">$@item.price / kg</p>
+                                <!-- Form để thêm sản phẩm vào giỏ hàng -->
+                                <form asp-action="AddToCart" asp-controller="Cart" method="post">
+                                    <input type="hidden" name="id_product" value="@item.id_product" />
+                                    <input type="hidden" name="quantity" value="1" />
+                                    <button type="submit" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                        <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
                 }
 
             </div>

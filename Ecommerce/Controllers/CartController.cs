@@ -10,52 +10,78 @@ namespace Ecommerce.Controllers
     public class CartController : BaseController
     {   
         private readonly ProductService _service;
+        private readonly UserService _userService;
 
-        public CartController (ProductService service)
+        public CartController (ProductService service, UserService userService)
         {
             _service = service;
+            _userService = userService;
         }
      
         public List<CartItemViewModel> Cart => HttpContext.Session.Get<List<CartItemViewModel>>(SettingKey.CART_KEY) ??
             new List<CartItemViewModel>(); 
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            ViewBag.Total = GetTotal();
-            return View(Cart);
-        }
-        public IActionResult Chackout()
-        {
-            ViewBag.Cart = Cart;
-            ViewBag.Total = GetTotal();
-
             var claimsIdentity = User.Identity as ClaimsIdentity;
             if (claimsIdentity != null && claimsIdentity.IsAuthenticated)
+            {
+                if(User.IsInRole("Customer")){
+                    var id = claimsIdentity.FindFirst("IDUser")?.Value;
+                    User user = await _userService.GetOneAsync(int.Parse(id));
+                    if (user.Voucher_Users != null)
+                    {
+                        ViewBag.Vouchers = user.Voucher_Users;
+                    }
+                }
+            }
+            ViewBag.Total = GetTotal();
+
+            return View(Cart);
+        }
+        public async Task<IActionResult> Chackout(string vouchercode)
+        {
+            ViewBag.Cart = Cart;
+            decimal total = GetTotal(); 
+
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            if (claimsIdentity?.IsAuthenticated == true)
             {
                 var email = claimsIdentity.FindFirst(ClaimTypes.Email)?.Value;
                 var fullname = claimsIdentity.FindFirst(ClaimTypes.Name)?.Value;
                 var phone = claimsIdentity.FindFirst("Phone")?.Value;
                 var address = claimsIdentity.FindFirst("Address")?.Value;
 
-                // Assuming fullname contains more than two parts (firstname, middlename, lastname)
-                string[] nameCpn = fullname?.Split(" ");
-                var firstname = nameCpn?.FirstOrDefault();
-                var lastname = nameCpn?.Length > 1 ? string.Join(" ", nameCpn.Skip(1)) : string.Empty;
+                var nameParts = fullname?.Split(" ");
+                var firstname = nameParts?.FirstOrDefault();
+                var lastname = nameParts?.Length > 1 ? string.Join(" ", nameParts.Skip(1)) : string.Empty;
 
-                BillingDetailViewModel bill = new BillingDetailViewModel
+                var iduser = claimsIdentity.FindFirst("IDUser")?.Value;
+                Voucher_User voucher = null;
+                decimal discount = 0;
+
+                if (!string.IsNullOrEmpty(vouchercode))
+                {
+                    voucher = await _userService.GetOneVouchersAsync(int.Parse(vouchercode));
+                    decimal percentDiscount = voucher?.Voucher.percent_discount ?? 0;
+                    discount = percentDiscount * total; // Ensure this is calculated with decimal precision
+                    HttpContext.Session.Set<Voucher_User>(SettingKey.VOUCHER_KEY, voucher);
+                }
+
+                var bill = new BillingDetailViewModel
                 {
                     email = email,
                     firstname = firstname,
                     lastname = lastname,
                     address = address,
                     Phone = phone,
-                    // You might want to add city, Country, PostalCode, etc. if available in claims
+                    amount = total - discount // Ensure this subtraction is with decimal precision
                 };
 
                 return View(bill);
             }
 
-            return View(new BillingDetailViewModel{}); 
+            return View(new BillingDetailViewModel());
         }
 
 
@@ -67,7 +93,7 @@ namespace Ecommerce.Controllers
             {
                 return View(bill);
             }
-
+            Voucher_User voucher_User = HttpContext.Session.Get<Voucher_User>(SettingKey.VOUCHER_KEY);
             List<OrderDetail> list = new List<OrderDetail>();
             foreach (var product in Cart)
             {
@@ -85,12 +111,21 @@ namespace Ecommerce.Controllers
             {
                 idUserClaim = claimsIdentity.FindFirst("IDUser")?.Value;
             }
+           
             Order order = new Order
             {
                 OrderDetails = list,
                 order_time = DateTime.Now,
                 status = "Đặt hàng thành công",
+                Voucher_User =  new Voucher_User
+                {
+                    id_user = int.Parse(idUserClaim),
+                }
             };
+            if(voucher_User != null)
+            {
+                order.Voucher_User.id_voucher = voucher_User.Voucher.id_voucher;
+            }
 
             Bill billInsert = new Bill
             {
@@ -108,7 +143,12 @@ namespace Ecommerce.Controllers
                 shipping = bill.shipping,
             };
             //
-            HttpContext.Session.Set<Bill>(SettingKey.Bill_KEY, billInsert); 
+            HttpContext.Session.Set<List<CartItemViewModel>>(SettingKey.CART_KEY, null);
+        
+            if (voucher_User != null)
+            {
+                await _userService.SetStateVoucher(voucher_User, 1);
+            }
             await _service.Chackout(billInsert);
 
             return RedirectToAction("Index", "Home");
@@ -223,14 +263,9 @@ namespace Ecommerce.Controllers
             return Json(new { quantity = item.quantity , amount = item.amount, total = GetTotal() });
         }
 
-        private double GetTotal()
+        private decimal GetTotal()
         {
-            double total = 0;
-            foreach (var item in Cart)
-            {
-                total += item.amount;
-            }
-          return total;
+            return Cart.Sum(item => (decimal)item.amount);
         }
     }
 

@@ -114,7 +114,7 @@
         }
 
         function updatePriceAmount() {
-            $('#price-amount').text($('#price-range').val());
+            $('#price-amount').text($('#price-range').val()*100);
         }
 
         $('#search-input').on('input', debounce(updateProductList, 300));
