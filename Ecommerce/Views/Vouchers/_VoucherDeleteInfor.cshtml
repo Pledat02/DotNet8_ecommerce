@@ -26,7 +26,6 @@
     </dl>
 
     <form asp-action="Delete" method="post" id="deleteVoucherForm">
-        @Html.AntiForgeryToken()
         <div class="modal-footer">
             <input type="hidden" asp-for="id_voucher" />
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -40,25 +39,3 @@
        
     </form>
 </div>
-<script>
-    $(document).on('submit', '#deleteVoucherForm', function (e) {
-        e.preventDefault();
-
-        var form = $(this);
-        $.ajax({
-            url: form.attr('action'),
-            method: form.attr('method'),
-            data: form.serialize(),
-            success: function (response) {
-                if (response.success) {
-                    $('#deleteVoucherModal').modal('hide');
-                    var voucherId = form.find('input[name="id_voucher"]').val();
-                    $('#voucherid_' + voucherId).remove();
-                }
-            },
-            error: function (error) {
-                console.error('Error:', error);
-            }
-        });
-    });
-</script>

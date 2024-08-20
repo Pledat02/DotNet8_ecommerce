@@ -116,11 +116,11 @@
 </style>
 <div style="display: flex; align-items: start; margin-top: 170px" class="container">
     <div class="sidebar">
-        <a href="#" onclick="ShowTable('customers')">Quản lý khách hàng</a>
-        <a href="#" onclick="ShowTable('products')">Quản lý sản phẩm</a>
-        <a href="#" onclick="ShowTable('employees')">Quản lý nhân viên</a>
-        <a href="#" onclick="ShowTable('vouchers')">Quản lý voucher</a>
-        <a href="#" onclick="ShowTable('orders')">Quản lý đơn hàng</a>
+        <a href="#" onclick="ShowTable('customers')" id="customerTb">Quản lý khách hàng</a>
+        <a href="#" onclick="ShowTable('products')" id="productTb">Quản lý sản phẩm</a>
+        <a href="#" onclick="ShowTable('employees')" id="employeeTb">Quản lý nhân viên</a>
+        <a href="#" onclick="ShowTable('vouchers')" id="voucherTb">Quản lý voucher</a>
+        <a href="#" onclick="ShowTable('orders')" id="orderTb">Quản lý đơn hàng</a>
     </div>
     <script>
            function ShowTable(tableId) {
@@ -136,16 +136,25 @@
             <h1>Quản lý khách hàng</h1>
             <button class="add-new-btn"
                     data-bs-toggle="modal"
-                    data-bs-target="#addCustomerModal">
+                    data-bs-target="#addCustomerModal" id="userCreate">
                 Tạo mới
             </button>
             <div id="user-content"></div>
 
             <script>
-                document.addEventListener("DOMContentLoaded", function () {
-                    fetchData('/Users/Index')
+                document.getElementById('customerTb').addEventListener('click', function () {
+                    fetch('/Users/Index')
+                        .then(response => response.text())  
                         .then(data => {
                             document.getElementById('user-content').innerHTML = data;
+
+                            $('#customerTable').DataTable({
+                                "paging": true,
+                                "searching": true,
+                                "ordering": true,
+                                "info": true,           
+                                "pageLength": 10       
+                            });
                         })
                         .catch(error => console.error('Error:', error));
                 });
@@ -155,29 +164,28 @@
 
         <div id="products" class="table-container">
             <h1>Quản lý sản phẩm</h1>
-            <button class="add-new-btn" data-bs-toggle="modal" data-bs-target="#addProductModal">
+            <button class="add-new-btn" data-bs-toggle="modal" data-bs-target="#addProductModal" id="productCreate">
                 Tạo mới
             </button>
             <div id="product-content">   </div>
 
             <script>
-
-                document.addEventListener("DOMContentLoaded", function () {
-                    fetchData('/Products/Index')
+                document.getElementById('productTb').addEventListener('click', function () {
+                    fetch('/Products/Index')
+                        .then(response => response.text())  
                         .then(data => {
                             document.getElementById('product-content').innerHTML = data;
-                            setTimeout(function () {
-                                $('#productTable').DataTable({
-                                    "paging": true,
-                                    "searching": true,
-                                    "ordering": true,       // Bật sắp xếp
-                                    "pageLength": 10        // Số hàng mỗi trang
-                                });
-                            }, 300);
+
+                            $('#productTable').DataTable({
+                                "paging": true,
+                                "searching": true,
+                                "ordering": true,      
+                                "info": true,           
+                                "pageLength": 10       
+                            });
                         })
                         .catch(error => console.error('Error:', error));
                 });
-
             </script>
 
         </div>
@@ -186,43 +194,46 @@
             <h1>Quản lý nhân viên</h1>
             <button class="add-new-btn"
                     data-bs-toggle="modal"
-                    data-bs-target="#addEmployeeModal">
+                    data-bs-target="#addEmployeeModal" id="staffCreate">
                 Tạo mới
             </button>
             <div id="staff-content">   </div>
-            <script>
-
-                document.addEventListener("DOMContentLoaded", function () {
-                    fetchData('/Staffs/Index')
+           <script>
+                document.getElementById('employeeTb').addEventListener('click', function () {
+                    fetch('/Staffs/Index')
+                        .then(response => response.text())  // 
                         .then(data => {
                             document.getElementById('staff-content').innerHTML = data;
-                            setTimeout(function () {
-                                $('#staffTable').DataTable({
-                                    "paging": true,
-                                    "searching": true,
-                                    "ordering": true,       // Bật sắp xếp
-                                    "pageLength": 10        // Số hàng mỗi trang
-                                });
-                            }, 300);
+
+ 
+                            $('#staffTable').DataTable({
+                                "paging": true,
+                                "searching": true,
+                                "ordering": true,       // Bật sắp xếp
+                                "info": true,           // Hiển thị thông tin bảng
+                                "pageLength": 10        // Số hàng mỗi trang
+                            });
                         })
                         .catch(error => console.error('Error:', error));
                 });
-
             </script>
         </div>
 
         <div id="vouchers" class="table-container">
             <h1>Quản lý voucher</h1>
-            <button class="add-new-btn" data-bs-toggle="modal" data-bs-target="#addVoucherModal">
+            <button class="add-new-btn" data-bs-toggle="modal" data-bs-target="#addVoucherModal" id="voucherCreate">
                 Tạo mới
             </button>
             <div id="voucher-content"></div>
 
             <script>
-                document.addEventListener("DOMContentLoaded", function () {
-                    fetchData('/Vouchers/Index')
+                document.getElementById('voucherTb').addEventListener('click', function () {
+                    fetch('/Vouchers/Index')
+                        .then(response => response.text())  // 
                         .then(data => {
                             document.getElementById('voucher-content').innerHTML = data;
+
+ 
                             $('#voucherTable').DataTable({
                                 "paging": true,
                                 "searching": true,
@@ -238,22 +249,24 @@
 
         <div id="orders" class="table-container">
             <h1>Quản lý đơn hàng</h1>
-            <button class="add-new-btn" data-bs-toggle="modal" data-bs-target="#addOrderModal">
+            <button class="add-new-btn" data-bs-toggle="modal" data-bs-target="#addOrderModal" id="orderCreate">
                 Tạo mới
             </button>
             <div id="order-content"></div>
 
             <script>
-                document.addEventListener("DOMContentLoaded", function () {
-                    fetchData('/Orders/Index')
+                document.getElementById('orderTb').addEventListener('click', function () {
+                    fetch('/Orders/Index')
+                        .then(response => response.text())  //
                         .then(data => {
                             document.getElementById('order-content').innerHTML = data;
+
                             $('#orderTable').DataTable({
                                 "paging": true,
                                 "searching": true,
-                                "ordering": true,
-                                "info": true,
-                                "pageLength": 10
+                                "ordering": true,       // Bật sắp xếp
+                                "info": true,           // Hiển thị thông tin bảng
+                                "pageLength": 10        // Số hàng mỗi trang
                             });
                         })
                         .catch(error => console.error('Error:', error));
@@ -281,10 +294,10 @@
             <div class="modal-body">
                 <!-- Form to add new voucher -->
                 <div id="user-create-content"></div>
-
                 <script>
-                    document.addEventListener("DOMContentLoaded", function () {
-                        fetchData('/Users/Create')
+                    document.getElementById('userCreate').addEventListener('click', function () {
+                        fetch('/Users/Create')
+                            .then(response => response.text())  
                             .then(data => {
                                 document.getElementById('user-create-content').innerHTML = data;
                             })
@@ -315,12 +328,25 @@
                 <div id="customer-delete-content"></div>
 
                 <script>
-                    document.addEventListener("DOMContentLoaded", function () {
-                        fetchData('/Users/Delete')
+                    document.getElementById('userDelete').addEventListener('click', function () {
+                        fetch('/Users/Delete', {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'text/html',
+                            }
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.text(); 
+                            })
                             .then(data => {
                                 document.getElementById('customer-delete-content').innerHTML = data;
                             })
-                            .catch(error => console.error('Error:', error));
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
                     });
                 </script>
             </div>
@@ -347,12 +373,25 @@
                 <div id="customer-edit-content"></div>
 
                 <script>
-                    document.addEventListener("DOMContentLoaded", function () {
-                        fetchData('/Users/Edit')
+                    document.getElementById('userEdit').addEventListener('click', function () {
+                        fetch('/Users/Edit', {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'text/html',
+                            }
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.text();
+                            })
                             .then(data => {
                                 document.getElementById('customer-edit-content').innerHTML = data;
                             })
-                            .catch(error => console.error('Error:', error));
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
                     });
                 </script>
             </div>
@@ -379,8 +418,9 @@
                 <!-- Form to add new product -->
                 <div id="product-add-content" >
                     <script>
-                        document.addEventListener("DOMContentLoaded", function () {
-                            fetchData('/Products/Create')
+                        document.getElementById('productCreate').addEventListener('click', function () {
+                            fetch('/Products/Create')
+                                .then(response => response.text())
                                 .then(data => {
                                     document.getElementById('product-add-content').innerHTML = data;
                                 })
@@ -410,12 +450,25 @@
                 <div id="product-delete-content"></div>
 
                 <script>
-                    document.addEventListener("DOMContentLoaded", function () {
-                        fetchData('/Products/Delete')
+                    document.getElementById('productDelete').addEventListener('click', function () {
+                        fetch('/Products/Delete', {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'text/html',
+                            }
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.text();
+                            })
                             .then(data => {
                                 document.getElementById('product-delete-content').innerHTML = data;
                             })
-                            .catch(error => console.error('Error:', error));
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
                     });
                 </script>
             </div>
@@ -440,15 +493,28 @@
             </div>
             <div class="modal-body">
                 <div id="product-edit-content"> </div>
-                    <script>
-                        document.addEventListener("DOMContentLoaded", function () {
-                            fetchData('/Products/Edit')
-                                .then(data => {
-                                    document.getElementById('product-edit-content').innerHTML = data;
-                                })
-                                .catch(error => console.error('Error:', error));
-                        });
-                    </script>
+                <script>
+                    document.getElementById('productEdit').addEventListener('click', function () {
+                        fetch('/Products/Edit', {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'text/html',
+                            }
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.text();
+                            })
+                            .then(data => {
+                                document.getElementById('product-edit-content').innerHTML = data;
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
+                    });
+                </script>
                
             </div>
            
@@ -473,8 +539,9 @@
             <div class="modal-body">
                 <div id="staff-add-content"> </div>
                 <script>
-                    document.addEventListener("DOMContentLoaded", function () {
-                        fetchData('/Staffs/Create')
+                    document.getElementById('staffCreate').addEventListener('click', function () {
+                        fetch('/Staffs/Create')
+                            .then(response => response.text())
                             .then(data => {
                                 document.getElementById('staff-add-content').innerHTML = data;
                             })
@@ -504,12 +571,25 @@
             <div class="modal-body">
                 <div id="staff-edit-content"> </div>
                 <script>
-                    document.addEventListener("DOMContentLoaded", function () {
-                        fetchData('/Staffs/Edit')
+                    document.getElementById('staffEdit').addEventListener('click', function () {
+                        fetch('/Staffs/Edit', {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'text/html',
+                            }
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.text();
+                            })
                             .then(data => {
                                 document.getElementById('staff-edit-content').innerHTML = data;
                             })
-                            .catch(error => console.error('Error:', error));
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
                     });
                 </script>
             </div>
@@ -532,15 +612,28 @@
                 </div>
                 <div class="modal-body">
                     <div id="staff-delete-content"> </div>
-                    <script>
-                        document.addEventListener("DOMContentLoaded", function () {
-                            fetchData('/Staffs/Delete')
-                                .then(data => {
-                                    document.getElementById('staff-delete-content').innerHTML = data;
-                                })
-                                .catch(error => console.error('Error:', error));
-                        });
-                    </script>
+                <script>
+                    document.getElementById('staffDelete').addEventListener('click', function () {
+                        fetch('/Staffs/Delete', {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'text/html',
+                            }
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.text();
+                            })
+                            .then(data => {
+                                document.getElementById('staff-delete-content').innerHTML = data;
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
+                    });
+                </script>
                 </div>
             </div>
     </div>
@@ -565,8 +658,9 @@
                 <div id="voucher-create-content"></div>
 
                 <script>
-                    document.addEventListener("DOMContentLoaded", function () {
-                        fetchData('/Vouchers/Create')
+                    document.getElementById('voucherCreate').addEventListener('click', function () {
+                        fetch('/Vouchers/Create')
+                            .then(response => response.text())
                             .then(data => {
                                 document.getElementById('voucher-create-content').innerHTML = data;
                             })
@@ -597,13 +691,27 @@
                 <!-- Form to edit voucher -->
                 <div id="voucher-edit-content"></div>
 
+
                 <script>
-                    document.addEventListener("DOMContentLoaded", function () {
-                        fetchData('/Vouchers/Edit')
+                    document.getElementById('voucherEdit').addEventListener('click', function () {
+                        fetch('/Vouchers/Edit', {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'text/html',
+                            }
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.text();
+                            })
                             .then(data => {
                                 document.getElementById('voucher-edit-content').innerHTML = data;
                             })
-                            .catch(error => console.error('Error:', error));
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
                     });
                 </script>
             </div>
@@ -631,12 +739,25 @@
                 <div id="voucher-delete-content"></div>
 
                 <script>
-                    document.addEventListener("DOMContentLoaded", function () {
-                        fetchData('/Vouchers/Delete')
-                            .then(data => {
-                                document.getElementById('voucher-edit-content').innerHTML = data;
+                    document.getElementById('voucherDelete').addEventListener('click', function () {
+                        fetch('/Vouchers/Delete', {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'text/html',
+                            }
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.text();
                             })
-                            .catch(error => console.error('Error:', error));
+                            .then(data => {
+                                document.getElementById('voucher-delete-content').innerHTML = data;
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
                     });
                 </script>
             </div>
@@ -664,8 +785,9 @@
                 <div id="order-create-content"></div>
 
                 <script>
-                    document.addEventListener("DOMContentLoaded", function () {
-                        fetchData('/Orders/Create')
+                    document.getElementById('orderCreate').addEventListener('click', function () {
+                        fetch('/Orders/Create')
+                            .then(response => response.text())
                             .then(data => {
                                 document.getElementById('order-create-content').innerHTML = data;
                             })
@@ -694,12 +816,25 @@
                 <div id="order-delete-content"></div>
 
                 <script>
-                    document.addEventListener("DOMContentLoaded", function () {
-                        fetchData('/Orders/Delete')
+                    document.getElementById('orderDelete').addEventListener('click', function () {
+                        fetch('/Orders/Delete', {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'text/html',
+                            }
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.text();
+                            })
                             .then(data => {
                                 document.getElementById('order-delete-content').innerHTML = data;
                             })
-                            .catch(error => console.error('Error:', error));
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
                     });
                 </script>
             </div>
@@ -722,21 +857,66 @@
                         aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div id="customer-edit-content"></div>
+                <div id="order-edit-content"></div>
 
                 <script>
-                    document.addEventListener("DOMContentLoaded", function () {
-                        fetchData('/Orders/Edit')
-                            .then(data => {
-                                document.getElementById('customer-edit-content').innerHTML = data;
+                    document.getElementById('orderEdit').addEventListener('click', function () {
+                        fetch('/Orders/Edit', {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'text/html', 
+                            }
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.text(); 
                             })
-                            .catch(error => console.error('Error:', error));
+                            .then(data => {
+                                document.getElementById('order-edit-content').innerHTML = data;
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
                     });
                 </script>
             </div>
         </div>
     </div>
 </div>
+<script>
+    function submitForm() {
+        
+        var form = $("#createUserForm");
+        console.log("Hello")
+        $.ajax({
+            type: "POST",
+            url: form.attr("action"),
+            data: form.serialize(),
+            success: function (response) {
+                if (response.success) {
+                    // Xử lý khi thành công (chẳng hạn, hiển thị thông báo thành công hoặc làm gì đó khác)
+                    alert("User created successfully!");
+                    // Đóng modal nếu có
+                    if (typeof bootstrap !== 'undefined') {
+                        var modal = bootstrap.Modal.getInstance(document.querySelector('#createUserForm')); // Thay '#yourModalId' bằng id của modal
+                        if (modal) {
+                            modal.hide();
+                        }
+                    }
+                } else {
+                    // Hiển thị thông báo lỗi
+                    $("#error-message").text(response.message).show();
+                }
+            },
+            error: function () {
+                // Xử lý lỗi nếu có
+                $("#error-message").text("Đã xảy ra lỗi. Vui lòng thử lại.").show();
+            }
+        });
+    }
+</script>
 <script type="text/javascript">
     // Function to open edit modal for Employee
     function editEmployee(id) {

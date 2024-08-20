@@ -1,7 +1,7 @@
 ﻿
 @model IEnumerable<Ecommerce.Data.User>
 
-<table id="myTable" class="display" style="width:100%">
+<table id="customerTable" class="display" style="width:100%">
     <thead>
         <tr>
             <th>
@@ -44,7 +44,7 @@
                         <button class="edit-button"
                                 data-bs-toggle="modal"
                                 data-bs-target="#editCustomerModal"
-                                onclick="editCustomer(@item.id_user)">
+                                onclick="editCustomer(@item.id_user)" id="userEdit">
                             <svg xmlns="http://www.w3.org/2000/svg"
                                  fill="none"
                                  viewBox="0 0 24 24"
@@ -59,7 +59,7 @@
                         <button class="delete-button"
                                 data-bs-toggle="modal"
                                 data-bs-target="#deleteCustomerModal"
-                                onclick="deleteCustomer(@item.id_user)">
+                                onclick="deleteCustomer(@item.id_user)" id="userDelete">
                             <svg xmlns="http://www.w3.org/2000/svg"
                                  fill="none"
                                  viewBox="0 0 24 24"

@@ -1,6 +1,7 @@
 ﻿using Ecommerce.Data;
 using Ecommerce.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 
 namespace Ecommerce.Services
 {
@@ -62,11 +63,18 @@ namespace Ecommerce.Services
         public async Task DeleteAsync(int? id)
         {
             var order = await _dbContext.Orders
-                .FirstOrDefaultAsync(o => o.id_order == id);
-
+       .FirstOrDefaultAsync(o => o.id_order == id);
+            var bill = await _dbContext.Bills
+                .Where(b => b.id_order == id) 
+                .FirstOrDefaultAsync();
             if (order != null)
             {
-                _dbContext.Orders.Remove(order);
+                if (bill != null)
+                {
+                    _dbContext.Bills.Remove(bill); // Xóa Bill trước
+                }
+
+                _dbContext.Orders.Remove(order); // Sau đó xóa Order
                 await _dbContext.SaveChangesAsync();
             }
             else
